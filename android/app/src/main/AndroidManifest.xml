@@ -26,8 +26,10 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
    <application
+        android:usesCleartextTraffic="true"
         android:label="Deal With Past"
         android:icon="@mipmap/ic_launcher">
+        
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -65,6 +67,5 @@
             android:value="2" />
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyB5IXP-SANsluLrgaAgmqp70kNlHeCa-ps"/>
-            
     </application>
 </manifest>

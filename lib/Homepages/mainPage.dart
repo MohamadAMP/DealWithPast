@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:interactive_map/Gallery/Gallery.dart';
 import 'package:interactive_map/My%20Stories/Stories.dart';
 import 'package:interactive_map/profilePage.dart';
 import 'package:interactive_map/Timeline/timeline.dart';
 import '../Map/map.dart';
-import '../gallery.dart';
 
 class WelcomePage extends StatelessWidget {
   @override

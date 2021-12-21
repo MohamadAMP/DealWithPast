@@ -51,6 +51,11 @@ class _BodyState extends State<Body> {
               //terms and conditions
               await userRepo.Login(user.uid, user.email.toString(),
                   user.email.toString().split('@')[0], token),
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WelcomePage(),
+                  ))
             }
           else
             {

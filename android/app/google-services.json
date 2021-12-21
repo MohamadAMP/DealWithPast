@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "1031121611433-d9r372uopmolgksb7dv7bfrpbc0efrb7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "lb.com.aub.dwp",
+            "certificate_hash": "b971feb361731a190022640957ed53bd8a61d921"
+          }
+        },
+        {
           "client_id": "1031121611433-3ascvka4gh21jblvcr07dtgnookomd17.apps.googleusercontent.com",
           "client_type": 3
         }

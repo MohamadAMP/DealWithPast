@@ -1,8 +1,9 @@
-// ignore_for_file: file_names, unused_import, library_prefixes, must_be_immutable, unused_field, prefer_typing_uninitialized_variables, non_constant_identifier_names, unused_local_variable, avoid_function_literals_in_foreach_calls, unused_element, sized_box_for_whitespace, avoid_unnecessary_containers, prefer_const_constructors, duplicate_ignore, unnecessary_this
+// ignore_for_file: file_names, unused_import, library_prefixes, must_be_immutable, unused_field, prefer_typing_uninitialized_variables, non_constant_identifier_names, unused_local_variable, avoid_function_literals_in_foreach_calls, unused_element, sized_box_for_whitespace, avoid_unnecessary_containers, prefer_const_constructors, duplicate_ignore, unnecessary_this, prefer_const_literals_to_create_immutables
 
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:interactive_map/Repos/StoryRepo.dart';
@@ -22,6 +23,7 @@ import 'package:place_picker/entities/localization_item.dart';
 import 'package:place_picker/place_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../Repos/UserInfo.dart';
 
@@ -56,6 +58,7 @@ class _AddStory extends State<AddStory> {
   var currentLocation;
   var allUploaded = true;
   List<Map<String, dynamic>> links = [];
+  var photoLinks = [];
   dynamic featured_image_id = 1325;
   late String status = 'none';
   Future<void> _selectDate(BuildContext context) async {
@@ -282,10 +285,96 @@ class _AddStory extends State<AddStory> {
         builder: (context) => _aboutdialog);
   }
 
+  void _showImages() {
+    final _aboutdialog = StatefulBuilder(builder: (context, setState) {
+      List<dynamic> carousel = [];
+      photoLinks.forEach((element) {
+        var type = element[1];
+        if (type == 'image') {
+          carousel.add(
+            Image.network(
+              element[0],
+              fit: BoxFit.cover,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                }
+                return Center(
+                    child: Padding(
+                  padding: const EdgeInsets.all(100),
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                        : null,
+                  ),
+                ));
+              },
+            ),
+          );
+        } else if (type == 'video' || type == 'audio') {
+          carousel.add(WebView(
+            initialUrl:
+                'http://dwp.world/wp-content/uploads/2021/12/sweet-voice-1.mp3',
+            javascriptMode: JavascriptMode.unrestricted,
+          ));
+        }
+      });
+      var length = convertToArabicNumber((carousel.length).toString());
+      return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          title: Icon(Icons.image),
+          content: Container(
+              height: 300,
+              width: 250,
+              child: CarouselSlider.builder(
+                itemCount: carousel.length,
+                options: CarouselOptions(
+                  height: 250.0,
+                  viewportFraction: 1,
+                  enableInfiniteScroll: false,
+                ),
+                itemBuilder: (context, itemIndex, realIndex) {
+                  var i = convertToArabicNumber((itemIndex + 1).toString());
+                  return Stack(children: [
+                    Container(
+                        width: double.infinity, child: carousel[itemIndex]),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              "$i من $length",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                border: Border.all(color: Colors.black),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                          )),
+                    ),
+                  ]);
+                },
+              )));
+    });
+    showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (context) => _aboutdialog);
+  }
+
   @override
   void initState() {
     super.initState();
+
     locationAccess();
+    if (Platform.isAndroid) WebView.platform = AndroidWebView();
+    if (Platform.isIOS) WebView.platform = CupertinoWebView();
   }
 
   bool value = false;
@@ -632,6 +721,11 @@ class _AddStory extends State<AddStory> {
                                     ? "Uploaded"
                                     : 'Failed';
                                 featured_image_id = content['id'];
+                                var list = [
+                                  content['guid']['rendered'],
+                                  'image'
+                                ];
+                                photoLinks.add(list);
                               });
                             }, (files) async {
                               setState(() {
@@ -680,6 +774,11 @@ class _AddStory extends State<AddStory> {
                                     "description": "test",
                                   };
                                   links.add(media);
+                                  var list = [
+                                    content['guid']['rendered'],
+                                    mimeType.split('/')[0]
+                                  ];
+                                  photoLinks.add(list);
                                 }
                               }
                               if (allUploaded) {
@@ -696,13 +795,42 @@ class _AddStory extends State<AddStory> {
                               height: 20,
                             ),
                             if (status == 'Uploaded')
-                              Text(
-                                'Uploaded',
-                                style: TextStyle(color: Colors.green),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'تم التحميل',
+                                    style: TextStyle(color: Colors.green),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    width: 150,
+                                    child: MaterialButton(
+                                      minWidth: double.infinity,
+                                      height: 40,
+                                      onPressed: () {
+                                        _showImages();
+                                      },
+                                      color: Color(0xFFFFDE73),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(40)),
+                                      child: const Text(
+                                        "عرض الصور",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             if (status == 'Failed')
                               Text(
-                                'Failed',
+                                'فشل التحميل',
                                 style: TextStyle(color: Colors.red),
                               ),
                             if (status == '') CircularProgressIndicator(),
