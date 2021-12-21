@@ -1,9 +1,9 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_import, avoid_function_literals_in_foreach_calls, must_be_immutable, prefer_const_constructors, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
-import 'package:interactive_map/Stories.dart';
+import 'package:interactive_map/My%20Stories/Stories.dart';
 import 'package:interactive_map/galleryView.dart';
-import 'package:interactive_map/viewStoriesTimeline.dart';
+import 'package:interactive_map/Timeline/viewStoriesTimeline.dart';
 
 class TimelineView extends StatefulWidget {
   List<dynamic> stories;

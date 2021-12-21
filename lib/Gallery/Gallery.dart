@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_import, library_prefixes, prefer_typing_uninitialized_variables, avoid_print, empty_catches
 
 import 'dart:io';
 
@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -16,10 +15,10 @@ import 'package:image/image.dart' as IMG;
 import 'package:interactive_map/Repos/UserRepo.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import 'Repos/StoryClass.dart';
-import 'Repos/StoryRepo.dart';
-import 'Repos/UserClass.dart';
-import 'galleryView.dart';
+import '../Repos/StoryClass.dart';
+import '../Repos/StoryRepo.dart';
+import '../Repos/UserClass.dart';
+import '../galleryView.dart';
 
 class Gallery extends StatefulWidget {
   const Gallery({Key? key}) : super(key: key);
@@ -50,10 +49,7 @@ class _Gallery extends State<Gallery> {
       token = await userRepo.Authenticate("admin", "admin_1234");
       stories = await storyrepo.getStories(token);
       return stories;
-    } catch (e) {
-      // EasyLoading.showError("Could not retrieve Stories");
-      print(e);
-    }
+    } catch (e) {}
   }
 
   // late AnimationController controller;

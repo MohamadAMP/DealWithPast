@@ -1,11 +1,11 @@
 //Display Professional Profile (Professional View)
 
-// ignore_for_file: file_names, deprecated_member_use
+// ignore_for_file: file_names, deprecated_member_use, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, prefer_const_constructors, prefer_if_null_operators
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:interactive_map/Login.dart';
-import 'package:interactive_map/auth.dart';
+import 'package:interactive_map/Backend/Login.dart';
+import 'package:interactive_map/Backend/auth.dart';
 
 // ignore: must_be_immutable
 class Profile extends StatefulWidget {

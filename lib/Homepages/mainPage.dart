@@ -1,14 +1,14 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_import, use_key_in_widget_constructors, prefer_const_constructors, duplicate_ignore
 
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:interactive_map/Stories.dart';
+import 'package:interactive_map/My%20Stories/Stories.dart';
 import 'package:interactive_map/profilePage.dart';
-import 'package:interactive_map/timeline.dart';
-import 'map.dart';
-import 'gallery.dart';
+import 'package:interactive_map/Timeline/timeline.dart';
+import '../Map/map.dart';
+import '../gallery.dart';
 
-class WelcomePageGuest extends StatelessWidget {
+class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,12 +27,14 @@ class Body extends StatefulWidget {
 }
 
 class _Body extends State<Body> {
-  int currentIndex = 0;
+  int currentIndex = 4;
   Map<int, Widget> pageMap = {};
   Map<int, String> titleMap = {
-    0: "الخريطة",
-    1: "Gallery",
-    2: "الجدول الزمني",
+    0: "الحساب الشخصي",
+    1: "الجدول الزمني",
+    2: "رواياتي",
+    3: "عرض الروايات",
+    4: "الخريطة",
   };
   late Widget appBarContent, appBarText;
   late TextEditingController appBarController;
@@ -63,7 +65,13 @@ class _Body extends State<Body> {
     super.initState();
     appBarController = TextEditingController();
     // ignore: prefer_const_constructors
-    pageMap = {0: MapPage(), 1: const Gallery(), 2: Timeline()};
+    pageMap = {
+      0: Profile(),
+      1: Timeline(),
+      2: Stories(),
+      3: Gallery(),
+      4: MapPage(),
+    };
     setAppBar();
   }
 
@@ -88,12 +96,16 @@ class _Body extends State<Body> {
         onTap: (index) {
           changePage(index);
         },
+        type: BottomNavigationBarType.fixed,
         items: const [
           // ignore: prefer_const_constructors
-          BottomNavigationBarItem(label: "", icon: Icon(Icons.map_outlined)),
+          BottomNavigationBarItem(label: "", icon: Icon(Icons.person)),
+          BottomNavigationBarItem(label: "", icon: Icon(Icons.timeline)),
+          BottomNavigationBarItem(
+              label: "", icon: Icon(Icons.photo_album_outlined)),
           BottomNavigationBarItem(
               label: "", icon: Icon(Icons.photo_library_outlined)),
-          BottomNavigationBarItem(label: "", icon: Icon(Icons.timeline)),
+          BottomNavigationBarItem(label: "", icon: Icon(Icons.map_outlined)),
         ],
       ),
     );

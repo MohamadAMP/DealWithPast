@@ -9,7 +9,9 @@ class UserRepo {
   Login(String uid, String email, String username, dynamic token) async {
     // var userName = username.split(" ").join(" ");
     final response = await http.post(
-      Uri.parse('http://dwp.world/wp-json/wp/v2/users/register'),
+      Uri.parse(
+        'https://dwp.world/wp-json/wp/v2/users/register',
+      ),
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -18,7 +20,6 @@ class UserRepo {
         'username': username,
         'email': email,
         'password': uid,
-        'role': 'contributor'
       }),
     );
 

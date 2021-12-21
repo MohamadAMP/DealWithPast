@@ -1,8 +1,8 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_import, must_be_immutable, avoid_function_literals_in_foreach_calls, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:interactive_map/addStory.dart';
-import 'Repos/StoryClass.dart';
+import 'package:interactive_map/View%20Stories/addStory.dart';
+import '../Repos/StoryClass.dart';
 import 'myStoriesTile.dart';
 
 class StoriesView extends StatefulWidget {

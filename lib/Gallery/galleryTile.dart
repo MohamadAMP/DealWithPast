@@ -1,34 +1,34 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_import, avoid_function_literals_in_foreach_calls, prefer_const_constructors, unused_local_variable, avoid_unnecessary_containers, empty_catches
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:interactive_map/StoryWidgetAll.dart';
-import 'Repos/StoryClass.dart';
-import 'Repos/UserClass.dart';
-import 'Repos/UserInfo.dart';
-import 'StoryWidgetAudio.dart';
-import 'StoryWidgetImgOnly.dart';
-import 'StoryWidgetVideo.dart';
+import 'package:interactive_map/View%20Stories/StoryWidgetAll.dart';
+
+import '../Repos/StoryClass.dart';
+import '../Repos/UserClass.dart';
+import '../Repos/UserInfo.dart';
+import '../Repos/UserRepo.dart';
+import '../View Stories/StoryWidgetImgOnly.dart';
 
 // ignore: must_be_immutable
-class StoryTile extends StatelessWidget {
+class GalleryTile extends StatelessWidget {
   final Story story;
-  dynamic token;
-  StoryTile(this.story, this.token, {Key? key}) : super(key: key);
+  final dynamic token;
+  GalleryTile(this.story, this.token, {Key? key}) : super(key: key);
 
   List<UserData> userData = [];
   dynamic location;
   late dynamic placemarks;
   late dynamic image;
-  retrieveUserInfo(UserInfoRepo userInfoRepo, dynamic id) async {
+  retrieveUserInfo(
+      UserInfoRepo userInfoRepo, UserRepo userRepo, dynamic id) async {
     try {
-      userData = await userInfoRepo.getUserInfo(id, token);
+      var tok = await userRepo.Authenticate("admin", "admin_1234");
+
+      userData = await userInfoRepo.getUserInfo(id, tok);
       // EasyLoading.showSuccess("Stories Loaded");
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
-    }
+    } catch (e) {}
   }
 
   String convertToArabicNumber(String number) {
@@ -45,22 +45,40 @@ class StoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-        child: ListTile(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    double width = MediaQuery.of(context).size.width;
+    return Card(
+        color: Color(0xFF31302D),
+        elevation: 10.0,
+        // margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+        child: Center(
+          child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(
+                height: 20,
+              ),
               // ignore: sized_box_for_whitespace
-              Container(
-                height: 80,
-                width: 80,
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    story.featured_image,
+              Expanded(
+                child: Container(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Image.network(
+                      story.featured_image,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
+                // decoration: BoxDecoration(
+                //     image: DecorationImage(
+                //         image: NetworkImage(
+                //           story.featured_image,
+                //         ),
+                //         fit: BoxFit.contain),
+                //     // border: Border.all(width: 3.0),
+                //     borderRadius: BorderRadius.all(Radius.circular(20.0))),
               ),
+
               const SizedBox(
                 width: 20,
               ),
@@ -70,7 +88,7 @@ class StoryTile extends StatelessWidget {
                     textDirection: TextDirection.rtl,
                     child: Text(
                       story.title,
-                      style: const TextStyle(fontSize: 18, color: Colors.white),
+                      style: const TextStyle(fontSize: 16, color: Colors.white),
                     ),
                   ),
                   Directionality(
@@ -82,22 +100,20 @@ class StoryTile extends StatelessWidget {
                           .toList()[0]
                           .split('-')[0]
                           .toString()),
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                      style: TextStyle(fontSize: 16, color: Colors.white),
                     ),
                   ),
                 ],
               ),
               // SizedBox(width),
               Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_forward,
-                    color: Color(0xFFFFDE73),
-                  ),
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: TextButton(
                   onPressed: () async {
                     UserInfoRepo userInfoRepo = UserInfoRepo();
-                    await retrieveUserInfo(userInfoRepo, story.author);
+                    UserRepo userRepo = UserRepo();
+                    await retrieveUserInfo(
+                        userInfoRepo, userRepo, story.author);
 
                     if (story.gallery == false) {
                       Navigator.push(
@@ -107,8 +123,6 @@ class StoryTile extends StatelessWidget {
                                 story, story.locationName, userData[0])),
                       );
                     } else {
-                      print(story.gallery);
-
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -117,6 +131,10 @@ class StoryTile extends StatelessWidget {
                       );
                     }
                   },
+                  child: Text(
+                    "اقرأ المزيد",
+                    style: TextStyle(color: Color(0xFFFFDE73)),
+                  ),
                 ),
               )
             ],

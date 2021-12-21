@@ -1,7 +1,7 @@
 // ignore: file_names
 //title,date,source_url,location,description
 
-// ignore_for_file: non_constant_identifier_names, file_names
+// ignore_for_file: non_constant_identifier_names, file_names, duplicate_ignore
 
 //format (m['notes'][0][0]);
 class Story {

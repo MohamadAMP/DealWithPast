@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_import, library_prefixes, non_constant_identifier_names, duplicate_ignore, prefer_typing_uninitialized_variables, avoid_function_literals_in_foreach_calls, empty_catches
 
 import 'dart:io';
 
@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -14,13 +13,13 @@ import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:image/image.dart' as IMG;
 import 'package:interactive_map/Repos/UserRepo.dart';
-import 'package:interactive_map/timelineView.dart';
+import 'package:interactive_map/Timeline/timelineView.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import 'Repos/StoryClass.dart';
-import 'Repos/StoryRepo.dart';
-import 'Repos/UserClass.dart';
-import 'galleryView.dart';
+import '../Repos/StoryClass.dart';
+import '../Repos/StoryRepo.dart';
+import '../Repos/UserClass.dart';
+import '../galleryView.dart';
 
 class Timeline extends StatefulWidget {
   const Timeline({Key? key}) : super(key: key);
@@ -62,7 +61,6 @@ class _Timeline extends State<Timeline> {
       stories = await storyrepo.getStories(token);
       stories.forEach((element) {
         if (element.event_date != "") {
-          print(element.event_date.runtimeType);
           String year = element.event_date
               .toString()
               .split("T")
@@ -79,7 +77,6 @@ class _Timeline extends State<Timeline> {
       });
       var lowerBound = minimum;
       intervals = (2030 - minimum) ~/ 10;
-      print(intervals);
       for (int i = 0; i < intervals; i++) {
         var list = [];
         stories.forEach((element) {
@@ -102,10 +99,7 @@ class _Timeline extends State<Timeline> {
         }
       }
       return all_stories;
-    } catch (e) {
-      // EasyLoading.showError("Could not retrieve Stories");
-      print(e);
-    }
+    } catch (e) {}
   }
 
   // late AnimationController controller;

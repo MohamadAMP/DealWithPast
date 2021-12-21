@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_import, library_prefixes, must_be_immutable, unused_field, prefer_typing_uninitialized_variables, non_constant_identifier_names, unused_local_variable, avoid_function_literals_in_foreach_calls, unused_element, sized_box_for_whitespace, avoid_unnecessary_containers, prefer_const_constructors, duplicate_ignore, unnecessary_this
 
 import 'dart:io';
 import 'dart:convert';
@@ -8,13 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:interactive_map/Repos/StoryRepo.dart';
 import 'package:interactive_map/Repos/UserRepo.dart';
 import 'package:interactive_map/Repos/media.dart';
-import 'package:interactive_map/Stories.dart';
-import 'package:interactive_map/mainPage.dart';
+import 'package:interactive_map/My%20Stories/Stories.dart';
+import 'package:interactive_map/Homepages/mainPage.dart';
 import 'package:intl/intl.dart';
 import 'dart:ui' as ui;
 import 'package:google_place/google_place.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart' as locationPerm;
 import 'package:flutter/cupertino.dart';
@@ -24,7 +23,7 @@ import 'package:place_picker/place_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 
-import 'Repos/UserInfo.dart';
+import '../Repos/UserInfo.dart';
 
 class AddStory extends StatefulWidget {
   dynamic token;
@@ -49,6 +48,7 @@ class _AddStory extends State<AddStory> {
   late locationPerm.LocationData _locationData;
   String _selectedDate = 'أدخل التاريخ';
   String _selectedDateEnglish = '';
+  late LocationResult locationResult;
   final googlePlace = GooglePlace("AIzaSyB5IXP-SANsluLrgaAgmqp70kNlHeCa-ps");
   var predictions = [];
   var lng;
@@ -71,8 +71,7 @@ class _AddStory extends State<AddStory> {
       var month = convertToArabicNumber(d.month.toString());
       var day = convertToArabicNumber(d.day.toString());
       String date = year + "/" + month + '/' + day;
-      // DateTime new_Date = DateTime.parse(date);
-      // print(new_Date);
+
       setState(() {
         _selectedDate = DateFormat.yMd("ar").format(d);
         _selectedDateEnglish = DateFormat.yMd("en_US").format(d);
@@ -94,7 +93,6 @@ class _AddStory extends State<AddStory> {
 
   void locationAccess() async {
     _serviceEnabled = await location.serviceEnabled();
-    print(_serviceEnabled);
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
       if (!_serviceEnabled) {
@@ -102,7 +100,6 @@ class _AddStory extends State<AddStory> {
       }
     }
     _permissionGranted = await location.hasPermission();
-    print(_serviceEnabled);
     if (_permissionGranted == locationPerm.PermissionStatus.denied) {
       _permissionGranted = await location.requestPermission();
       if (_permissionGranted != locationPerm.PermissionStatus.granted) {
@@ -113,22 +110,22 @@ class _AddStory extends State<AddStory> {
 
   void showPlacePicker() async {
     if (_permissionGranted == locationPerm.PermissionStatus.granted) {
-      LocationResult result =
-          await Navigator.of(context).push(MaterialPageRoute(
+      locationResult = await Navigator.of(context)
+          .push(MaterialPageRoute(
               builder: (context) => PlacePicker(
                     "AIzaSyB5IXP-SANsluLrgaAgmqp70kNlHeCa-ps",
-                    displayLocation: LatLng(33.8938, 35.5018),
+                    displayLocation: const LatLng(33.8938, 35.5018),
                     localizationItem: LocalizationItem(
                         languageCode: "ar_lb",
                         tapToSelectLocation: "اختر هذا المكان",
                         findingPlace: "تفتيش...",
                         nearBy: "اماكن مجاورة"),
-                  )));
-      locationController.text = result.city!.name!;
-      print(result.latLng!.latitude);
+                  )))
+          .catchError((error) {});
+      locationController.text = locationResult.city!.name!;
 
-      lat = result.latLng!.latitude;
-      lng = result.latLng!.longitude;
+      lat = locationResult.latLng!.latitude;
+      lng = locationResult.latLng!.longitude;
     }
   }
 
@@ -148,17 +145,14 @@ class _AddStory extends State<AddStory> {
             predictions.add(data['predictions'][i]);
           });
         }
-        print(predictions);
         return predictions;
       } else {
-        print('predictions empty');
         setState(() {
           predictions.clear();
         });
       }
       return [];
     } else {
-      print("error");
       return [];
     }
   }
@@ -172,27 +166,27 @@ class _AddStory extends State<AddStory> {
       var data2 = jsonDecode(response2.body);
       lng = data2['result']['geometry']['location']['lng'].toString();
       lat = data2['result']['geometry']['location']['lat'].toString();
-      print("lng:" + lng);
-      print("lat:" + lat);
     }
   }
 
   void _showErrorDate() {
     final _aboutdialog = StatefulBuilder(builder: (context, setState) {
       return AlertDialog(
+          // ignore: prefer_const_constructors
           shape: RoundedRectangleBorder(
+              // ignore: prefer_const_constructors
               borderRadius: BorderRadius.all(Radius.circular(10))),
-          title: Icon(Icons.error),
+          title: const Icon(Icons.error),
           content: Container(
               height: 120,
               child: Column(children: [
-                Container(child: Text("يجب ادخال التاريخ")),
-                SizedBox(
+                Container(child: const Text("يجب ادخال التاريخ")),
+                const SizedBox(
                   height: 40,
                 ),
                 TextButton(
                   onPressed: () => {Navigator.pop(context)},
-                  child: Text(
+                  child: const Text(
                     "إستمرار",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -325,7 +319,6 @@ class _AddStory extends State<AddStory> {
                       });
                       _imageFile =
                           await _picker.pickImage(source: ImageSource.gallery);
-                      // print(_imageFile!.path);
 
                       onFilePicked(_imageFile);
                     }
@@ -359,7 +352,7 @@ class _AddStory extends State<AddStory> {
                       } else {
                         files = [];
                       }
-                      // files.forEach((element) => {print(element)});
+
                       onFilesPicked(result);
                     }
                   },
@@ -631,9 +624,9 @@ class _AddStory extends State<AddStory> {
                                 fileName = file.path.toString();
                               });
                               var res = await media.uploadImage(file);
-                              // print(res);
+
                               var content = jsonDecode(res);
-                              print(content);
+
                               setState(() {
                                 status = content['data'] == null
                                     ? "Uploaded"
@@ -643,7 +636,6 @@ class _AddStory extends State<AddStory> {
                             }, (files) async {
                               setState(() {
                                 fileNames = files.paths;
-                                // print(fileNames);
                               });
                               for (var fileName in fileNames) {
                                 var res = await media.uploadAll(fileName);
@@ -688,11 +680,9 @@ class _AddStory extends State<AddStory> {
                                     "description": "test",
                                   };
                                   links.add(media);
-                                  print(links);
                                 }
                               }
                               if (allUploaded) {
-                                // print(links);
                                 setState(() {
                                   status = 'Uploaded';
                                 });
@@ -738,8 +728,6 @@ class _AddStory extends State<AddStory> {
                                     if (status != '') {
                                       if (_selectedDate != 'أدخل التاريخ') {
                                         if (_formKey.currentState!.validate()) {
-                                          // print(
-                                          //     "CHECKBOX: " + _selectedDateEnglish);
                                           var parsed =
                                               _selectedDateEnglish.split('/');
                                           var date = parsed[2].toString() +
@@ -752,7 +740,6 @@ class _AddStory extends State<AddStory> {
                                           String dateformat =
                                               DateFormat("yyyy-MM-ddTHH:mm:ss")
                                                   .format(dateParsed);
-                                          print(dateformat);
                                           Map<String, dynamic> data = {
                                             // 'author': userId[0].id,
                                             'title': titleController.text,

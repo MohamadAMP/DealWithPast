@@ -1,8 +1,8 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 
-import 'galleryTile.dart';
+import 'Gallery/galleryTile.dart';
 
 // ignore: must_be_immutable
 class GalleryView extends StatelessWidget {

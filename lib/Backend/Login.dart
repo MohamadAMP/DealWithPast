@@ -1,15 +1,15 @@
 //Base Login Page
 
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_import, use_key_in_widget_constructors, prefer_typing_uninitialized_variables, unnecessary_this, prefer_const_constructors, avoid_unnecessary_containers, duplicate_ignore
 
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:interactive_map/Repos/UserRepo.dart';
 import 'package:interactive_map/Repos/media.dart';
-import 'package:interactive_map/mainPage.dart';
-import 'package:interactive_map/mainPageGuest.dart';
-import 'package:interactive_map/map.dart';
+import 'package:interactive_map/Homepages/mainPage.dart';
+import 'package:interactive_map/Homepages/mainPageGuest.dart';
+import 'package:interactive_map/Map/map.dart';
 
 import 'auth.dart';
 
@@ -18,6 +18,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // ignore: prefer_const_constructors
         title: Center(child: Text('Deal With Past')),
       ),
       body: Body(),

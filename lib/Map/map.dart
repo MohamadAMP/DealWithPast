@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, library_prefixes, prefer_typing_uninitialized_variables, await_only_futures, unnecessary_this, avoid_print, duplicate_ignore, avoid_function_literals_in_foreach_calls, prefer_const_constructors, avoid_unnecessary_containers, sized_box_for_whitespace, empty_catches
 //
 // import 'dart:html';
 import 'dart:math';
@@ -11,16 +11,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:image/image.dart' as IMG;
-import 'package:interactive_map/StoryWidgetAll.dart';
-import 'package:interactive_map/StoryWidgetVideo.dart';
+import 'package:interactive_map/View%20Stories/StoryWidgetAll.dart';
 
-import 'Repos/StoryClass.dart';
-import 'Repos/StoryRepo.dart';
-import 'Repos/UserClass.dart';
-import 'Repos/UserInfo.dart';
-import 'Repos/UserRepo.dart';
-import 'StoryWidgetAudio.dart';
-import 'StoryWidgetImgOnly.dart';
+import '../Repos/StoryClass.dart';
+import '../Repos/StoryRepo.dart';
+import '../Repos/UserClass.dart';
+import '../Repos/UserInfo.dart';
+import '../Repos/UserRepo.dart';
+import '../View Stories/StoryWidgetImgOnly.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({Key? key}) : super(key: key);
@@ -55,23 +53,13 @@ class _MapPage extends State<MapPage> {
       stories = await storyrepo.getStories(token);
       // EasyLoading.showSuccess("Stories Loaded");
       mapCreated(_controller);
-    } catch (e) {
-      // EasyLoading.showError("Could not retrieve Stories");
-      // ignore: avoid_print
-      print(e);
-    }
+    } catch (e) {}
   }
 
   retrieveUserInfo(UserInfoRepo userInfoRepo, dynamic id) async {
     try {
-      // token = await userRepo.Authenticate("admin", "admin_1234");
       userData = await userInfoRepo.getUserInfo(id, token);
-      // EasyLoading.showSuccess("Stories Loaded");
-    } catch (e) {
-      // EasyLoading.showError("Could not retrieve Stories");
-      // ignore: avoid_print
-      print(e);
-    }
+    } catch (e) {}
   }
 
   Future<Uint8List> getBytesFromAsset(String src, int width, int height,
@@ -139,6 +127,7 @@ class _MapPage extends State<MapPage> {
 
   @override
   void dispose() {
+    // ignore: todo
     // TODO: implement dispose
     super.dispose();
     _controller.dispose();
@@ -159,7 +148,6 @@ class _MapPage extends State<MapPage> {
             position: LatLng(e.lat, e.lng),
             onTap: () {
               setState(() {
-                print(showPage);
                 mainStory = e;
                 showPage = true;
               });

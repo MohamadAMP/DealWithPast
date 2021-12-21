@@ -1,26 +1,26 @@
-// ignore_for_file: file_names, deprecated_member_use
+// ignore_for_file: file_names, deprecated_member_use, unused_import, avoid_function_literals_in_foreach_calls, must_be_immutable, sized_box_for_whitespace, prefer_const_constructors, avoid_unnecessary_containers, duplicate_ignore, non_constant_identifier_names
 
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:interactive_map/mainPage.dart';
+import 'package:interactive_map/Homepages/mainPage.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'Repos/StoryClass.dart';
-import 'Repos/UserClass.dart';
+import '../Repos/StoryClass.dart';
+import '../Repos/UserClass.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 
-class StoryWidgetAll extends StatefulWidget {
+class StoryWidgetImgOnly extends StatefulWidget {
   Story story;
   dynamic location;
   UserData userData;
-  StoryWidgetAll(this.story, this.location, this.userData, {Key? key})
+  StoryWidgetImgOnly(this.story, this.location, this.userData, {Key? key})
       : super(key: key);
 
   @override
-  _StoryWidgetAllState createState() => _StoryWidgetAllState();
+  _StoryWidgetImgOnlyState createState() => _StoryWidgetImgOnlyState();
 }
 
 String convertToArabicNumber(String number) {
@@ -37,10 +37,9 @@ String convertToArabicNumber(String number) {
 
 enum SocialMedia { facebook, twitter, whatsapp, instagram }
 
-class _StoryWidgetAllState extends State<StoryWidgetAll> {
+class _StoryWidgetImgOnlyState extends State<StoryWidgetImgOnly> {
   Future share(SocialMedia socialPlatform) async {
     final text = widget.story.title;
-    print(widget.story.link);
     final urlShare = Uri.encodeComponent(widget.story.link);
 
     final urls = {
@@ -62,6 +61,7 @@ class _StoryWidgetAllState extends State<StoryWidgetAll> {
   void _share() {
     final _aboutdialog = StatefulBuilder(builder: (context, setState) {
       return AlertDialog(
+          // ignore: prefer_const_constructors
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
           title: Icon(Icons.share),
@@ -315,6 +315,24 @@ class _StoryWidgetAllState extends State<StoryWidgetAll> {
                     ),
                   ),
                 ),
+                Container(
+                  margin: EdgeInsets.all(10),
+                  child: MaterialButton(
+                    color: Color(0xFFFFDE73),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40)),
+                    onPressed: () {
+                      _share();
+                    },
+                    child: const Text(
+                      "شارك",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                )
               ]),
             ),
           ),
@@ -342,108 +360,45 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
+    // ignore: todo
     // TODO: implement initState
     super.initState();
-    if (Platform.isAndroid) WebView.platform = AndroidWebView();
-    if (Platform.isIOS) WebView.platform = CupertinoWebView();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<dynamic> carousel = [
-      Image.network(
-        widget.story.featured_image,
-        fit: BoxFit.cover,
-        loadingBuilder: (BuildContext context, Widget child,
-            ImageChunkEvent? loadingProgress) {
-          if (loadingProgress == null) {
-            return child;
-          }
-          return Center(
-              child: Padding(
-            padding: const EdgeInsets.all(100),
-            child: CircularProgressIndicator(
-              value: loadingProgress.expectedTotalBytes != null
-                  ? loadingProgress.cumulativeBytesLoaded /
-                      loadingProgress.expectedTotalBytes!
-                  : null,
-            ),
-          ));
-        },
-      ),
-    ];
-    widget.story.gallery.forEach((element) {
-      var mime_type = element['mime_type'];
-      var type = mime_type.toString().split('/')[0];
-      print(type);
-      if (type == 'image') {
-        carousel.add(
-          Image.network(
-            element['url'],
-            fit: BoxFit.cover,
-            loadingBuilder: (BuildContext context, Widget child,
-                ImageChunkEvent? loadingProgress) {
-              if (loadingProgress == null) {
-                return child;
-              }
-              return Center(
-                  child: Padding(
-                padding: const EdgeInsets.all(100),
-                child: CircularProgressIndicator(
-                  value: loadingProgress.expectedTotalBytes != null
-                      ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes!
-                      : null,
-                ),
-              ));
-            },
-          ),
-        );
-      } else if (type == 'video' || type == 'audio') {
-        print('other');
-        carousel.add(WebView(
-          initialUrl: element['url'],
-          javascriptMode: JavascriptMode.unrestricted,
-        ));
-      }
-    });
     dynamic desc = removeAllHtmlTags(widget.story.description);
-    var length = convertToArabicNumber((carousel.length).toString());
     List<dynamic> myList = [
-      Column(children: [
-        CarouselSlider.builder(
-          itemCount: carousel.length,
-          options: CarouselOptions(
-            height: 250.0,
-            viewportFraction: 1,
-            enableInfiniteScroll: false,
-          ),
-          itemBuilder: (context, itemIndex, realIndex) {
-            var i = convertToArabicNumber((itemIndex + 1).toString());
-            return Stack(children: [
-              Container(width: double.infinity, child: carousel[itemIndex]),
-              Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        "$i من $length",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      decoration: BoxDecoration(
-                          color: Colors.black,
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                    )),
-              ),
-            ]);
-          },
-        ),
-      ]),
       Column(
         children: [
+          Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+              // ignore: avoid_unnecessary_containers
+              child: Container(
+                height: 250,
+                // height: 60,
+                // width: 60,
+                child: Image.network(
+                  widget.story.featured_image,
+                  fit: BoxFit.fill,
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    return Center(
+                        child: Padding(
+                      padding: const EdgeInsets.all(100),
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    ));
+                  },
+                ),
+              )),
           const SizedBox(
             height: 20,
           ),

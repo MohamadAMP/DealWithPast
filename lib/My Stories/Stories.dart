@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_import, library_prefixes, non_constant_identifier_names, prefer_typing_uninitialized_variables, unused_local_variable, empty_catches
 
 import 'dart:io';
 
@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -18,9 +17,9 @@ import 'package:interactive_map/Repos/UserInfo.dart';
 import 'package:interactive_map/Repos/UserRepo.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import 'Repos/StoryClass.dart';
-import 'Repos/StoryRepo.dart';
-import 'Repos/UserClass.dart';
+import '../Repos/StoryClass.dart';
+import '../Repos/StoryRepo.dart';
+import '../Repos/UserClass.dart';
 import 'StoriesView.dart';
 
 class Stories extends StatefulWidget {
@@ -47,9 +46,9 @@ class _Stories extends State<Stories> {
       dynamic email = user!.email;
       token = await userRepoTok.Authenticate("admin", "admin_1234");
       var userInfo = await userRepo.getUserInfoByEmail(
-          FirebaseAuth.instance.currentUser!.displayName, token);
+          FirebaseAuth.instance.currentUser!.email.toString().split("@")[0],
+          token);
       var id = userInfo[0].id;
-      print(id);
       var stories_published = await storyrepo.getStoriesByAuthor(id, token);
       var stories_submitted =
           await storyrepo.getStoriesPendingByAuthor(id, token);
@@ -65,12 +64,8 @@ class _Stories extends State<Stories> {
       });
       all_stories.add(published);
       all_stories.add(submitted);
-      print(all_stories);
       return all_stories;
-    } catch (e) {
-      // EasyLoading.showError("Could not retrieve Stories");
-      print(e);
-    }
+    } catch (e) {}
   }
 
   // late AnimationController controller;

@@ -3,7 +3,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:interactive_map/Repos/UserRepo.dart';
 import 'UserClass.dart';
 
 class UserInfoRepo {
@@ -20,11 +19,10 @@ class UserInfoRepo {
     List<UserData> userInfo = [];
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      print(data);
+
       userInfo.add(UserData.fromJson(data));
       return userInfo;
     } else {
-      print(jsonDecode(response.body));
       return false;
     }
   }
@@ -40,7 +38,7 @@ class UserInfoRepo {
     List<UserData> userInfo = [];
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      print(data);
+
       data.forEach((e) {
         var user = UserData.fromJson(e);
         if (user.name == email) {
@@ -50,7 +48,6 @@ class UserInfoRepo {
 
       return userInfo;
     } else {
-      print(response.statusCode);
       return false;
     }
   }
