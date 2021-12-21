@@ -327,39 +327,60 @@ class _AddStory extends State<AddStory> {
               borderRadius: BorderRadius.all(Radius.circular(10))),
           title: Icon(Icons.image),
           content: Container(
-              height: 300,
+              height: 350,
               width: 250,
-              child: CarouselSlider.builder(
-                itemCount: carousel.length,
-                options: CarouselOptions(
-                  height: 250.0,
-                  viewportFraction: 1,
-                  enableInfiniteScroll: false,
-                ),
-                itemBuilder: (context, itemIndex, realIndex) {
-                  var i = convertToArabicNumber((itemIndex + 1).toString());
-                  return Stack(children: [
-                    Container(
-                        width: double.infinity, child: carousel[itemIndex]),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
-                          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              "$i من $length",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                border: Border.all(color: Colors.black),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                          )),
+              child: Column(
+                children: [
+                  CarouselSlider.builder(
+                    itemCount: carousel.length,
+                    options: CarouselOptions(
+                      height: 250.0,
+                      viewportFraction: 1,
+                      enableInfiniteScroll: false,
                     ),
-                  ]);
-                },
+                    itemBuilder: (context, itemIndex, realIndex) {
+                      var i = convertToArabicNumber((itemIndex + 1).toString());
+                      return Stack(children: [
+                        Container(
+                            width: double.infinity, child: carousel[itemIndex]),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Padding(
+                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                child: Text(
+                                  "$i من $length",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    border: Border.all(color: Colors.black),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
+                              )),
+                        ),
+                      ]);
+                    },
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  TextButton(
+                    onPressed: () => {Navigator.pop(context)},
+                    child: const Text(
+                      "إستمرار",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Bahij",
+                      ),
+                    ),
+                    style: TextButton.styleFrom(
+                      primary: Colors.black,
+                      backgroundColor: Color(0xFFCCAF41),
+                    ),
+                  ),
+                ],
               )));
     });
     showDialog(
@@ -403,12 +424,13 @@ class _AddStory extends State<AddStory> {
                     if (status == '') {
                       _showError();
                     } else {
-                      setState(() {
-                        status = '';
-                      });
                       _imageFile =
                           await _picker.pickImage(source: ImageSource.gallery);
-
+                      if (_imageFile != null) {
+                        setState(() {
+                          status = '';
+                        });
+                      }
                       onFilePicked(_imageFile);
                     }
                   },
@@ -430,14 +452,14 @@ class _AddStory extends State<AddStory> {
                     if (status == '') {
                       _showError();
                     } else {
-                      setState(() {
-                        status = '';
-                      });
                       FilePickerResult? result = await FilePicker.platform
                           .pickFiles(allowMultiple: true);
 
                       if (result != null) {
                         files = result.paths;
+                        setState(() {
+                          status = '';
+                        });
                       } else {
                         files = [];
                       }
