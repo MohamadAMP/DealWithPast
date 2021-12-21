@@ -6,12 +6,13 @@ import 'package:http/http.dart' as http;
 String Token = "";
 
 class UserRepo {
-  Login(String uid, String email, String username) async {
+  Login(String uid, String email, String username, dynamic token) async {
     // var userName = username.split(" ").join(" ");
     final response = await http.post(
       Uri.parse('http://dwp.world/wp-json/wp/v2/users/register'),
       headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, String>{
         'username': username,
@@ -23,8 +24,9 @@ class UserRepo {
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
+
       // Token = data["token"];
-      // print(data);
+      print(data);
       return true;
     } else {
       print(response.body);

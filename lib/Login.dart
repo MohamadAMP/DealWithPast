@@ -33,6 +33,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   UserRepo userRepo = UserRepo();
   Media media = Media();
+  late var token;
 
   @override
   void initState() {
@@ -40,18 +41,24 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> click() async {
+    token = await userRepo.Authenticate("admin", "admin_1234");
     signInWithGoogle().then((user) async => {
-          // media.upload(),
-
-          // userRepo.Login(
-          //     user!.uid, user.email.toString(), user.displayName.toString()),
-          userRepo.Authenticate("admin", "admin_1234"),
-          // print(user.uid),
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => WelcomePage(),
-              ))
+          if (await userRepo.AuthenticateOther(
+                  user!.email.toString().split('@')[0], user.uid) ==
+              false)
+            {
+              //terms and conditions
+              await userRepo.Login(user.uid, user.email.toString(),
+                  user.email.toString().split('@')[0], token),
+            }
+          else
+            {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WelcomePage(),
+                  ))
+            },
         });
   }
 
