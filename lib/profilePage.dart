@@ -4,8 +4,10 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:interactive_map/Backend/Login.dart';
-import 'package:interactive_map/Backend/auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:interactive_map/Homepages/mainPageGuest.dart';
+
+import 'Backend/auth.dart';
 
 // ignore: must_be_immutable
 class Profile extends StatefulWidget {
@@ -85,12 +87,12 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         ElevatedButton(
-                            onPressed: () {
-                              signOut();
+                            onPressed: () async {
+                              await signOut();
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginPage()),
+                                    builder: (context) => WelcomePageGuest()),
                               );
                             },
                             child: Text("signout"))

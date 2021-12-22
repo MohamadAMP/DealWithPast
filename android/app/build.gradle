@@ -54,8 +54,8 @@ android {
         applicationId "lb.com.aub.dwp"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 12
-        versionName "12.0"
+        versionCode 2
+        versionName "2.0"
     }
 
     signingConfigs {

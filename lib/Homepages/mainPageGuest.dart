@@ -1,9 +1,11 @@
 // ignore_for_file: file_names, unused_import, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:interactive_map/Gallery/Gallery.dart';
 import 'package:interactive_map/My%20Stories/Stories.dart';
+import 'package:interactive_map/My%20Stories/addStoryGuest.dart';
 import 'package:interactive_map/profilePage.dart';
 import 'package:interactive_map/Timeline/timeline.dart';
 import '../Map/map.dart';
@@ -27,12 +29,13 @@ class Body extends StatefulWidget {
 }
 
 class _Body extends State<Body> {
-  int currentIndex = 2;
+  int currentIndex = 3;
   Map<int, Widget> pageMap = {};
   Map<int, String> titleMap = {
-    0: "الجدول الزمني",
-    1: "عرض الروايات",
-    2: "الخريطة",
+    0: "أضف رواية",
+    1: "الجدول الزمني",
+    2: "عرض الروايات",
+    3: "الخريطة",
   };
   late Widget appBarContent, appBarText;
   late TextEditingController appBarController;
@@ -58,13 +61,24 @@ class _Body extends State<Body> {
     });
   }
 
+  signoutUser() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    await googleSignIn.signOut();
+  }
+
   @override
   void initState() {
     super.initState();
     appBarController = TextEditingController();
     // ignore: prefer_const_constructors
-    pageMap = {0: Timeline(), 1: const Gallery(), 2: MapPage()};
+    pageMap = {
+      0: AddStoryGuest(),
+      1: Timeline(),
+      2: const Gallery(),
+      3: MapPage()
+    };
     setAppBar();
+    signoutUser();
   }
 
   @override
@@ -88,8 +102,11 @@ class _Body extends State<Body> {
         onTap: (index) {
           changePage(index);
         },
+        type: BottomNavigationBarType.fixed,
         items: const [
           // ignore: prefer_const_constructors
+          BottomNavigationBarItem(
+              label: "", icon: Icon(Icons.photo_album_outlined)),
           BottomNavigationBarItem(label: "", icon: Icon(Icons.timeline)),
           BottomNavigationBarItem(
               label: "", icon: Icon(Icons.photo_library_outlined)),

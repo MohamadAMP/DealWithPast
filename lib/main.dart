@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:interactive_map/Backend/Login.dart';
 import 'package:interactive_map/Homepages/mainPage.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:interactive_map/Homepages/mainPageGuest.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
     };
     MaterialColor mainColor = MaterialColor(0xFF000000, color);
     if (FirebaseAuth.instance.currentUser != null) {
+      print(FirebaseAuth.instance.currentUser!.displayName);
       return MaterialApp(
         locale: const Locale('ar', 'MA'),
         localizationsDelegates: const [
@@ -69,7 +71,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: mainColor,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: LoginPage(),
+        home: WelcomePageGuest(),
       );
     }
   }
