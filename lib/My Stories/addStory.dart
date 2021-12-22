@@ -453,7 +453,7 @@ class _AddStory extends State<AddStory> {
                       _showError();
                     } else {
                       FilePickerResult? result = await FilePicker.platform
-                          .pickFiles(allowMultiple: true);
+                          .pickFiles(allowMultiple: true, type: FileType.media);
 
                       if (result != null) {
                         files = result.paths;
