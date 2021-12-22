@@ -31,7 +31,7 @@ class _Body extends State<Body> {
   Map<int, Widget> pageMap = {};
   Map<int, String> titleMap = {
     0: "الجدول الزمني",
-    1: "Gallery",
+    1: "عرض الروايات",
     2: "الخريطة",
   };
   late Widget appBarContent, appBarText;

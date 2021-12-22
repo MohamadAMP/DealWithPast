@@ -53,14 +53,17 @@ class _StoriesView extends State<StoriesView> {
                               child: const Text("لا توجد روايات مواقق عليها",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 28)))
-                          : ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: widget.stories[0].length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return StoryTile(
-                                    widget.stories[0][index], widget.token);
-                              })),
+                          : Align(
+                              alignment: Alignment.topCenter,
+                              child: ListView.builder(
+                                  // shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: widget.stories[0].length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return StoryTile(
+                                        widget.stories[0][index], widget.token);
+                                  }))),
                   Container(
                     color: Color(0xFF252422),
                     child: widget.stories[1].isEmpty
@@ -70,7 +73,6 @@ class _StoriesView extends State<StoriesView> {
                                     color: Colors.white, fontSize: 28)))
                         : ListView.builder(
                             shrinkWrap: true,
-                            reverse: true,
                             scrollDirection: Axis.vertical,
                             itemCount: widget.stories[1].length,
                             itemBuilder: (BuildContext context, int index) {

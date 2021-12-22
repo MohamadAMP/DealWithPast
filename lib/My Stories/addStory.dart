@@ -926,11 +926,14 @@ class _AddStory extends State<AddStory> {
                                           StoryRepo storyRepo = StoryRepo();
                                           var res = await storyRepo.postStory(
                                               data,
-                                              FirebaseAuth.instance.currentUser!
-                                                  .displayName,
+                                              FirebaseAuth
+                                                  .instance.currentUser!.email
+                                                  .toString()
+                                                  .split('@')[0],
                                               FirebaseAuth
                                                   .instance.currentUser!.uid);
                                           var content = jsonDecode(res);
+                                          print(content);
                                           if (content['content'] != null) {
                                             _showSuccess();
                                           }

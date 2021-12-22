@@ -79,12 +79,12 @@ class _StoryWidgetAllState extends State<StoryWidgetAll> {
                       children: [
                         // ignore: deprecated_member_use
                         OutlineButton(
+                            color: Colors.transparent,
+                            borderSide: BorderSide(color: Colors.transparent),
                             onPressed: () {
                               share(SocialMedia.facebook);
                               Navigator.pop(context);
                             },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
                             splashColor: Colors.grey[600],
                             // borderSide: BorderSide(color: Colors.grey),
                             child: Container(
@@ -96,14 +96,13 @@ class _StoryWidgetAllState extends State<StoryWidgetAll> {
                               ),
                             )),
                         OutlineButton(
+                            color: Colors.transparent,
+                            borderSide: BorderSide(color: Colors.transparent),
                             onPressed: () {
                               share(SocialMedia.twitter);
                               Navigator.pop(context);
                             },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
                             splashColor: Colors.grey[600],
-                            // borderSide: BorderSide(color: Colors.grey),
                             child: Container(
                               child: Image(
                                   fit: BoxFit.fitWidth,
@@ -122,15 +121,14 @@ class _StoryWidgetAllState extends State<StoryWidgetAll> {
                         // ignore: deprecated_member_use
 
                         OutlineButton(
+                            color: Colors.transparent,
+                            borderSide: BorderSide(color: Colors.transparent),
                             onPressed: () {
                               Clipboard.setData(
                                   ClipboardData(text: widget.story.link));
                               Navigator.pop(context);
                             },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
                             splashColor: Colors.grey[600],
-                            // borderSide: BorderSide(color: Colors.grey),
                             child: Container(
                               child: Image(
                                   fit: BoxFit.fitWidth,
@@ -139,14 +137,13 @@ class _StoryWidgetAllState extends State<StoryWidgetAll> {
                                   width: 45),
                             )),
                         OutlineButton(
+                            color: Colors.transparent,
+                            borderSide: BorderSide(color: Colors.transparent),
                             onPressed: () {
                               share(SocialMedia.whatsapp);
                               Navigator.pop(context);
                             },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
                             splashColor: Colors.grey[600],
-                            // borderSide: BorderSide(color: Colors.grey),
                             child: Container(
                               child: Image(
                                   fit: BoxFit.fitWidth,
