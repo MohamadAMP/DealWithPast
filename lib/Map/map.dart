@@ -178,8 +178,8 @@ class _MapPage extends State<MapPage> {
         GoogleMap(
           minMaxZoomPreference: MinMaxZoomPreference(8.5, 20),
           cameraTargetBounds: CameraTargetBounds(LatLngBounds(
-              northeast: LatLng(34.37, 36.37),
-              southwest: LatLng(33.2569738, 35.2935346))),
+              northeast: LatLng(33.8566324, 35.7896525),
+              southwest: LatLng(33.8469738, 35.7535346))),
           initialCameraPosition: _initialCameraPosition,
           myLocationButtonEnabled: false,
           zoomControlsEnabled: false,
