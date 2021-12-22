@@ -13,7 +13,6 @@ class Media {
     String url = 'https://dwp.world/wp-json/wp/v2/media';
 
     String fileName = filePath.path.split('/').last;
-    print(fileName);
 
     Map<String, String> requestHeaders = {
       'Content-Type': 'image/jpg',
@@ -34,7 +33,6 @@ class Media {
     String url = 'https://dwp.world/wp-json/wp/v2/media';
 
     String fileName = filePath.split('/').last;
-    print(fileName);
 
     Map<String, String> requestHeaders = {
       'Content-Type': 'image/jpg',

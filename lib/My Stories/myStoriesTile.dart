@@ -25,7 +25,6 @@ class StoryTile extends StatelessWidget {
       // EasyLoading.showSuccess("Stories Loaded");
     } catch (e) {
       // ignore: avoid_print
-      print(e);
     }
   }
 

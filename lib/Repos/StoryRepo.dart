@@ -19,12 +19,10 @@ class StoryRepo {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       data.forEach((e) {
-        print(e['author']);
         stories.add(Story.fromJson(e));
       });
       return stories;
     } else {
-      print(response.statusCode);
       return [];
     }
   }
@@ -47,7 +45,6 @@ class StoryRepo {
       });
       return stories;
     } else {
-      print(response.statusCode);
       return false;
     }
   }
@@ -71,17 +68,13 @@ class StoryRepo {
       });
       return stories;
     } else {
-      print(response.statusCode);
       return false;
     }
   }
 
   postStory(data, username, password) async {
-    print(username);
-    print(password);
     UserRepo userRepo = UserRepo();
     var token = await userRepo.AuthenticateOther(username, password);
-    print(token);
 
     String url = 'https://dwp.world/wp-json/wp/v2/stories';
 
@@ -95,7 +88,6 @@ class StoryRepo {
     request.body = jsonEncode(data);
     var res = await request.send();
     var content = await res.stream.bytesToString();
-    print(jsonDecode(content)['anonymous']);
 
     return content;
   }

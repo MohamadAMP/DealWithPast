@@ -27,10 +27,8 @@ class UserRepo {
       var data = jsonDecode(response.body);
 
       // Token = data["token"];
-      print(data);
       return true;
     } else {
-      print(response.body);
       return false;
     }
   }
@@ -48,10 +46,8 @@ class UserRepo {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       var token = data['token'];
-      print(token);
       return token;
     } else {
-      print(response.body);
       return false;
     }
   }
@@ -69,10 +65,8 @@ class UserRepo {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       var token = data['token'];
-      print(token);
       return token;
     } else {
-      print(response.body);
       return false;
     }
   }

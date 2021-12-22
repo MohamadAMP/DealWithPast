@@ -203,7 +203,6 @@ class _MapPage extends State<MapPage> {
                                   setState(() {
                                     showPage = false;
                                   });
-                                  print(mainStory.gallery);
                                   if (mainStory.gallery == false) {
                                     Navigator.push(
                                       context,
@@ -215,8 +214,6 @@ class _MapPage extends State<MapPage> {
                                                   userData[0])),
                                     );
                                   } else {
-                                    print(mainStory.gallery);
-
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

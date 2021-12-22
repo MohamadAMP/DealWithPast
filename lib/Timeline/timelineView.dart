@@ -107,49 +107,59 @@ class _TimelineViewState extends State<TimelineView> {
                                       height: 10,
                                     ),
                                     Container(
+                                        padding:
+                                            EdgeInsets.fromLTRB(10, 0, 0, 0),
                                         child: Row(
-                                      children: [
-                                        Container(
-                                          height: 100,
-                                          width: 100,
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: NetworkImage(
-                                                    widget.stories[index][0]
-                                                        .featured_image,
-                                                  ),
-                                                  fit: BoxFit.cover),
-                                              // border: Border.all(width: 3.0),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10.0))),
-                                        ),
-                                        SizedBox(
-                                          width: 40,
-                                        ),
-                                        Column(
                                           children: [
-                                            Text(
-                                              widget.stories[index][0].title,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16),
+                                            Container(
+                                              height: 100,
+                                              width: 100,
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(
+                                                        widget.stories[index][0]
+                                                            .featured_image,
+                                                      ),
+                                                      fit: BoxFit.cover),
+                                                  // border: Border.all(width: 3.0),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              10.0))),
                                             ),
-                                            Text(
-                                                convertToArabicNumber(widget
-                                                    .stories[index][0]
-                                                    .event_date
-                                                    .toString()
-                                                    .split("T")
-                                                    .toList()[0]
-                                                    .split('-')[0]
-                                                    .toString()),
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 16)),
+                                            SizedBox(
+                                              width: 40,
+                                            ),
+                                            Column(
+                                              children: [
+                                                SizedBox(
+                                                  width: 110,
+                                                  child: Text(
+                                                    widget.stories[index][0]
+                                                        .title,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        fontSize: 16),
+                                                  ),
+                                                ),
+                                                Text(
+                                                    convertToArabicNumber(widget
+                                                        .stories[index][0]
+                                                        .event_date
+                                                        .toString()
+                                                        .split("T")
+                                                        .toList()[0]
+                                                        .split('-')[0]
+                                                        .toString()),
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 16)),
+                                              ],
+                                            ),
                                           ],
-                                        ),
-                                      ],
-                                    ))
+                                        ))
                                   ]),
                             ]),
                       ),
