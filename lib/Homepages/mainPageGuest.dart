@@ -73,9 +73,9 @@ class _Body extends State<Body> {
     // ignore: prefer_const_constructors
     pageMap = {
       0: AddStoryGuest(),
-      1: Timeline(),
+      1: const Timeline(),
       2: const Gallery(),
-      3: MapPage()
+      3: const MapPage()
     };
     setAppBar();
     signoutUser();

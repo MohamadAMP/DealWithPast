@@ -933,7 +933,6 @@ class _AddStory extends State<AddStory> {
                                               FirebaseAuth
                                                   .instance.currentUser!.uid);
                                           var content = jsonDecode(res);
-                                          print(content);
                                           if (content['content'] != null) {
                                             _showSuccess();
                                           }

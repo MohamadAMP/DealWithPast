@@ -94,10 +94,11 @@ class _BodyState extends State<Body> {
     return Container(
         color: Color(0xFF252422),
         child: Center(
-            child: Column(
+            child: SingleChildScrollView(
+                child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 150),
+            SizedBox(height: 40),
             Center(
               child: Text(
                 "لإضافة رواية عليك الدخول إلى حسابك الشخصي",
@@ -105,10 +106,9 @@ class _BodyState extends State<Body> {
                 style: TextStyle(color: Colors.white, fontSize: 40),
               ),
             ),
-            SizedBox(height: 120),
+            SizedBox(height: 100),
             Container(child: loginButton()),
-            SizedBox(height: 30),
           ],
-        )));
+        ))));
   }
 }

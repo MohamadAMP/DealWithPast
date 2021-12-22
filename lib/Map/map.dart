@@ -176,10 +176,10 @@ class _MapPage extends State<MapPage> {
         body: Stack(
       children: [
         GoogleMap(
-          minMaxZoomPreference: MinMaxZoomPreference(8.5, 40),
+          minMaxZoomPreference: MinMaxZoomPreference(8.5, 20),
           cameraTargetBounds: CameraTargetBounds(LatLngBounds(
-              northeast: LatLng(34.6566324, 36.6896525),
-              southwest: LatLng(33.0569738, 35.0935346))),
+              northeast: LatLng(34.37, 36.37),
+              southwest: LatLng(33.2569738, 35.2935346))),
           initialCameraPosition: _initialCameraPosition,
           myLocationButtonEnabled: false,
           zoomControlsEnabled: false,
