@@ -41,7 +41,7 @@ class _TimelineViewState extends State<TimelineView> {
                   child: Card(
                     margin: const EdgeInsets.all(20.0),
                     child: Container(
-                      width: double.infinity,
+                      width: 320,
                       height: 200.0,
                       color: Color(0xFF31302D),
                       child: Container(
@@ -133,7 +133,7 @@ class _TimelineViewState extends State<TimelineView> {
                                             Column(
                                               children: [
                                                 SizedBox(
-                                                  width: 110,
+                                                  width: 100,
                                                   child: Text(
                                                     widget.stories[index][0]
                                                         .title,
