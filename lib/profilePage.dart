@@ -7,20 +7,22 @@ import 'package:flutter/material.dart';
 import 'package:interactive_map/Homepages/mainPageGuest.dart';
 
 import 'Backend/auth.dart';
+import 'Repos/UserInfo.dart';
+import 'Repos/UserRepo.dart';
 
 // ignore: must_be_immutable
 class Profile extends StatefulWidget {
-  Profile();
+  dynamic url;
+  Profile(this.url);
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
   User? user = FirebaseAuth.instance.currentUser;
+  UserInfoRepo userRepo = UserInfoRepo();
 
-  var url = FirebaseAuth.instance.currentUser!.photoURL;
-
-  void click() {}
+  UserRepo userRepoTok = UserRepo();
 
   @override
   void initState() {
@@ -37,13 +39,14 @@ class _ProfileState extends State<Profile> {
         body: SingleChildScrollView(
       child: Column(children: <Widget>[
         Container(
-          color: Colors.black54,
-          height: 190,
+          color: Color(0xFF31302D),
+          height: MediaQuery.of(context).size.height * 0.23,
           child: Padding(
             padding: EdgeInsets.only(left: 30.0, top: 30.0),
             child: Column(
               children: <Widget>[
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 0, 40, 0),
@@ -55,48 +58,11 @@ class _ProfileState extends State<Profile> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                             fit: BoxFit.fill,
-                            image: NetworkImage(url!),
+                            image: NetworkImage(widget.url),
                           ),
                         ),
                       ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          (name != null ? name : ""),
-
-                          //you might have to add another text widget depending on how you retrieve it
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          (email != null ? email : ""),
-
-                          //you might have to add another text widget depending on how you retrieve it
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        ElevatedButton(
-                            onPressed: () async {
-                              await signOut();
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => WelcomePageGuest()),
-                              );
-                            },
-                            child: Text("signout"))
-                      ],
-                    )
                   ],
                 ),
                 const SizedBox(
@@ -106,24 +72,116 @@ class _ProfileState extends State<Profile> {
             ),
           ),
         ),
-        SizedBox(
-          height: 16,
-        ),
-        SizedBox(
-          height: 25,
-        ),
         Container(
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.only(left: 32.0, right: 32.0),
-            child: Center(
-                child: Text(
-              "Published Posts:",
-              style: TextStyle(
-                color: Colors.grey[800],
-                fontWeight: FontWeight.w700,
-                fontSize: 18,
+          height: MediaQuery.of(context).size.height * 0.67,
+          color: Color(0xFF252422),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 45,
               ),
-            ))),
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.only(left: 32.0, right: 32.0),
+                  child: Center(
+                      child: Text(
+                    "معلومات",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                    ),
+                  ))),
+              SizedBox(
+                height: 25,
+              ),
+              Column(
+                // mainAxisAlignment: MainAxisAlignment.spaceAround/*  */,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
+                      child: Text(
+                        'الإسم :',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )),
+                  SizedBox(height: 20),
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
+                      child: SizedBox(
+                          width: double.infinity,
+                          child: Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Text(
+                                (name != null ? name : ""),
+
+                                //you might have to add another text widget depending on how you retrieve it
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )))),
+                  SizedBox(height: 20),
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
+                      child: Text(
+                        'البريد الإلكتروني :',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )),
+                  SizedBox(height: 20),
+                  SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
+                          child: Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: Text(
+                              (email != null ? email : ""),
+
+                              //you might have to add another text widget depending on how you retrieve it
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ))),
+                  SizedBox(
+                    height: 100,
+                  ),
+                  Center(
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFFFFDE73))),
+                          onPressed: () async {
+                            await signOut();
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => WelcomePageGuest()),
+                            );
+                          },
+                          child: Text(
+                            "خروج",
+                            style: TextStyle(color: Colors.black, fontSize: 25),
+                          ))),
+                ],
+              ),
+            ],
+          ),
+        ),
       ]),
     ));
   }

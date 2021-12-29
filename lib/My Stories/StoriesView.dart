@@ -68,7 +68,7 @@ class _StoriesView extends State<StoriesView> {
                     color: Color(0xFF252422),
                     child: widget.stories[1].isEmpty
                         ? Center(
-                            child: const Text("لا توجد روايات بانتظار مواققة",
+                            child: const Text("لا توجد روايات بانتظار موافقة",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 28)))
                         : ListView.builder(

@@ -6,6 +6,7 @@ import 'package:interactive_map/Gallery/Gallery.dart';
 import 'package:interactive_map/My%20Stories/Stories.dart';
 import 'package:interactive_map/profilePage.dart';
 import 'package:interactive_map/Timeline/timeline.dart';
+import 'package:interactive_map/profileStart.dart';
 import '../Map/map.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -66,7 +67,7 @@ class _Body extends State<Body> {
     appBarController = TextEditingController();
     // ignore: prefer_const_constructors
     pageMap = {
-      0: Profile(),
+      0: ProfileStart(),
       1: Timeline(),
       2: Stories(),
       3: Gallery(),

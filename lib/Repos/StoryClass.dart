@@ -51,6 +51,7 @@ class Story {
         description = json['content']['rendered'],
         date_submitted = json['date_gmt'],
         event_date = json['date'],
+        // event_date = json['acf']['event_date'],
         gallery = json['acf']['gallery'],
         anonymous = json['acf']['anonymous'],
         // video = json['acf']['video'],

@@ -214,7 +214,7 @@ class _AddStory extends State<AddStory> {
       return AlertDialog(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
-          title: Icon(Icons.error),
+          title: Icon(Icons.check),
           content: Container(
               height: 120,
               child: Column(children: [
@@ -712,22 +712,60 @@ class _AddStory extends State<AddStory> {
                                       child: Text(_selectedDate,
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 24,
                                               color: Colors.white)),
                                       onTap: () {
-                                        _selectDate(context);
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("أدخل التاريخ"),
+                                              content: Container(
+                                                // Need to use container to add size constraint.
+                                                width: 300,
+                                                height: 300,
+                                                child: YearPicker(
+                                                  firstDate: DateTime(
+                                                      DateTime.now().year - 300,
+                                                      1),
+                                                  lastDate: DateTime(
+                                                      DateTime.now().year + 100,
+                                                      1),
+                                                  initialDate: DateTime.now(),
+                                                  // save the selected date to _selectedDate DateTime variable.
+                                                  // It's used to set the previous selected date when
+                                                  // re-showing the dialog.
+                                                  selectedDate: DateTime.now(),
+                                                  onChanged:
+                                                      (DateTime dateTime) {
+                                                    setState(() {
+                                                      _selectedDate =
+                                                          convertToArabicNumber(
+                                                              dateTime.year
+                                                                  .toString());
+                                                      _selectedDateEnglish =
+                                                          dateTime.year
+                                                              .toString();
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
                                       },
                                     ),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.calendar_today,
-                                        color: Color(0xFFFFDE73),
-                                      ),
-                                      // tooltip: 'Tap to open date picker',
-                                      onPressed: () {
-                                        _selectDate(context);
-                                      },
-                                    ),
+                                    // IconButton(
+                                    //   icon: const Icon(
+                                    //     Icons.calendar_today,
+                                    //     color: Color(0xFFFFDE73),
+                                    //   ),
+                                    //   // tooltip: 'Tap to open date picker',
+                                    //   onPressed: () {
+                                    //     _selectDate(context);
+                                    //   },
+                                    // ),
                                   ],
                                 ),
                               ),
@@ -890,14 +928,13 @@ class _AddStory extends State<AddStory> {
                                     if (status != '') {
                                       if (_selectedDate != 'أدخل التاريخ') {
                                         if (_formKey.currentState!.validate()) {
-                                          var parsed =
-                                              _selectedDateEnglish.split('/');
-                                          var date = parsed[2].toString() +
-                                              "-" +
-                                              parsed[0].toString() +
-                                              "-" +
-                                              parsed[1].toString() +
-                                              "T00:00:00";
+                                          var date =
+                                              _selectedDateEnglish.toString() +
+                                                  "-" +
+                                                  '01' +
+                                                  "-" +
+                                                  '01' +
+                                                  "T00:00:00";
                                           var dateParsed = DateTime.parse(date);
                                           String dateformat =
                                               DateFormat("yyyy-MM-ddTHH:mm:ss")

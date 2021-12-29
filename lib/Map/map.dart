@@ -7,10 +7,16 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'dart:async';
+import 'dart:ui';
+
+import 'package:flutter/foundation.dart';
+import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:image/image.dart' as IMG;
+import 'package:interactive_map/My%20Stories/myStoriesTile.dart';
 import 'package:interactive_map/View%20Stories/StoryWidgetAll.dart';
 import 'package:location/location.dart' as locationPerm;
 import 'package:flutter/cupertino.dart';
@@ -21,6 +27,7 @@ import '../Repos/UserClass.dart';
 import '../Repos/UserInfo.dart';
 import '../Repos/UserRepo.dart';
 import '../View Stories/StoryWidgetImgOnly.dart';
+import "package:collection/collection.dart";
 
 class MapPage extends StatefulWidget {
   const MapPage({Key? key}) : super(key: key);
@@ -41,6 +48,7 @@ class _MapPage extends State<MapPage> {
   // ignore: non_constant_identifier_names
   bool Loaded = false;
   bool showPage = false;
+  bool showPageGrouped = false;
   bool nearMe = false;
   dynamic location;
   late Story mainStory;
@@ -54,13 +62,17 @@ class _MapPage extends State<MapPage> {
   late bool _serviceEnabled;
   late locationPerm.PermissionStatus _permissionGranted;
   late locationPerm.LocationData _locationData;
-  // late Coordinates coordinates;
-
+  List<dynamic> groupedStories = [];
+  List<dynamic> groupedMain = [];
   retrieveStories() async {
     try {
       token = await userRepo.Authenticate("admin", "admin_1234");
       stories = await storyrepo.getStories(token);
-      // EasyLoading.showSuccess("Stories Loaded");
+
+      var newMap = groupBy(stories, (Story s) => s.locationName);
+      for (var i = 0; i < newMap.length; i++) {
+        groupedStories.add(newMap.values.elementAt(i));
+      }
       mapCreated(_controller);
     } catch (e) {}
   }
@@ -69,6 +81,42 @@ class _MapPage extends State<MapPage> {
     try {
       userData = await userInfoRepo.getUserInfo(id, token);
     } catch (e) {}
+  }
+
+  Future<Uint8List> getBytesFromCanvas(
+      int customNum, int width, int height) async {
+    final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
+    final Canvas canvas = Canvas(pictureRecorder);
+    final Paint paint = Paint()..color = Colors.blue;
+    final Radius radius = Radius.circular(width / 2);
+    canvas.drawRRect(
+        RRect.fromRectAndCorners(
+          Rect.fromLTWH(0.0, 0.0, width.toDouble(), height.toDouble()),
+          topLeft: radius,
+          topRight: radius,
+          bottomLeft: radius,
+          bottomRight: radius,
+        ),
+        paint);
+
+    TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
+    painter.text = TextSpan(
+      text: convertToArabicNumber(
+          customNum.toString()), // your custom number here
+      style: TextStyle(fontSize: 65.0, color: Colors.white),
+    );
+
+    painter.layout();
+    painter.paint(
+        canvas,
+        Offset((width * 0.5) - painter.width * 0.5,
+            (height * .5) - painter.height * 0.5));
+    final img = await pictureRecorder.endRecording().toImage(width, height);
+    final data = await img.toByteData(format: ui.ImageByteFormat.png);
+    if (this.mounted) {
+      setState(() {});
+    }
+    return data!.buffer.asUint8List();
   }
 
   Future<Uint8List> getBytesFromAsset(String src, int width, int height,
@@ -159,14 +207,14 @@ class _MapPage extends State<MapPage> {
   }
 
   Future<void> _goToLoc() async {
-    final GoogleMapController controller = await _controller;
-    controller.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: LatLng(currLat, currLng), zoom: 12)));
+    // final GoogleMapController controller = await _controller;
+    _controller.animateCamera(
+        CameraUpdate.newLatLngZoom(LatLng(currLat, currLng), 12));
   }
 
   Future<void> _goToAll() async {
-    final GoogleMapController controller = await _controller;
-    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+    // final GoogleMapController controller = await _controller;
+    _controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: LatLng(33.8547, 35.8623), zoom: 8.5, bearing: 10)));
   }
 
@@ -174,23 +222,51 @@ class _MapPage extends State<MapPage> {
     setState(() {
       _controller = controller;
       // ignore: avoid_function_literals_in_foreach_calls
-      stories.forEach((e) async {
-        allMarkers.add(Marker(
-            markerId: MarkerId(e.title + " " + e.date_submitted),
-            draggable: false,
-            consumeTapEvents: true,
-            icon: BitmapDescriptor.fromBytes(
-                await getBytesFromAsset(e.featured_image, 100, 100)),
-            // infoWindow: InfoWindow(title: e.title),
-            position: LatLng(e.lat, e.lng),
-            onTap: () {
-              setState(() {
-                mainStory = e;
-                showPage = true;
-              });
-            }
-            // ignore: avoid_print
-            ));
+      groupedStories.forEach((storyElem) async {
+        if (storyElem.length == 1) {
+          Story e = storyElem[0];
+          allMarkers.add(Marker(
+              markerId: MarkerId(e.title + " " + e.date_submitted),
+              draggable: false,
+              consumeTapEvents: true,
+              icon: BitmapDescriptor.fromBytes(
+                  await getBytesFromAsset(e.featured_image, 100, 100)),
+              // infoWindow: InfoWindow(title: e.title),
+              position: LatLng(e.lat, e.lng),
+              onTap: () {
+                setState(() {
+                  showPageGrouped = false;
+                  showPage = false;
+                  mainStory = e;
+                  showPage = true;
+                });
+              }
+              // ignore: avoid_print
+              ));
+        } else {
+          var mains = [];
+          storyElem.forEach((e) async {
+            mains.add(e);
+          });
+          allMarkers.add(Marker(
+              markerId: MarkerId(
+                  storyElem[0].title + " " + storyElem[0].date_submitted),
+              draggable: false,
+              consumeTapEvents: true,
+              icon: BitmapDescriptor.fromBytes(
+                  await getBytesFromCanvas(storyElem.length, 150, 150)),
+              position: LatLng(storyElem[0].lat, storyElem[0].lng),
+              onTap: () {
+                setState(() {
+                  showPageGrouped = false;
+                  showPage = false;
+                  groupedMain = mains;
+                  showPageGrouped = true;
+                });
+              }
+              // ignore: avoid_print
+              ));
+        }
       });
     });
   }
@@ -215,8 +291,8 @@ class _MapPage extends State<MapPage> {
         GoogleMap(
           minMaxZoomPreference: MinMaxZoomPreference(8.5, 20),
           cameraTargetBounds: CameraTargetBounds(LatLngBounds(
-              northeast: LatLng(33.8566324, 35.7896525),
-              southwest: LatLng(33.8469738, 35.7535346))),
+              northeast: LatLng(34.6566324, 36.6896525),
+              southwest: LatLng(33.0569738, 35.0935346))),
           initialCameraPosition: _initialCameraPosition,
           myLocationButtonEnabled: false,
           zoomControlsEnabled: false,
@@ -225,6 +301,7 @@ class _MapPage extends State<MapPage> {
           // scrollGesturesEnabled: false,
           rotateGesturesEnabled: false,
           markers: Set.from(allMarkers),
+
           onMapCreated: mapCreated,
         ),
         showPage
@@ -376,7 +453,38 @@ class _MapPage extends State<MapPage> {
                         nearMe = true;
                       });
                     },
-                    child: Text("روايات قريبة")))
+                    child: Text("روايات قريبة"))),
+        showPageGrouped
+            ? Container(
+                child:
+                    Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                Container(
+                    height: 300,
+                    child: Scaffold(
+                        appBar: AppBar(
+                          title: Text('روايات في: ' +
+                              groupedMain[0].locationName.toString()),
+                          leading: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  showPageGrouped = false;
+                                });
+                              },
+                              icon: Icon(Icons.arrow_back)),
+                          centerTitle: true,
+                        ),
+                        body: Container(
+                            color: Color(0xFF252422),
+                            padding: EdgeInsets.fromLTRB(15, 5, 15, 0),
+                            child: ListView.builder(
+                                // shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: groupedMain.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return StoryTile(groupedMain[index], token);
+                                }))))
+              ]))
+            : Container(),
       ],
     ));
   }

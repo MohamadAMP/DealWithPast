@@ -61,11 +61,6 @@ class _Body extends State<Body> {
     });
   }
 
-  signoutUser() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-    await googleSignIn.signOut();
-  }
-
   @override
   void initState() {
     super.initState();
@@ -78,7 +73,6 @@ class _Body extends State<Body> {
       3: const MapPage()
     };
     setAppBar();
-    signoutUser();
   }
 
   @override
