@@ -27,6 +27,8 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   UserRepo userRepo = UserRepo();
   Media media = Media();
+  var agreed = false;
+
   late var token;
 
   @override
@@ -34,22 +36,88 @@ class _BodyState extends State<Body> {
     super.initState();
   }
 
+  void _showTerms() {
+    final _aboutdialog = StatefulBuilder(builder: (context, setState) {
+      return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          title: Column(
+            children: const [
+              Text('الأحكام والشروط'),
+              Icon(Icons.confirmation_num),
+            ],
+          ),
+          content: Container(
+              height: 120,
+              child: Column(children: [
+                Container(child: Text("عليك الموافقة قبل الدخول إلى حسابك")),
+                SizedBox(
+                  height: 40,
+                ),
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () async => {
+                        token =
+                            await userRepo.Authenticate("admin", "admin_1234"),
+                        await userRepo.Login(
+                            FirebaseAuth.instance.currentUser!.uid,
+                            FirebaseAuth.instance.currentUser!.email.toString(),
+                            FirebaseAuth.instance.currentUser!.email
+                                .toString()
+                                .split('@')[0],
+                            token),
+                        Navigator.pop(context),
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WelcomePage(),
+                            ))
+                      },
+                      child: Text(
+                        "قبول الشروط",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: TextButton.styleFrom(
+                        primary: Colors.black,
+                        backgroundColor: Color(0xFFCCAF41),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 40,
+                    ),
+                    TextButton(
+                      onPressed: () async =>
+                          {await signOut(), Navigator.pop(context)},
+                      child: Text(
+                        "عدم قبول الشروط",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: TextButton.styleFrom(
+                        primary: Colors.black,
+                        backgroundColor: Color(0xFFCCAF41),
+                      ),
+                    ),
+                  ],
+                )
+              ])));
+    });
+    showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (context) => _aboutdialog);
+  }
+
   Future<void> click() async {
-    token = await userRepo.Authenticate("admin", "admin_1234");
     signInWithGoogle().then((user) async => {
           if (await userRepo.AuthenticateOther(
                   user!.email.toString().split('@')[0], user.uid) ==
               false)
-            {
-              //terms and conditions
-              await userRepo.Login(user.uid, user.email.toString(),
-                  user.email.toString().split('@')[0], token),
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WelcomePage(),
-                  ))
-            }
+            {_showTerms()}
           else
             {
               Navigator.pushReplacement(

@@ -50,7 +50,7 @@ class _StoriesView extends State<StoriesView> {
                       color: Color(0xFF252422),
                       child: widget.stories[0].isEmpty
                           ? Center(
-                              child: const Text("لا توجد روايات مواقق عليها",
+                              child: const Text("لا توجد روايات موافق عليها",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 28)))
                           : Align(

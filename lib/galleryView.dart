@@ -14,14 +14,20 @@ class GalleryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         color: Color(0xFF252422),
-        child: GridView.builder(
-            padding: EdgeInsets.fromLTRB(10, 30, 10, 0),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-            ),
-            itemCount: stories.length,
-            itemBuilder: (BuildContext context, int index) {
-              return GalleryTile(stories[index], token);
-            }));
+        child: Column(children: [
+          Expanded(
+              child: GridView.builder(
+                  padding: EdgeInsets.fromLTRB(10, 30, 10, 0),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
+                  itemCount: stories.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GalleryTile(stories[index], token);
+                  })),
+          SizedBox(
+            height: 30,
+          )
+        ]));
   }
 }

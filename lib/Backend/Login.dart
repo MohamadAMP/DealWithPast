@@ -43,29 +43,7 @@ class _BodyState extends State<Body> {
 
   Future<void> click() async {
     token = await userRepo.Authenticate("admin", "admin_1234");
-    signInWithGoogle().then((user) async => {
-          if (await userRepo.AuthenticateOther(
-                  user!.email.toString().split('@')[0], user.uid) ==
-              false)
-            {
-              //terms and conditions
-              await userRepo.Login(user.uid, user.email.toString(),
-                  user.email.toString().split('@')[0], token),
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WelcomePage(),
-                  ))
-            }
-          else
-            {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WelcomePage(),
-                  ))
-            },
-        });
+    signInWithGoogle().then((user) async => {});
   }
 
   Widget loginButton() {

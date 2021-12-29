@@ -35,7 +35,7 @@ class _Body extends State<Body> {
     0: "أضف رواية",
     1: "الجدول الزمني",
     2: "عرض الروايات",
-    3: "الخريطة",
+    3: "Memory Map",
   };
   late Widget appBarContent, appBarText;
   late TextEditingController appBarController;

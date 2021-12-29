@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:interactive_map/Backend/Login.dart';
+import 'package:interactive_map/Homepages/firstPage.dart';
 import 'package:interactive_map/Homepages/mainPage.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:interactive_map/Homepages/mainPageGuest.dart';
@@ -32,46 +33,24 @@ class MyApp extends StatelessWidget {
       900: Colors.black,
     };
     MaterialColor mainColor = MaterialColor(0xFF000000, color);
-    if (FirebaseAuth.instance.currentUser != null) {
-      return MaterialApp(
-        locale: const Locale('ar', 'MA'),
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('en', ''), // English, no country code
-          Locale('ar', 'MA'), // Spanish, no country code
-        ],
-        debugShowCheckedModeBanner: false,
-        title: 'Interactive Map',
-        theme: ThemeData(
-          primarySwatch: mainColor,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: WelcomePage(),
-      );
-    } else {
-      return MaterialApp(
-        locale: const Locale('ar', 'MA'),
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('en', ''), // English, no country code
-          Locale('ar', 'MA'), // Spanish, no country code
-        ],
-        debugShowCheckedModeBanner: false,
-        title: 'Interactive Map',
-        theme: ThemeData(
-          primarySwatch: mainColor,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: WelcomePageGuest(),
-      );
-    }
+    return MaterialApp(
+      locale: const Locale('ar', 'MA'),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', ''), // English, no country code
+        Locale('ar', 'MA'), // Spanish, no country code
+      ],
+      debugShowCheckedModeBanner: false,
+      title: 'Interactive Map',
+      theme: ThemeData(
+        primarySwatch: mainColor,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: const FirstPage(),
+    );
   }
 }
