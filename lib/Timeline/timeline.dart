@@ -61,12 +61,7 @@ class _Timeline extends State<Timeline> {
       stories = await storyrepo.getStories(token);
       stories.forEach((element) {
         if (element.event_date != "") {
-          String year = element.event_date
-              .toString()
-              .split("T")
-              .toList()[0]
-              .split('-')[0]
-              .toString();
+          String year = element.event_date.toString().split("/")[2].toString();
           var yearInt = int.parse(year);
 
           if (yearInt < minimum) {
@@ -81,12 +76,8 @@ class _Timeline extends State<Timeline> {
         var list = [];
         stories.forEach((element) {
           if (element.event_date != "") {
-            String year = element.event_date
-                .toString()
-                .split("T")
-                .toList()[0]
-                .split('-')[0]
-                .toString();
+            String year =
+                element.event_date.toString().split("/")[2].toString();
             var yearInt = int.parse(year);
             if (yearInt >= lowerBound + (10 * (i)) &&
                 yearInt < lowerBound + (10 * (i + 1))) {

@@ -36,96 +36,122 @@ class _BodyState extends State<Body> {
     super.initState();
   }
 
-  void _showTerms() {
+  posting(dynamic user) async {
+    if (await userRepo.AuthenticateOther(
+            user!.email.toString().split('@')[0], user.uid) ==
+        false) {
+      return false;
+    } else {
+      Navigator.pop(context);
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WelcomePage(),
+          ));
+      return true;
+    }
+  }
+
+  void _sending(dynamic user) {
     final _aboutdialog = StatefulBuilder(builder: (context, setState) {
       return AlertDialog(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
-          title: Column(
-            children: const [
-              Text('الأحكام والشروط'),
-              Icon(Icons.confirmation_num),
-            ],
-          ),
+          title: Center(child: Text('تسجيل الدخول')),
           content: Container(
               height: 120,
-              child: Column(children: [
-                Container(child: Text("عليك الموافقة قبل الدخول إلى حسابك")),
-                SizedBox(
-                  height: 40,
-                ),
-                Row(
-                  children: [
-                    TextButton(
-                      onPressed: () async => {
-                        token =
-                            await userRepo.Authenticate("admin", "admin_1234"),
-                        await userRepo.Login(
-                            FirebaseAuth.instance.currentUser!.uid,
-                            FirebaseAuth.instance.currentUser!.email.toString(),
-                            FirebaseAuth.instance.currentUser!.email
-                                .toString()
-                                .split('@')[0],
-                            token),
-                        Navigator.pop(context),
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => WelcomePage(),
-                            ))
-                      },
-                      child: Text(
-                        "قبول الشروط",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      style: TextButton.styleFrom(
-                        primary: Colors.black,
-                        backgroundColor: Color(0xFFCCAF41),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 40,
-                    ),
-                    TextButton(
-                      onPressed: () async =>
-                          {await signOut(), Navigator.pop(context)},
-                      child: Text(
-                        "عدم قبول الشروط",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      style: TextButton.styleFrom(
-                        primary: Colors.black,
-                        backgroundColor: Color(0xFFCCAF41),
-                      ),
-                    ),
-                  ],
-                )
-              ])));
+              child: FutureBuilder(
+                  future: posting(user),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Scaffold(
+                          backgroundColor: Colors.white,
+                          body: Center(
+                              child: CircularProgressIndicator(
+                            color: Colors.black,
+                          )));
+                    } else {
+                      if (snapshot.data) {
+                        return Container();
+                      } else {
+                        return Container(
+                            height: 120,
+                            child: Column(children: [
+                              Container(
+                                  child: Text(
+                                      "عليك الموافقة قبل الدخول إلى حسابك")),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  TextButton(
+                                    onPressed: () async => {
+                                      token = await userRepo.Authenticate(
+                                          "admin", "admin_1234"),
+                                      await userRepo.Login(
+                                          FirebaseAuth
+                                              .instance.currentUser!.uid,
+                                          FirebaseAuth
+                                              .instance.currentUser!.email
+                                              .toString(),
+                                          FirebaseAuth
+                                              .instance.currentUser!.email
+                                              .toString()
+                                              .split('@')[0],
+                                          token),
+                                      Navigator.pop(context),
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => WelcomePage(),
+                                          ))
+                                    },
+                                    child: Text(
+                                      "قبول الشروط",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    style: TextButton.styleFrom(
+                                      primary: Colors.black,
+                                      backgroundColor: Color(0xFFCCAF41),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async => {
+                                      await signOut(),
+                                      Navigator.pop(context)
+                                    },
+                                    child: Text(
+                                      "عدم قبول الشروط",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    style: TextButton.styleFrom(
+                                      primary: Colors.black,
+                                      backgroundColor: Color(0xFFCCAF41),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ]));
+                      }
+                    }
+                  })));
     });
     showDialog(
-        barrierDismissible: true,
+        barrierDismissible: false,
         context: context,
         builder: (context) => _aboutdialog);
   }
 
   Future<void> click() async {
     signInWithGoogle().then((user) async => {
-          if (await userRepo.AuthenticateOther(
-                  user!.email.toString().split('@')[0], user.uid) ==
-              false)
-            {_showTerms()}
-          else
-            {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WelcomePage(),
-                  ))
-            },
+          _sending(user),
         });
   }
 

@@ -172,6 +172,75 @@ class _AddStory extends State<AddStory> {
     }
   }
 
+  postStory(dynamic data) async {
+    StoryRepo storyRepo = StoryRepo();
+    var res = await storyRepo.postStory(
+        data,
+        FirebaseAuth.instance.currentUser!.email.toString().split('@')[0],
+        FirebaseAuth.instance.currentUser!.uid);
+    var content = jsonDecode(res);
+    return content;
+  }
+
+  void _sending(data) {
+    final _aboutdialog = StatefulBuilder(builder: (context, setState) {
+      return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          title: Icon(Icons.check),
+          content: Container(
+              height: 120,
+              child: FutureBuilder(
+                  future: postStory(data),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Scaffold(
+                          backgroundColor: Colors.white,
+                          body: Center(
+                              child: CircularProgressIndicator(
+                            color: Colors.black,
+                          )));
+                    } else {
+                      if (snapshot.data['content'] != null) {
+                        return Column(children: [
+                          Container(child: Text("تم إرسال الرواية بنجاح")),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          TextButton(
+                            onPressed: () => {
+                              Navigator.pop(context),
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => WelcomePage()),
+                              )
+                            },
+                            child: Text(
+                              "إستمرار",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Bahij",
+                              ),
+                            ),
+                            style: TextButton.styleFrom(
+                              primary: Colors.black,
+                              backgroundColor: Color(0xFFCCAF41),
+                            ),
+                          ),
+                        ]);
+                      } else {
+                        return Container();
+                      }
+                    }
+                  })));
+    });
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => _aboutdialog);
+  }
+
   void _showErrorDate() {
     final _aboutdialog = StatefulBuilder(builder: (context, setState) {
       return AlertDialog(
@@ -756,16 +825,6 @@ class _AddStory extends State<AddStory> {
                                         );
                                       },
                                     ),
-                                    // IconButton(
-                                    //   icon: const Icon(
-                                    //     Icons.calendar_today,
-                                    //     color: Color(0xFFFFDE73),
-                                    //   ),
-                                    //   // tooltip: 'Tap to open date picker',
-                                    //   onPressed: () {
-                                    //     _selectDate(context);
-                                    //   },
-                                    // ),
                                   ],
                                 ),
                               ),
@@ -793,6 +852,7 @@ class _AddStory extends State<AddStory> {
                                     ? "Uploaded"
                                     : 'Failed';
                                 featured_image_id = content['id'];
+                                print(content);
                                 var list = [
                                   content['guid']['rendered'],
                                   'image'
@@ -925,6 +985,14 @@ class _AddStory extends State<AddStory> {
                                   onPressed: () async {
                                     FocusManager.instance.primaryFocus
                                         ?.unfocus();
+                                    var anonymous = [];
+                                    if (checkboxValue) {
+                                      anonymous = ['تفعيل عدم ظهور الإسم'];
+                                    } else {
+                                      anonymous = [];
+                                    }
+
+                                    print(anonymous);
                                     if (status != '') {
                                       if (_selectedDate != 'أدخل التاريخ') {
                                         if (_formKey.currentState!.validate()) {
@@ -953,26 +1021,13 @@ class _AddStory extends State<AddStory> {
                                                 'city': locationController.text
                                               },
                                               'event_date': dateformat,
-                                              'anonymous': checkboxValue,
+                                              'anonymous': anonymous,
                                               'gallery': links,
                                             },
                                             'status': "pending",
                                             "featured_media": featured_image_id,
                                           };
-
-                                          StoryRepo storyRepo = StoryRepo();
-                                          var res = await storyRepo.postStory(
-                                              data,
-                                              FirebaseAuth
-                                                  .instance.currentUser!.email
-                                                  .toString()
-                                                  .split('@')[0],
-                                              FirebaseAuth
-                                                  .instance.currentUser!.uid);
-                                          var content = jsonDecode(res);
-                                          if (content['content'] != null) {
-                                            _showSuccess();
-                                          }
+                                          _sending(data);
                                         }
                                       } else {
                                         _showErrorDate();

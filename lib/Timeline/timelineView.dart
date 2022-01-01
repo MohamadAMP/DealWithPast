@@ -61,9 +61,7 @@ class _TimelineViewState extends State<TimelineView> {
                                           convertToArabicNumber(widget
                                                   .stories[index][0].event_date
                                                   .toString()
-                                                  .split("T")
-                                                  .toList()[0]
-                                                  .split('-')[0]
+                                                  .split("/")[2]
                                                   .toString()
                                                   .substring(0, 3) +
                                               "0"),
@@ -86,10 +84,8 @@ class _TimelineViewState extends State<TimelineView> {
                                                                         [0]
                                                                     .event_date
                                                                     .toString()
-                                                                    .split("T")
-                                                                    .toList()[0]
                                                                     .split(
-                                                                        '-')[0]
+                                                                        "/")[2]
                                                                     .toString()
                                                                     .substring(
                                                                         0, 3) +
@@ -149,9 +145,7 @@ class _TimelineViewState extends State<TimelineView> {
                                                         .stories[index][0]
                                                         .event_date
                                                         .toString()
-                                                        .split("T")
-                                                        .toList()[0]
-                                                        .split('-')[0]
+                                                        .split("/")[2]
                                                         .toString()),
                                                     style: TextStyle(
                                                         color: Colors.white,

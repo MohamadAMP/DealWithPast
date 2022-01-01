@@ -182,7 +182,7 @@ class _StoryWidgetImgOnlyState extends State<StoryWidgetImgOnly> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.story.anonymous != false) {
+    if (widget.story.anonymous.length == 0) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -387,6 +387,7 @@ class _BodyState extends State<Body> {
                         child: Padding(
                       padding: const EdgeInsets.all(100),
                       child: CircularProgressIndicator(
+                        color: Color(0xFFFFDE73),
                         value: loadingProgress.expectedTotalBytes != null
                             ? loadingProgress.cumulativeBytesLoaded /
                                 loadingProgress.expectedTotalBytes!
@@ -456,12 +457,12 @@ class _BodyState extends State<Body> {
                         width: 10,
                       ),
                       Text(
-                        convertToArabicNumber(widget.story.event_date
-                            .toString()
-                            .split("T")
-                            .toList()[0]
-                            .split('-')[0]
-                            .toString()),
+                        widget.story.event_date == ''
+                            ? ""
+                            : convertToArabicNumber(widget.story.event_date
+                                .toString()
+                                .split("/")[2]
+                                .toString()),
                         style:
                             const TextStyle(fontSize: 20, color: Colors.white),
                       ),

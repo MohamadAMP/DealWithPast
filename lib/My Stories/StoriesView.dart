@@ -61,8 +61,8 @@ class _StoriesView extends State<StoriesView> {
                                   itemCount: widget.stories[0].length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return StoryTile(
-                                        widget.stories[0][index], widget.token);
+                                    return StoryTile(widget.stories[0][index],
+                                        widget.token, false);
                                   }))),
                   Container(
                     color: Color(0xFF252422),
@@ -77,7 +77,7 @@ class _StoriesView extends State<StoriesView> {
                             itemCount: widget.stories[1].length,
                             itemBuilder: (BuildContext context, int index) {
                               return StoryTile(
-                                  widget.stories[1][index], widget.token);
+                                  widget.stories[1][index], widget.token, true);
                             }),
                   )
                 ],

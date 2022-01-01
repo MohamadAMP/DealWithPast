@@ -1,9 +1,10 @@
-// ignore_for_file: file_names, unused_import, avoid_function_literals_in_foreach_calls, prefer_const_constructors, unused_local_variable, avoid_unnecessary_containers, empty_catches
+// ignore_for_file: file_names, unused_import, avoid_function_literals_in_foreach_calls, prefer_const_constructors, unused_local_variable, avoid_unnecessary_containers, empty_catches, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:interactive_map/View%20Stories/StoryWidgetAll.dart';
+import 'package:interactive_map/View%20Stories/LoadUser.dart';
 
 import '../Repos/StoryClass.dart';
 import '../Repos/UserClass.dart';
@@ -58,29 +59,20 @@ class GalleryTile extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              // ignore: sized_box_for_whitespace
               Expanded(
-                child: Container(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Image.network(
-                      story.featured_image,
-                      fit: BoxFit.contain,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                  child: Container(
+                    width: double.infinity,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.network(
+                        story.featured_image,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
-                // decoration: BoxDecoration(
-                //     image: DecorationImage(
-                //         image: NetworkImage(
-                //           story.featured_image,
-                //         ),
-                //         fit: BoxFit.contain),
-                //     // border: Border.all(width: 3.0),
-                //     borderRadius: BorderRadius.all(Radius.circular(20.0))),
-              ),
-
-              const SizedBox(
-                width: 20,
               ),
               Column(
                 children: [
@@ -88,46 +80,40 @@ class GalleryTile extends StatelessWidget {
                     textDirection: TextDirection.rtl,
                     child: Text(
                       story.title,
-                      style: const TextStyle(fontSize: 16, color: Colors.white),
+                      style: const TextStyle(fontSize: 12, color: Colors.white),
                     ),
                   ),
                   Directionality(
                     textDirection: TextDirection.rtl,
                     child: Text(
-                      convertToArabicNumber(story.event_date
-                          .toString()
-                          .split("T")
-                          .toList()[0]
-                          .split('-')[0]
-                          .toString()),
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      story.event_date == ''
+                          ? ""
+                          : convertToArabicNumber(story.event_date
+                              .toString()
+                              .split("/")[2]
+                              .toString()),
+                      style: TextStyle(fontSize: 12, color: Colors.white),
                     ),
                   ),
                 ],
               ),
-              // SizedBox(width),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: TextButton(
                   onPressed: () async {
-                    UserInfoRepo userInfoRepo = UserInfoRepo();
-                    UserRepo userRepo = UserRepo();
-                    await retrieveUserInfo(
-                        userInfoRepo, userRepo, story.author);
-
                     if (story.gallery == false) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => StoryWidgetImgOnly(
-                                story, story.locationName, userData[0])),
+                            builder: (context) => ViewStoryStart(story.author,
+                                false, story, story.locationName, false)),
                       );
                     } else {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => StoryWidgetAll(
-                                story, story.locationName, userData[0])),
+                            builder: (context) => ViewStoryStart(story.author,
+                                true, story, story.locationName, false)),
                       );
                     }
                   },

@@ -18,6 +18,7 @@ import 'package:http/http.dart' as http;
 import 'package:image/image.dart' as IMG;
 import 'package:interactive_map/My%20Stories/myStoriesTile.dart';
 import 'package:interactive_map/View%20Stories/StoryWidgetAll.dart';
+import 'package:interactive_map/View%20Stories/LoadUser.dart';
 import 'package:location/location.dart' as locationPerm;
 import 'package:flutter/cupertino.dart';
 import 'package:place_picker/entities/localization_item.dart';
@@ -64,11 +65,11 @@ class _MapPage extends State<MapPage> {
   late locationPerm.LocationData _locationData;
   List<dynamic> groupedStories = [];
   List<dynamic> groupedMain = [];
+
   retrieveStories() async {
     try {
       token = await userRepo.Authenticate("admin", "admin_1234");
       stories = await storyrepo.getStories(token);
-
       var newMap = groupBy(stories, (Story s) => s.locationName);
       for (var i = 0; i < newMap.length; i++) {
         groupedStories.add(newMap.values.elementAt(i));
@@ -77,51 +78,105 @@ class _MapPage extends State<MapPage> {
     } catch (e) {}
   }
 
-  retrieveUserInfo(UserInfoRepo userInfoRepo, dynamic id) async {
-    try {
-      userData = await userInfoRepo.getUserInfo(id, token);
-    } catch (e) {}
-  }
-
   Future<Uint8List> getBytesFromCanvas(
-      int customNum, int width, int height) async {
+      String src, Size size, int length) async {
     final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(pictureRecorder);
-    final Paint paint = Paint()..color = Colors.blue;
-    final Radius radius = Radius.circular(width / 2);
+
+    final Radius radius = Radius.circular(size.width / 2);
+
+    final Paint tagPaint = Paint()..color = Colors.blue;
+    final double tagWidth = 80.0;
+
+    final Paint shadowPaint = Paint()..color = Colors.blue.withAlpha(100);
+    final double shadowWidth = 15.0;
+
+    final Paint borderPaint = Paint()..color = Colors.black;
+    final double borderWidth = 3.0;
+
+    final double imageOffset = shadowWidth + borderWidth;
     canvas.drawRRect(
         RRect.fromRectAndCorners(
-          Rect.fromLTWH(0.0, 0.0, width.toDouble(), height.toDouble()),
+          Rect.fromLTWH(shadowWidth, shadowWidth,
+              size.width - (shadowWidth * 2), size.height - (shadowWidth * 2)),
           topLeft: radius,
           topRight: radius,
           bottomLeft: radius,
           bottomRight: radius,
         ),
-        paint);
+        borderPaint);
 
-    TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
-    painter.text = TextSpan(
-      text: convertToArabicNumber(
-          customNum.toString()), // your custom number here
-      style: TextStyle(fontSize: 65.0, color: Colors.white),
+    // Add tag circle
+    canvas.drawRRect(
+        RRect.fromRectAndCorners(
+          Rect.fromLTWH(size.width - tagWidth, 0.0, tagWidth, tagWidth),
+          topLeft: radius,
+          topRight: radius,
+          bottomLeft: radius,
+          bottomRight: radius,
+        ),
+        tagPaint);
+
+    // Add tag text
+    TextPainter textPainter = TextPainter(textDirection: TextDirection.ltr);
+    textPainter.text = TextSpan(
+      text: convertToArabicNumber(length.toString()),
+      style: TextStyle(fontSize: 80.0, color: Colors.white),
     );
 
-    painter.layout();
-    painter.paint(
+    textPainter.layout();
+    textPainter.paint(
         canvas,
-        Offset((width * 0.5) - painter.width * 0.5,
-            (height * .5) - painter.height * 0.5));
-    final img = await pictureRecorder.endRecording().toImage(width, height);
-    final data = await img.toByteData(format: ui.ImageByteFormat.png);
+        Offset(size.width - tagWidth / 2 - textPainter.width / 2,
+            tagWidth / 2 - textPainter.height / 2));
+
+    // Oval for the image
+    Rect oval = Rect.fromLTWH(imageOffset, imageOffset,
+        size.width - (imageOffset * 2), size.height - (imageOffset * 2));
+
+    // Add path for oval image
+    canvas.clipPath(Path()..addOval(oval));
+
+    // Add image
+    final Uint8List imageUint8List =
+        await (await NetworkAssetBundle(Uri.parse(src)).load(src))
+            .buffer
+            .asUint8List();
+    final ui.Codec codec = await ui.instantiateImageCodec(imageUint8List);
+    final ui.FrameInfo imageFI = await codec.getNextFrame();
+    paintImage(
+        canvas: canvas, image: imageFI.image, rect: oval, fit: BoxFit.fitWidth);
+    canvas.drawRRect(
+        RRect.fromRectAndCorners(
+          Rect.fromLTWH(size.width - tagWidth, 0.0, tagWidth, tagWidth),
+          topLeft: radius,
+          topRight: radius,
+          bottomLeft: radius,
+          bottomRight: radius,
+        ),
+        tagPaint);
+    textPainter.layout();
+    textPainter.paint(
+        canvas,
+        Offset(size.width - tagWidth / 2 - textPainter.width / 2,
+            tagWidth / 2 - textPainter.height / 2));
+    // Convert canvas to image
+    final ui.Image _image = await pictureRecorder
+        .endRecording()
+        .toImage(size.width.toInt(), size.height.toInt());
+
+    final rdata = await _image.toByteData(format: ui.ImageByteFormat.png);
+    // Convert image to bytes
     if (this.mounted) {
       setState(() {});
     }
-    return data!.buffer.asUint8List();
+
+    return rdata!.buffer.asUint8List();
   }
 
-  Future<Uint8List> getBytesFromAsset(String src, int width, int height,
-      {int size = 150,
-      bool addBorder = true,
+  Future<Uint8List> getBytesFromAsset(
+      String src, int width, int height, int size,
+      {bool addBorder = true,
       Color borderColor = Colors.black,
       double borderSize = 12,
       Color titleColor = Colors.white,
@@ -197,7 +252,15 @@ class _MapPage extends State<MapPage> {
   @override
   initState() {
     super.initState();
+
     retrieveStories();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _controller.setMapStyle("[]");
+    }
   }
 
   @override
@@ -219,6 +282,15 @@ class _MapPage extends State<MapPage> {
   }
 
   void mapCreated(controller) {
+    double doubleSize =
+        (0.12186629526462396 * MediaQuery.of(context).size.height);
+
+    var sizeIMG = doubleSize.toInt();
+    double doubleSizeAll =
+        (0.2193593314763231 * MediaQuery.of(context).size.height);
+    var sizeAll = doubleSizeAll.toInt();
+    int sizeAssets =
+        (0.18279944289693595 * MediaQuery.of(context).size.height).toInt();
     setState(() {
       _controller = controller;
       // ignore: avoid_function_literals_in_foreach_calls
@@ -229,8 +301,8 @@ class _MapPage extends State<MapPage> {
               markerId: MarkerId(e.title + " " + e.date_submitted),
               draggable: false,
               consumeTapEvents: true,
-              icon: BitmapDescriptor.fromBytes(
-                  await getBytesFromAsset(e.featured_image, 100, 100)),
+              icon: BitmapDescriptor.fromBytes(await getBytesFromAsset(
+                  e.featured_image, sizeIMG, sizeIMG, sizeAssets)),
               // infoWindow: InfoWindow(title: e.title),
               position: LatLng(e.lat, e.lng),
               onTap: () {
@@ -253,10 +325,16 @@ class _MapPage extends State<MapPage> {
                   storyElem[0].title + " " + storyElem[0].date_submitted),
               draggable: false,
               consumeTapEvents: true,
-              icon: BitmapDescriptor.fromBytes(
-                  await getBytesFromCanvas(storyElem.length, 150, 150)),
+              icon: BitmapDescriptor.fromBytes(await getBytesFromCanvas(
+                  storyElem[0].featured_image,
+                  ui.Size(sizeAll.toDouble(), sizeAll.toDouble()),
+                  storyElem.length)),
               position: LatLng(storyElem[0].lat, storyElem[0].lng),
               onTap: () {
+                print("HEIGHT: " +
+                    (150 / MediaQuery.of(context).size.height).toString());
+                print(MediaQuery.of(context).size.width.toString());
+                print('test');
                 setState(() {
                   showPageGrouped = false;
                   showPage = false;
@@ -315,9 +393,6 @@ class _MapPage extends State<MapPage> {
                           actions: [
                             TextButton(
                                 onPressed: () async {
-                                  UserInfoRepo userInfoRepo = UserInfoRepo();
-                                  await retrieveUserInfo(
-                                      userInfoRepo, mainStory.author);
                                   setState(() {
                                     showPage = false;
                                   });
@@ -325,20 +400,23 @@ class _MapPage extends State<MapPage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              StoryWidgetImgOnly(
-                                                  mainStory,
-                                                  mainStory.locationName,
-                                                  userData[0])),
+                                          builder: (context) => ViewStoryStart(
+                                              mainStory.author,
+                                              false,
+                                              mainStory,
+                                              mainStory.locationName,
+                                              false)),
                                     );
                                   } else {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => StoryWidgetAll(
+                                          builder: (context) => ViewStoryStart(
+                                              mainStory.author,
+                                              true,
                                               mainStory,
                                               mainStory.locationName,
-                                              userData[0])),
+                                              false)),
                                     );
                                   }
                                 },
@@ -360,9 +438,11 @@ class _MapPage extends State<MapPage> {
                         ),
                         body: Container(
                             color: Color(0xFF252422),
-                            padding: EdgeInsets.fromLTRB(20, 60, 40, 0),
+                            padding: EdgeInsets.fromLTRB(20, 60, 30, 0),
                             child: Column(children: [
                               Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
@@ -374,9 +454,9 @@ class _MapPage extends State<MapPage> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 60,
-                                    ),
+                                    // SizedBox(
+                                    //   width: 20,
+                                    // ),
                                     Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -411,13 +491,13 @@ class _MapPage extends State<MapPage> {
                                             ),
                                             Container(
                                               child: Text(
-                                                convertToArabicNumber(mainStory
-                                                    .event_date
-                                                    .toString()
-                                                    .split("T")
-                                                    .toList()[0]
-                                                    .split('-')[0]
-                                                    .toString()),
+                                                mainStory.event_date == ''
+                                                    ? ""
+                                                    : convertToArabicNumber(
+                                                        mainStory.event_date
+                                                            .toString()
+                                                            .split("/")[2]
+                                                            .toString()),
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 20),
@@ -475,13 +555,14 @@ class _MapPage extends State<MapPage> {
                         ),
                         body: Container(
                             color: Color(0xFF252422),
-                            padding: EdgeInsets.fromLTRB(15, 5, 15, 0),
+                            // padding: EdgeInsets.fromLTRB(15, 5, 15, 0),
                             child: ListView.builder(
                                 // shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
                                 itemCount: groupedMain.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  return StoryTile(groupedMain[index], token);
+                                  return StoryTile(
+                                      groupedMain[index], token, false);
                                 }))))
               ]))
             : Container(),

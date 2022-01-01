@@ -7,9 +7,12 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:interactive_map/Repos/UserRepo.dart';
 
 class Media {
   Future<dynamic> uploadImage(filePath) async {
+    UserRepo userRepo = UserRepo();
+    var token = await userRepo.Authenticate('admin', 'admin_1234');
     String url = 'https://dwp.world/wp-json/wp/v2/media';
 
     String fileName = filePath.path.split('/').last;
@@ -17,8 +20,7 @@ class Media {
     Map<String, String> requestHeaders = {
       'Content-Type': 'image/jpg',
       'Content-Disposition': 'attachment; filename=$fileName',
-      'Authorization':
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZHdwLndvcmxkIiwiaWF0IjoxNjM5OTA1MTMxLCJuYmYiOjE2Mzk5MDUxMzEsImV4cCI6MTY0MDUwOTkzMSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiNyJ9fX0.vjs9QXPowJ-5KldMzS0YfYST44zCrcQrDpGeUsOSyJ8',
+      'Authorization': 'Bearer $token',
     };
     List<int> imageBytes = File(filePath.path).readAsBytesSync();
     var request = http.Request('POST', Uri.parse(url));
@@ -30,6 +32,8 @@ class Media {
   }
 
   Future<dynamic> uploadAll(filePath) async {
+    UserRepo userRepo = UserRepo();
+    var token = await userRepo.Authenticate('admin', 'admin_1234');
     String url = 'https://dwp.world/wp-json/wp/v2/media';
 
     String fileName = filePath.split('/').last;
@@ -37,8 +41,7 @@ class Media {
     Map<String, String> requestHeaders = {
       'Content-Type': 'image/jpg',
       'Content-Disposition': 'attachment; filename=$fileName',
-      'Authorization':
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZHdwLndvcmxkIiwiaWF0IjoxNjM5OTA1MTMxLCJuYmYiOjE2Mzk5MDUxMzEsImV4cCI6MTY0MDUwOTkzMSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiNyJ9fX0.vjs9QXPowJ-5KldMzS0YfYST44zCrcQrDpGeUsOSyJ8',
+      'Authorization': 'Bearer $token',
     };
     List<int> imageBytes = File(filePath).readAsBytesSync();
     var request = http.Request('POST', Uri.parse(url));

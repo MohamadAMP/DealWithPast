@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:interactive_map/View%20Stories/StoryWidgetAll.dart';
+import 'package:interactive_map/View%20Stories/LoadUser.dart';
 import '../Repos/StoryClass.dart';
 import '../Repos/UserClass.dart';
 import '../Repos/UserInfo.dart';
@@ -13,7 +14,8 @@ import '../View Stories/StoryWidgetImgOnly.dart';
 class StoryTile extends StatelessWidget {
   final Story story;
   dynamic token;
-  StoryTile(this.story, this.token, {Key? key}) : super(key: key);
+  dynamic pending;
+  StoryTile(this.story, this.token, this.pending, {Key? key}) : super(key: key);
 
   List<UserData> userData = [];
   dynamic location;
@@ -73,12 +75,12 @@ class StoryTile extends StatelessWidget {
                   Directionality(
                     textDirection: TextDirection.rtl,
                     child: Text(
-                      convertToArabicNumber(story.event_date
-                          .toString()
-                          .split("T")
-                          .toList()[0]
-                          .split('-')[0]
-                          .toString()),
+                      story.event_date == ''
+                          ? ""
+                          : convertToArabicNumber(story.event_date
+                              .toString()
+                              .split("/")[2]
+                              .toString()),
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
@@ -93,22 +95,19 @@ class StoryTile extends StatelessWidget {
                     color: Color(0xFFFFDE73),
                   ),
                   onPressed: () async {
-                    UserInfoRepo userInfoRepo = UserInfoRepo();
-                    await retrieveUserInfo(userInfoRepo, story.author);
-
                     if (story.gallery == false) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => StoryWidgetImgOnly(
-                                story, story.locationName, userData[0])),
+                            builder: (context) => ViewStoryStart(story.author,
+                                false, story, story.locationName, pending)),
                       );
                     } else {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => StoryWidgetAll(
-                                story, story.locationName, userData[0])),
+                            builder: (context) => ViewStoryStart(story.author,
+                                true, story, story.locationName, pending)),
                       );
                     }
                   },
