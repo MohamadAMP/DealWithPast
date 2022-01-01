@@ -45,7 +45,7 @@ class _TimelineViewState extends State<TimelineView> {
                       height: 200.0,
                       color: Color(0xFF31302D),
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(20, 20, 40, 20),
+                        padding: EdgeInsets.fromLTRB(20, 20, 30, 20),
                         child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -103,57 +103,56 @@ class _TimelineViewState extends State<TimelineView> {
                                       height: 10,
                                     ),
                                     Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(10, 0, 0, 0),
                                         child: Row(
-                                          children: [
-                                            Container(
-                                              height: 100,
-                                              width: 100,
-                                              decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: NetworkImage(
-                                                        widget.stories[index][0]
-                                                            .featured_image,
-                                                      ),
-                                                      fit: BoxFit.cover),
-                                                  // border: Border.all(width: 3.0),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              10.0))),
-                                            ),
-                                            SizedBox(
-                                              width: 40,
-                                            ),
-                                            Column(
-                                              children: [
-                                                SizedBox(
-                                                  width: 100,
-                                                  child: Text(
+                                      // mainAxisAlignment:
+                                      // MainAxisAlignment.,
+                                      children: [
+                                        Container(
+                                          height: 100,
+                                          width: 100,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
                                                     widget.stories[index][0]
-                                                        .title,
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        fontSize: 16),
+                                                        .featured_image,
                                                   ),
+                                                  fit: BoxFit.cover),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0))),
+                                        ),
+                                        SizedBox(
+                                          width: 30,
+                                        ),
+                                        Container(
+                                          child: Column(
+                                            children: [
+                                              SizedBox(
+                                                width: 90,
+                                                child: Text(
+                                                  widget
+                                                      .stories[index][0].title,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      fontSize: 16),
                                                 ),
-                                                Text(
-                                                    convertToArabicNumber(widget
-                                                        .stories[index][0]
-                                                        .event_date
-                                                        .toString()
-                                                        .split("/")[2]
-                                                        .toString()),
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 16)),
-                                              ],
-                                            ),
-                                          ],
-                                        ))
+                                              ),
+                                              Text(
+                                                  convertToArabicNumber(widget
+                                                      .stories[index][0]
+                                                      .event_date
+                                                      .toString()
+                                                      .split("/")[2]
+                                                      .toString()),
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16)),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ))
                                   ]),
                             ]),
                       ),
