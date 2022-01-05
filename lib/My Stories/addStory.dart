@@ -23,6 +23,7 @@ import 'package:place_picker/entities/localization_item.dart';
 import 'package:place_picker/place_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../Repos/UserInfo.dart';
@@ -354,9 +355,11 @@ class _AddStory extends State<AddStory> {
         builder: (context) => _aboutdialog);
   }
 
+  var documents = [];
   void _showImages() {
     final _aboutdialog = StatefulBuilder(builder: (context, setState) {
       List<dynamic> carousel = [];
+      print(photoLinks);
       photoLinks.forEach((element) {
         var type = element[1];
         if (type == 'image') {
@@ -384,12 +387,31 @@ class _AddStory extends State<AddStory> {
           );
         } else if (type == 'video' || type == 'audio') {
           carousel.add(WebView(
-            initialUrl:
-                'http://dwp.world/wp-content/uploads/2021/12/sweet-voice-1.mp3',
+            initialUrl: element[0],
             javascriptMode: JavascriptMode.unrestricted,
           ));
+        } else {
+          documents.add(element[0]);
         }
       });
+      if (documents.length != 0) {
+        documents.forEach((element) {
+          var link = element;
+
+          carousel.add(InkWell(
+              onTap: () async {
+                var url = link;
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              },
+              child: link.split('.').last == 'pdf'
+                  ? Container(child: Image.asset('assets/pdf-image.png'))
+                  : Container(child: Image.asset('assets/word-image.png'))));
+        });
+      }
       var length = convertToArabicNumber((carousel.length).toString());
       return AlertDialog(
           shape: RoundedRectangleBorder(
@@ -522,22 +544,23 @@ class _AddStory extends State<AddStory> {
                       _showError();
                     } else {
                       FilePickerResult? result = await FilePicker.platform
-                          .pickFiles(
-                              allowMultiple: true,
-                              type: FileType.custom,
-                              allowedExtensions: [
-                            'jpg',
-                            'jpeg',
-                            'webp',
-                            'mp3',
-                            'mp4',
-                            'webm',
-                            'm4a',
-                            'png'
-                          ]);
+                          .pickFiles(allowMultiple: true, type: FileType.any
+                              // type: FileType.custom,
+                              //     allowedExtensions: [
+                              //   'jpg',
+                              //   'jpeg',
+                              //   'webp',
+                              //   'mp3',
+                              //   'mp4',
+                              //   'webm',
+                              //   'm4a',
+                              //   'png'
+                              // ]
+                              );
 
                       if (result != null) {
                         files = result.paths;
+                        print(result.paths);
                         setState(() {
                           status = '';
                         });
@@ -857,6 +880,7 @@ class _AddStory extends State<AddStory> {
                                   content['guid']['rendered'],
                                   'image'
                                 ];
+
                                 photoLinks.add(list);
                               });
                             }, (files) async {

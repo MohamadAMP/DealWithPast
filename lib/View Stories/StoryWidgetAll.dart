@@ -10,7 +10,10 @@ import '../Repos/UserClass.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:open_file/open_file.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StoryWidgetAll extends StatefulWidget {
   Story story;
@@ -355,6 +358,8 @@ class _BodyState extends State<Body> {
     return htmlText.replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' ');
   }
 
+  var documents = [];
+
   @override
   void initState() {
     // ignore: todo
@@ -421,8 +426,27 @@ class _BodyState extends State<Body> {
           initialUrl: element['url'],
           javascriptMode: JavascriptMode.unrestricted,
         ));
+      } else {
+        documents.add(element['url']);
       }
     });
+    if (documents.length != 0) {
+      documents.forEach((element) {
+        var link = element;
+        carousel.add(InkWell(
+            onTap: () async {
+              var url = link;
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                throw 'Could not launch $url';
+              }
+            },
+            child: link.split('.').last == 'pdf'
+                ? Container(child: Image.asset('assets/pdf-image.png'))
+                : Container(child: Image.asset('assets/word-image.png'))));
+      });
+    }
     dynamic desc = removeAllHtmlTags(widget.story.description);
     var length = convertToArabicNumber((carousel.length).toString());
     List<dynamic> myList = [

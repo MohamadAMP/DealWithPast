@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:interactive_map/Backend/auth.dart';
 import 'package:interactive_map/Repos/UserRepo.dart';
@@ -9,6 +10,7 @@ import 'package:interactive_map/Repos/media.dart';
 import 'package:interactive_map/Homepages/mainPage.dart';
 import 'package:interactive_map/Homepages/mainPageGuest.dart';
 import 'package:interactive_map/Map/map.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AddStoryGuest extends StatelessWidget {
   @override
@@ -58,8 +60,9 @@ class _BodyState extends State<Body> {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
           title: Center(child: Text('تسجيل الدخول')),
+          // ignore: sized_box_for_whitespace
           content: Container(
-              height: 120,
+              height: 380,
               child: FutureBuilder(
                   future: posting(user),
                   builder: (context, AsyncSnapshot snapshot) {
@@ -75,13 +78,74 @@ class _BodyState extends State<Body> {
                         return Container();
                       } else {
                         return Container(
-                            height: 120,
-                            child: Column(children: [
+                            height: 380,
+                            child: SingleChildScrollView(
+                                child: Column(children: [
                               Container(
-                                  child: Text(
-                                      "عليك الموافقة قبل الدخول إلى حسابك")),
+                                  child: Directionality(
+                                textDirection: TextDirection.ltr,
+                                child: Text(
+                                  'The stories and interviews and other information mentioned in this platform do not necessarily reflect the views of the UNDP and the donor. The content of the stories is the sole responsibility of the interviewees.',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              )),
                               SizedBox(
-                                height: 40,
+                                height: 10,
+                              ),
+                              Container(
+                                  child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: Text(
+                                    'القصص والمقابلات والمعلومات الأخرى المذكورة في هذه المنصة لا تعكس بالضرورة وجهات نظر برنامج الأمم المتحدة الإنمائي والجهة المانحة. محتوى القصص هي مسؤولية الأشخاص الذين تمت مقابلتهم.',
+                                    style: TextStyle(fontSize: 15)),
+                              )),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Divider(
+                                color: Colors.black,
+                                thickness: 2,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                child: Center(
+                                    child: Text(
+                                  "عليك الموافقة على الشروط قبل الدخول إلى حسابك",
+                                  style: TextStyle(fontSize: 15),
+                                )),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'لقراءة الشروط',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 15),
+                                      ),
+                                      TextSpan(
+                                        text: ' اضغط هنا',
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () {
+                                            launch(
+                                                'https://dwp.world/terms-and-conditions/');
+                                          },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
                               ),
                               Row(
                                 mainAxisAlignment:
@@ -138,13 +202,13 @@ class _BodyState extends State<Body> {
                                   ),
                                 ],
                               )
-                            ]));
+                            ])));
                       }
                     }
                   })));
     });
     showDialog(
-        barrierDismissible: false,
+        barrierDismissible: true,
         context: context,
         builder: (context) => _aboutdialog);
   }

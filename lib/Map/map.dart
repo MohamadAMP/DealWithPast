@@ -86,7 +86,7 @@ class _MapPage extends State<MapPage> {
     final Radius radius = Radius.circular(size.width / 2);
 
     final Paint tagPaint = Paint()..color = Colors.blue;
-    final double tagWidth = 80.0;
+    final double tagWidth = 60.0;
 
     final Paint shadowPaint = Paint()..color = Colors.blue.withAlpha(100);
     final double shadowWidth = 15.0;
@@ -121,7 +121,7 @@ class _MapPage extends State<MapPage> {
     TextPainter textPainter = TextPainter(textDirection: TextDirection.ltr);
     textPainter.text = TextSpan(
       text: convertToArabicNumber(length.toString()),
-      style: TextStyle(fontSize: 80.0, color: Colors.white),
+      style: TextStyle(fontSize: 60.0, color: Colors.white),
     );
 
     textPainter.layout();
@@ -285,12 +285,13 @@ class _MapPage extends State<MapPage> {
     double doubleSize =
         (0.12186629526462396 * MediaQuery.of(context).size.height);
 
-    var sizeIMG = doubleSize.toInt();
+    var sizeIMG = (doubleSize / 1.25).toInt();
     double doubleSizeAll =
         (0.2193593314763231 * MediaQuery.of(context).size.height);
-    var sizeAll = doubleSizeAll.toInt();
+    var sizeAll = (doubleSizeAll / 1.25).toInt();
     int sizeAssets =
-        (0.18279944289693595 * MediaQuery.of(context).size.height).toInt();
+        ((0.18279944289693595 * MediaQuery.of(context).size.height) / 1.25)
+            .toInt();
     setState(() {
       _controller = controller;
       // ignore: avoid_function_literals_in_foreach_calls

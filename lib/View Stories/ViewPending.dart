@@ -116,6 +116,7 @@ class _BodyState extends State<Body> {
     return htmlText.replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' ');
   }
 
+  var documents = [];
   @override
   void initState() {
     // ignore: todo
@@ -183,42 +184,26 @@ class _BodyState extends State<Body> {
             initialUrl: element['url'],
             javascriptMode: JavascriptMode.unrestricted,
           ));
+        } else {
+          documents.add(element['url']);
         }
       });
-
-      widget.story.gallery.forEach((element) {
-        var mime_type = element['mime_type'];
-        var type = mime_type.toString().split('/')[0];
-        if (type == 'image') {
-          carousel.add(
-            Image.network(
-              element['url'],
-              fit: BoxFit.cover,
-              loadingBuilder: (BuildContext context, Widget child,
-                  ImageChunkEvent? loadingProgress) {
-                if (loadingProgress == null) {
-                  return child;
-                }
-                return Center(
-                    child: Padding(
-                  padding: const EdgeInsets.all(100),
-                  child: CircularProgressIndicator(
-                    color: Color(0xFFFFDE73),
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                        : null,
-                  ),
-                ));
-              },
-            ),
-          );
-        } else if (type == 'video' || type == 'audio') {
-          carousel.add(WebView(
-            initialUrl: element['url'],
-            javascriptMode: JavascriptMode.unrestricted,
-          ));
-        }
+    }
+    if (documents.length != 0) {
+      documents.forEach((element) {
+        var link = element;
+        carousel.add(InkWell(
+            onTap: () async {
+              var url = link;
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                throw 'Could not launch $url';
+              }
+            },
+            child: link.split('.').last == 'pdf'
+                ? Container(child: Image.asset('assets/pdf-image.png'))
+                : Container(child: Image.asset('assets/word-image.png'))));
       });
     }
     dynamic desc = removeAllHtmlTags(widget.story.description);

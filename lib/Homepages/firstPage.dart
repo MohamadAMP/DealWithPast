@@ -71,12 +71,29 @@ class _FirstPage extends State<FirstPage> {
         future: retrieveUser(),
         builder: (context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
-            return const Scaffold(
-                backgroundColor: Color(0xFF252422),
+            return Scaffold(
+                backgroundColor: const Color(0xFF252422),
                 body: Center(
-                    child: CircularProgressIndicator(
-                  color: Color(0xFFFFDE73),
-                )));
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                      Center(
+                        child: Container(
+                            height: 200,
+                            width: 200,
+                            child: Image.asset('assets/icon.png')),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      const Center(
+                          child: Text('خارطة وذاكرة',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 40,
+                              )))
+                    ])));
           } else {
             if (snapshot.data == true) {
               return WelcomePage();
