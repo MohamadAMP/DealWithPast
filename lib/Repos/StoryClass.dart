@@ -9,7 +9,7 @@ class Story {
   // final String mediaType;
   final String description;
   final String event_date;
-  // final String source_url;
+  final String targeted_person;
   final String date_submitted;
   final String status;
   final String featured_image;
@@ -33,6 +33,7 @@ class Story {
       this.date_submitted,
       this.event_date,
       this.gallery,
+      this.targeted_person,
       // this.video,
       // this.audio,
       this.status,
@@ -54,6 +55,7 @@ class Story {
         event_date = json['acf']['event_date'],
         gallery = json['acf']['gallery'],
         anonymous = json['acf']['anonymous'],
+        targeted_person = json['acf']['targeted_person'],
         // video = json['acf']['video'],
         // audio = json['acf']['audio'],
         link = json['link'],

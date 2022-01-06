@@ -523,7 +523,7 @@ class _BodyState extends State<Body> {
                         width: 10,
                       ),
                       Text(
-                        widget.story.title,
+                        widget.story.targeted_person,
                         style:
                             const TextStyle(fontSize: 20, color: Colors.white),
                       ),
