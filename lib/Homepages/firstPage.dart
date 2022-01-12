@@ -82,7 +82,7 @@ class _FirstPage extends State<FirstPage> {
                         child: Container(
                             height: 200,
                             width: 200,
-                            child: Image.asset('assets/icon.png')),
+                            child: Image.asset('assets/logo.png')),
                       ),
                       SizedBox(
                         height: 40,
