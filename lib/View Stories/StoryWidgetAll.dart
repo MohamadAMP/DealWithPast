@@ -14,6 +14,7 @@ import 'package:open_file/open_file.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:math' as math;
 
 class StoryWidgetAll extends StatefulWidget {
   Story story;
@@ -210,49 +211,50 @@ class _StoryWidgetAllState extends State<StoryWidgetAll> {
                         const SizedBox(
                           width: 30,
                         ),
-                        Column(
-                          children: [
-                            Text(
-                              widget.userData.name,
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            Text(
-                              convertToArabicNumber(widget.story.date_submitted
-                                      .split("T")[0]
-                                      .split("-")[2]) +
-                                  "-" +
-                                  convertToArabicNumber(widget
-                                      .story.date_submitted
-                                      .split("T")[0]
-                                      .split("-")[1]) +
-                                  "-" +
-                                  convertToArabicNumber(widget
-                                      .story.date_submitted
-                                      .split("T")[0]
-                                      .split("-")[0]),
-                              style: TextStyle(fontSize: 16),
-                            )
-                          ],
-                        ),
+                        // Column(
+                        //   children: [
+                        //     Text(
+                        //       widget.userData.name,
+                        //       style: TextStyle(fontSize: 16),
+                        //     ),
+                        //     Text(
+                        //       convertToArabicNumber(widget.story.date_submitted
+                        //               .split("T")[0]
+                        //               .split("-")[2]) +
+                        //           "-" +
+                        //           convertToArabicNumber(widget
+                        //               .story.date_submitted
+                        //               .split("T")[0]
+                        //               .split("-")[1]) +
+                        //           "-" +
+                        //           convertToArabicNumber(widget
+                        //               .story.date_submitted
+                        //               .split("T")[0]
+                        //               .split("-")[0]),
+                        //       style: TextStyle(fontSize: 16),
+                        //     )
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),
                 ),
                 Container(
+                  width: 110,
                   margin: EdgeInsets.all(10),
                   child: MaterialButton(
                     color: Color(0xFFFFDE73),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40)),
+                        borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       _share();
                     },
                     child: const Text(
                       "شارك",
                       style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                      ),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          fontFamily: 'Baloo'),
                     ),
                   ),
                 )
@@ -287,49 +289,50 @@ class _StoryWidgetAllState extends State<StoryWidgetAll> {
                         const SizedBox(
                           width: 30,
                         ),
-                        Column(
-                          children: [
-                            Text(
-                              "مجهول",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            Text(
-                              convertToArabicNumber(widget.story.date_submitted
-                                      .split("T")[0]
-                                      .split("-")[2]) +
-                                  "-" +
-                                  convertToArabicNumber(widget
-                                      .story.date_submitted
-                                      .split("T")[0]
-                                      .split("-")[1]) +
-                                  "-" +
-                                  convertToArabicNumber(widget
-                                      .story.date_submitted
-                                      .split("T")[0]
-                                      .split("-")[0]),
-                              style: TextStyle(fontSize: 16),
-                            )
-                          ],
-                        ),
+                        // Column(
+                        //   children: [
+                        //     Text(
+                        //       "مجهول",
+                        //       style: TextStyle(fontSize: 16),
+                        //     ),
+                        //     Text(
+                        //       convertToArabicNumber(widget.story.date_submitted
+                        //               .split("T")[0]
+                        //               .split("-")[2]) +
+                        //           "-" +
+                        //           convertToArabicNumber(widget
+                        //               .story.date_submitted
+                        //               .split("T")[0]
+                        //               .split("-")[1]) +
+                        //           "-" +
+                        //           convertToArabicNumber(widget
+                        //               .story.date_submitted
+                        //               .split("T")[0]
+                        //               .split("-")[0]),
+                        //       style: TextStyle(fontSize: 16),
+                        //     )
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),
                 ),
                 Container(
+                  width: 110,
                   margin: EdgeInsets.all(10),
                   child: MaterialButton(
                     color: Color(0xFFFFDE73),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40)),
+                        borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       _share();
                     },
                     child: const Text(
                       "شارك",
                       style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                      ),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          fontFamily: 'Baloo'),
                     ),
                   ),
                 )
@@ -354,6 +357,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  var show = true;
+
   String removeAllHtmlTags(String htmlText) {
     return htmlText.replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' ');
   }
@@ -450,38 +455,127 @@ class _BodyState extends State<Body> {
     dynamic desc = removeAllHtmlTags(widget.story.description);
     var length = convertToArabicNumber((carousel.length).toString());
     List<dynamic> myList = [
-      Column(children: [
-        CarouselSlider.builder(
-          itemCount: carousel.length,
-          options: CarouselOptions(
-            height: 250.0,
-            viewportFraction: 1,
-            enableInfiniteScroll: false,
-          ),
-          itemBuilder: (context, itemIndex, realIndex) {
-            var i = convertToArabicNumber((itemIndex + 1).toString());
-            return Stack(children: [
-              Container(width: double.infinity, child: carousel[itemIndex]),
-              Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        "$i من $length",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      decoration: BoxDecoration(
-                          color: Colors.black,
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                    )),
+      Stack(
+        children: [
+          Column(children: [
+            CarouselSlider.builder(
+              itemCount: carousel.length,
+              options: CarouselOptions(
+                onPageChanged: (index, reason) {
+                  if (carousel[index].toString().split('(')[0].toString() !=
+                      'Image') {
+                    setState(() {
+                      show = false;
+                      print(show);
+                    });
+                  } else {
+                    setState(() {
+                      show = true;
+                      print(show);
+                    });
+                  }
+                },
+                height: 250.0,
+                viewportFraction: 1,
+                enableInfiniteScroll: false,
               ),
-            ]);
-          },
-        ),
-      ]),
+              itemBuilder: (context, itemIndex, realIndex) {
+                var i = convertToArabicNumber((itemIndex + 1).toString());
+                return Stack(children: [
+                  Container(width: double.infinity, child: carousel[itemIndex]),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                        padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            "$i من $length",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              border: Border.all(color: Colors.black),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                        )),
+                  ),
+                ]);
+              },
+            ),
+          ]),
+          show
+              ? Positioned.fill(
+                  child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        // margin: EdgeInsetsGeometry.lerp(a, b, t),
+                        height: 65,
+                        color: Colors.black.withOpacity(0.5),
+                        padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                        alignment: Alignment.bottomRight,
+
+                        child: Container(
+                            child: Column(
+                          children: [
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Column(
+                              children: [
+                                Row(children: [
+                                  Transform(
+                                    alignment: Alignment.center,
+                                    transform: Matrix4.rotationY(math.pi),
+                                    child: Icon(
+                                      Icons.play_arrow,
+                                      color: Color(0xFFE0C165),
+                                    ),
+                                  ),
+                                  Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: Text(
+                                      widget.story.title,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white,
+                                          fontFamily: 'Baloo',
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ]),
+                                Container(
+                                    padding: EdgeInsets.fromLTRB(0, 0, 25, 0),
+                                    child: Row(children: [
+                                      Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: Text(
+                                          widget.story.event_date == ''
+                                              ? ""
+                                              : convertToArabicNumber(widget
+                                                      .story.event_date
+                                                      .toString()
+                                                      .split("/")[2]
+                                                      .toString()) +
+                                                  ' - ' +
+                                                  widget.story.locationName,
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              fontFamily: 'Baloo',
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ])),
+                              ],
+                            ),
+                          ],
+                        )),
+                      )),
+                )
+              : Container()
+        ],
+      ),
       Column(
         children: [
           const SizedBox(
@@ -494,10 +588,7 @@ class _BodyState extends State<Body> {
                 Container(
                   child: Row(
                     children: [
-                      const Icon(
-                        Icons.location_pin,
-                        color: Color(0xFFFFDE73),
-                      ),
+                      const Icon(Icons.location_pin, color: Color(0xFF2F69BC)),
                       const SizedBox(
                         width: 10,
                       ),
@@ -517,7 +608,7 @@ class _BodyState extends State<Body> {
                     children: [
                       const Icon(
                         Icons.person,
-                        color: Color(0xFFFFDE73),
+                        color: Color(0xFF2F69BC),
                       ),
                       const SizedBox(
                         width: 10,
@@ -538,7 +629,7 @@ class _BodyState extends State<Body> {
                     children: [
                       const Icon(
                         Icons.calendar_today_rounded,
-                        color: Color(0xFFFFDE73),
+                        color: Color(0xFF2F69BC),
                       ),
                       const SizedBox(
                         width: 10,

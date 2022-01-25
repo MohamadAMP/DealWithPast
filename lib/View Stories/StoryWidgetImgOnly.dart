@@ -11,6 +11,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
+import 'dart:math' as math;
 
 class StoryWidgetImgOnly extends StatefulWidget {
   Story story;
@@ -207,49 +208,50 @@ class _StoryWidgetImgOnlyState extends State<StoryWidgetImgOnly> {
                         const SizedBox(
                           width: 30,
                         ),
-                        Column(
-                          children: [
-                            Text(
-                              widget.userData.name,
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            Text(
-                              convertToArabicNumber(widget.story.date_submitted
-                                      .split("T")[0]
-                                      .split("-")[2]) +
-                                  "-" +
-                                  convertToArabicNumber(widget
-                                      .story.date_submitted
-                                      .split("T")[0]
-                                      .split("-")[1]) +
-                                  "-" +
-                                  convertToArabicNumber(widget
-                                      .story.date_submitted
-                                      .split("T")[0]
-                                      .split("-")[0]),
-                              style: TextStyle(fontSize: 16),
-                            )
-                          ],
-                        ),
+                        // Column(
+                        //   children: [
+                        //     Text(
+                        //       widget.userData.name,
+                        //       style: TextStyle(fontSize: 16),
+                        //     ),
+                        //     Text(
+                        //       convertToArabicNumber(widget.story.date_submitted
+                        //               .split("T")[0]
+                        //               .split("-")[2]) +
+                        //           "-" +
+                        //           convertToArabicNumber(widget
+                        //               .story.date_submitted
+                        //               .split("T")[0]
+                        //               .split("-")[1]) +
+                        //           "-" +
+                        //           convertToArabicNumber(widget
+                        //               .story.date_submitted
+                        //               .split("T")[0]
+                        //               .split("-")[0]),
+                        //       style: TextStyle(fontSize: 16),
+                        //     )
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),
                 ),
                 Container(
+                  width: 110,
                   margin: EdgeInsets.all(10),
                   child: MaterialButton(
                     color: Color(0xFFFFDE73),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40)),
+                        borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       _share();
                     },
                     child: const Text(
                       "شارك",
                       style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                      ),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          fontFamily: 'Baloo'),
                     ),
                   ),
                 )
@@ -284,49 +286,50 @@ class _StoryWidgetImgOnlyState extends State<StoryWidgetImgOnly> {
                         const SizedBox(
                           width: 30,
                         ),
-                        Column(
-                          children: [
-                            Text(
-                              "مجهول",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            Text(
-                              convertToArabicNumber(widget.story.date_submitted
-                                      .split("T")[0]
-                                      .split("-")[2]) +
-                                  "-" +
-                                  convertToArabicNumber(widget
-                                      .story.date_submitted
-                                      .split("T")[0]
-                                      .split("-")[1]) +
-                                  "-" +
-                                  convertToArabicNumber(widget
-                                      .story.date_submitted
-                                      .split("T")[0]
-                                      .split("-")[0]),
-                              style: TextStyle(fontSize: 16),
-                            )
-                          ],
-                        ),
+                        // Column(
+                        //   children: [
+                        //     Text(
+                        //       "مجهول",
+                        //       style: TextStyle(fontSize: 16),
+                        //     ),
+                        //     Text(
+                        //       convertToArabicNumber(widget.story.date_submitted
+                        //               .split("T")[0]
+                        //               .split("-")[2]) +
+                        //           "-" +
+                        //           convertToArabicNumber(widget
+                        //               .story.date_submitted
+                        //               .split("T")[0]
+                        //               .split("-")[1]) +
+                        //           "-" +
+                        //           convertToArabicNumber(widget
+                        //               .story.date_submitted
+                        //               .split("T")[0]
+                        //               .split("-")[0]),
+                        //       style: TextStyle(fontSize: 16),
+                        //     )
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),
                 ),
                 Container(
+                  width: 110,
                   margin: EdgeInsets.all(10),
                   child: MaterialButton(
                     color: Color(0xFFFFDE73),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40)),
+                        borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       _share();
                     },
                     child: const Text(
                       "شارك",
                       style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                      ),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          fontFamily: 'Baloo'),
                     ),
                   ),
                 )
@@ -371,31 +374,103 @@ class _BodyState extends State<Body> {
           Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               // ignore: avoid_unnecessary_containers
-              child: Container(
-                height: 250,
-                // height: 60,
-                // width: 60,
-                child: Image.network(
-                  widget.story.featured_image,
-                  fit: BoxFit.fill,
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
-                    return Center(
-                        child: Padding(
-                      padding: const EdgeInsets.all(100),
-                      child: CircularProgressIndicator(
-                        color: Color(0xFFFFDE73),
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes!
-                            : null,
-                      ),
-                    ));
-                  },
-                ),
+              child: Stack(
+                children: [
+                  Container(
+                    height: 250,
+                    // height: 60,
+                    // width: 60,
+                    child: Image.network(
+                      widget.story.featured_image,
+                      fit: BoxFit.fill,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return Center(
+                            child: Padding(
+                          padding: const EdgeInsets.all(100),
+                          child: CircularProgressIndicator(
+                            color: Color(0xFFFFDE73),
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        ));
+                      },
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          // margin: EdgeInsetsGeometry.lerp(a, b, t),
+                          height: 65,
+                          color: Colors.black.withOpacity(0.5),
+                          padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                          alignment: Alignment.bottomRight,
+
+                          child: Container(
+                              child: Column(
+                            children: [
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Column(
+                                children: [
+                                  Row(children: [
+                                    Transform(
+                                      alignment: Alignment.center,
+                                      transform: Matrix4.rotationY(math.pi),
+                                      child: Icon(
+                                        Icons.play_arrow,
+                                        color: Color(0xFFE0C165),
+                                      ),
+                                    ),
+                                    Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: Text(
+                                        widget.story.title,
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontFamily: 'Baloo',
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ]),
+                                  Container(
+                                      padding: EdgeInsets.fromLTRB(0, 0, 25, 0),
+                                      child: Row(children: [
+                                        Directionality(
+                                          textDirection: TextDirection.rtl,
+                                          child: Text(
+                                            widget.story.event_date == ''
+                                                ? ""
+                                                : convertToArabicNumber(widget
+                                                        .story.event_date
+                                                        .toString()
+                                                        .split("/")[2]
+                                                        .toString()) +
+                                                    ' - ' +
+                                                    widget.story.locationName,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.white,
+                                                fontFamily: 'Baloo',
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ])),
+                                ],
+                              ),
+                            ],
+                          )),
+                        )),
+                  ),
+                ],
               )),
           const SizedBox(
             height: 20,
@@ -409,7 +484,7 @@ class _BodyState extends State<Body> {
                     children: [
                       const Icon(
                         Icons.location_pin,
-                        color: Color(0xFFFFDE73),
+                        color: Color(0xFF2F69BC),
                       ),
                       const SizedBox(
                         width: 10,
@@ -430,7 +505,7 @@ class _BodyState extends State<Body> {
                     children: [
                       const Icon(
                         Icons.person,
-                        color: Color(0xFFFFDE73),
+                        color: Color(0xFF2F69BC),
                       ),
                       const SizedBox(
                         width: 10,
@@ -451,7 +526,7 @@ class _BodyState extends State<Body> {
                     children: [
                       const Icon(
                         Icons.calendar_today_rounded,
-                        color: Color(0xFFFFDE73),
+                        color: Color(0xFF2F69BC),
                       ),
                       const SizedBox(
                         width: 10,

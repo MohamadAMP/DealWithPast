@@ -77,51 +77,53 @@ class GalleryTile extends StatelessWidget {
                     color: Colors.black.withOpacity(0.5),
                     padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
                     alignment: Alignment.bottomRight,
-                    child: Column(
-                      // crossAxisAlignment: CrossAxisAlignment.end,
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Column(
+                    child: GestureDetector(
+                        onTap: () async {
+                          if (story.gallery == false) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ViewStoryStart(
+                                      story.author,
+                                      false,
+                                      story,
+                                      story.locationName,
+                                      false)),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ViewStoryStart(
+                                      story.author,
+                                      true,
+                                      story,
+                                      story.locationName,
+                                      false)),
+                            );
+                          }
+                        },
+                        child: Container(
+                            child: Column(
                           children: [
-                            Row(children: [
-                              Transform(
-                                alignment: Alignment.center,
-                                transform: Matrix4.rotationY(math.pi),
-                                child: Icon(
-                                  Icons.play_arrow,
-                                  color: Color(0xFFE0C165),
-                                ),
-                              ),
-                              Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: Text(
-                                  story.title,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontFamily: 'Baloo',
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ]),
-                            Container(
-                                padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                                child: Row(children: [
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Column(
+                              children: [
+                                Row(children: [
+                                  Transform(
+                                    alignment: Alignment.center,
+                                    transform: Matrix4.rotationY(math.pi),
+                                    child: Icon(
+                                      Icons.play_arrow,
+                                      color: Color(0xFFE0C165),
+                                    ),
+                                  ),
                                   Directionality(
                                     textDirection: TextDirection.rtl,
                                     child: Text(
-                                      story.event_date == ''
-                                          ? ""
-                                          : convertToArabicNumber(story
-                                                  .event_date
-                                                  .toString()
-                                                  .split("/")[2]
-                                                  .toString()) +
-                                              ' - ' +
-                                              story.locationName,
+                                      story.title,
                                       style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.white,
@@ -129,45 +131,34 @@ class GalleryTile extends StatelessWidget {
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                ])),
+                                ]),
+                                Container(
+                                    padding: EdgeInsets.fromLTRB(0, 0, 23, 0),
+                                    child: Row(children: [
+                                      Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: Text(
+                                          story.event_date == ''
+                                              ? ""
+                                              : convertToArabicNumber(story
+                                                      .event_date
+                                                      .toString()
+                                                      .split("/")[2]
+                                                      .toString()) +
+                                                  ' - ' +
+                                                  story.locationName,
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              fontFamily: 'Baloo',
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ])),
+                              ],
+                            ),
                           ],
-                        ),
-                        // Padding(
-                        //   padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        //   child: TextButton(
-                        //     onPressed: () async {
-                        //       if (story.gallery == false) {
-                        //         Navigator.push(
-                        //           context,
-                        //           MaterialPageRoute(
-                        //               builder: (context) => ViewStoryStart(
-                        //                   story.author,
-                        //                   false,
-                        //                   story,
-                        //                   story.locationName,
-                        //                   false)),
-                        //         );
-                        //       } else {
-                        //         Navigator.push(
-                        //           context,
-                        //           MaterialPageRoute(
-                        //               builder: (context) => ViewStoryStart(
-                        //                   story.author,
-                        //                   true,
-                        //                   story,
-                        //                   story.locationName,
-                        //                   false)),
-                        //         );
-                        //       }
-                        //     },
-                        //     child: Text(
-                        //       "اقرأ المزيد",
-                        //       style: TextStyle(color: Color(0xFFFFDE73)),
-                        //     ),
-                        //   ),
-                        // )
-                      ],
-                    ),
+                        ))),
                   )),
             ),
           ],

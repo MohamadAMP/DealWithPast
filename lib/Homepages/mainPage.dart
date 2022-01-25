@@ -47,7 +47,9 @@ class _Body extends State<Body> {
           letterSpacing: 2,
           fontSize: 20,
           fontWeight: FontWeight.bold,
-          fontStyle: FontStyle.italic),
+          // fontStyle: FontStyle.italic,
+          fontFamily: 'Baloo',
+          color: Color(0xFFE0C165)),
     );
 
     appBarContent = appBarText;
@@ -98,15 +100,111 @@ class _Body extends State<Body> {
           changePage(index);
         },
         type: BottomNavigationBarType.fixed,
-        items: const [
+        items: [
           // ignore: prefer_const_constructors
-          BottomNavigationBarItem(label: "", icon: Icon(Icons.person)),
-          BottomNavigationBarItem(label: "", icon: Icon(Icons.timeline)),
           BottomNavigationBarItem(
-              label: "", icon: Icon(Icons.photo_album_outlined)),
+            label: "",
+            icon: Row(
+              children: [
+                Container(),
+                Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 30, 0),
+                    child: Icon(Icons.person)),
+              ],
+            ),
+          ),
           BottomNavigationBarItem(
-              label: "", icon: Icon(Icons.photo_library_outlined)),
-          BottomNavigationBarItem(label: "", icon: Icon(Icons.map_outlined)),
+            label: "",
+            icon: Row(
+              children: [
+                Container(
+                  width: 1,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: const [
+                      Colors.grey,
+                      Colors.black,
+                    ],
+                  )),
+                ),
+                Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 30, 0),
+                    child: Icon(Icons.timeline)),
+              ],
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: "",
+            icon: Row(
+              children: [
+                Container(
+                  width: 1,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: const [
+                      Colors.grey,
+                      Colors.black,
+                    ],
+                  )),
+                ),
+                Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 30, 0),
+                    child: Icon(Icons.photo_album_outlined)),
+              ],
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: "",
+            icon: Row(
+              children: [
+                Container(
+                  width: 1,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: const [
+                      Colors.grey,
+                      Colors.black,
+                    ],
+                  )),
+                ),
+                Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 30, 0),
+                    child: Icon(Icons.photo_library_outlined)),
+              ],
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: "",
+            icon: Row(
+              children: [
+                Container(
+                  width: 1,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: const [
+                      Colors.grey,
+                      Colors.black,
+                    ],
+                  )),
+                ),
+                Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 30, 0),
+                    child: Icon(Icons.map_outlined)),
+              ],
+            ),
+          ),
         ],
       ),
     );

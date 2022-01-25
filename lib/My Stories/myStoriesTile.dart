@@ -69,7 +69,10 @@ class StoryTile extends StatelessWidget {
                     textDirection: TextDirection.rtl,
                     child: Text(
                       story.title,
-                      style: const TextStyle(fontSize: 18, color: Colors.white),
+                      style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontFamily: 'Baloo'),
                     ),
                   ),
                   Directionality(
@@ -81,7 +84,10 @@ class StoryTile extends StatelessWidget {
                               .toString()
                               .split("/")[2]
                               .toString()),
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontFamily: 'Baloo'),
                     ),
                   ),
                 ],

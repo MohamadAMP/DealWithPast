@@ -50,7 +50,61 @@ class _AddStory extends State<AddStory> {
   late locationPerm.PermissionStatus _permissionGranted;
   late locationPerm.LocationData _locationData;
   String _selectedDate = 'أدخل التاريخ';
+  String _selectedYear = 'السنة';
+  String _selectedMonth = 'الشهر';
+  String _selectedDay = 'اليوم';
   String _selectedDateEnglish = '';
+  String dropDownVal1 = 'الشهر';
+  List<String> options1 = <String>[
+    'الشهر',
+    'كانون الثاني',
+    'شباط',
+    'آذار',
+    'نيسان',
+    'أيار',
+    'حزيران',
+    'تموز',
+    'آب',
+    'أيلول',
+    'تشرين الأول',
+    'تشرين الثاني',
+    'كانون الأول'
+  ];
+  String dropDownVal2 = 'اليوم';
+  List<String> options2 = <String>[
+    'اليوم',
+    '٠١',
+    '٠٢',
+    '٠٣',
+    '٠٤',
+    '٠٥',
+    '٠٦',
+    '٠٧',
+    '٠٨',
+    '٠٩',
+    '١٠',
+    '١١',
+    '١٢',
+    '١٣',
+    '١٤',
+    '١٥',
+    '١٦',
+    '١٧',
+    '١٨',
+    '١٩',
+    '٢٠',
+    '٢١',
+    '٢٢',
+    '٢٣',
+    '٢٤',
+    '٢٥',
+    '٢٦',
+    '٢٧',
+    '٢٨',
+    '٢٩',
+    '٣٠',
+    '٣١'
+  ];
   late LocationResult locationResult;
   final googlePlace = GooglePlace("AIzaSyB5IXP-SANsluLrgaAgmqp70kNlHeCa-ps");
   var predictions = [];
@@ -93,6 +147,17 @@ class _AddStory extends State<AddStory> {
 
 /*   final latins = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']; */
     return res;
+  }
+
+  String replaceArabicNumber(String input) {
+    const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    const arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+
+    for (int i = 0; i < english.length; i++) {
+      input = input.replaceAll(arabic[i], english[i]);
+    }
+
+    return input;
   }
 
   void locationAccess() async {
@@ -359,7 +424,6 @@ class _AddStory extends State<AddStory> {
   void _showImages() {
     final _aboutdialog = StatefulBuilder(builder: (context, setState) {
       List<dynamic> carousel = [];
-      print(photoLinks);
       photoLinks.forEach((element) {
         var type = element[1];
         if (type == 'image') {
@@ -510,6 +574,8 @@ class _AddStory extends State<AddStory> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
+                // padding: EdgeInsets.from.,
+                width: 150,
                 child: ElevatedButton(
                   onPressed: () async {
                     if (status == '') {
@@ -525,19 +591,30 @@ class _AddStory extends State<AddStory> {
                       onFilePicked(_imageFile);
                     }
                   },
-                  child: Text(
-                    "الصورة الرئيسية",
-                    style: TextStyle(color: Colors.black),
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    child: Text(
+                      "الصورة الرئيسية",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Baloo',
+                      ),
+                    ),
                   ),
                   style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Color(0xFFFFDE73))),
+                          MaterialStateProperty.all<Color>(Color(0xFF2F69BC)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              side: BorderSide(color: Color(0xFF2F69BC))))),
                 ),
               ),
               SizedBox(
                 width: 15,
               ),
               Container(
+                width: 120,
                 child: ElevatedButton(
                   onPressed: () async {
                     if (status == '') {
@@ -560,7 +637,6 @@ class _AddStory extends State<AddStory> {
 
                       if (result != null) {
                         files = result.paths;
-                        print(result.paths);
                         setState(() {
                           status = '';
                         });
@@ -571,13 +647,22 @@ class _AddStory extends State<AddStory> {
                       onFilesPicked(result);
                     }
                   },
-                  child: Text(
-                    "الإستديو",
-                    style: TextStyle(color: Colors.black),
-                  ),
+                  child: Container(
+                      padding: EdgeInsets.all(15),
+                      child: Text(
+                        "الإستديو",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Baloo',
+                        ),
+                      )),
                   style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Color(0xFFFFDE73))),
+                          MaterialStateProperty.all<Color>(Color(0xFF2F69BC)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              side: BorderSide(color: Color(0xFF2F69BC))))),
                 ),
               ),
               // Image.file(
@@ -629,15 +714,7 @@ class _AddStory extends State<AddStory> {
                       const SizedBox(
                         height: 25,
                       ),
-                      Center(
-                        child: Text(
-                          "املأ المعلومات",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25),
-                        ),
-                      ),
+
                       const SizedBox(
                         height: 15,
                       ),
@@ -652,6 +729,7 @@ class _AddStory extends State<AddStory> {
                           },
                           style: const TextStyle(
                             color: Colors.white,
+                            fontFamily: 'Baloo',
                           ),
                           controller: titleController,
                           decoration: const InputDecoration(
@@ -667,6 +745,7 @@ class _AddStory extends State<AddStory> {
                               labelText: 'العنوان',
                               labelStyle: TextStyle(
                                 color: Colors.white,
+                                fontFamily: 'Baloo',
                               )),
                         ),
                       ),
@@ -680,6 +759,7 @@ class _AddStory extends State<AddStory> {
                           },
                           style: const TextStyle(
                             color: Colors.white,
+                            fontFamily: 'Baloo',
                           ),
                           controller: nameController,
                           decoration: const InputDecoration(
@@ -695,6 +775,7 @@ class _AddStory extends State<AddStory> {
                               labelText: 'الشخص المستهدف',
                               labelStyle: TextStyle(
                                 color: Colors.white,
+                                fontFamily: 'Baloo',
                               )),
                         ),
                       ),
@@ -710,6 +791,7 @@ class _AddStory extends State<AddStory> {
                           maxLines: 4,
                           style: const TextStyle(
                             color: Colors.white,
+                            fontFamily: 'Baloo',
                           ),
                           controller: descriptionController,
                           decoration: const InputDecoration(
@@ -725,6 +807,7 @@ class _AddStory extends State<AddStory> {
                               labelText: 'نبذة عن القصة',
                               labelStyle: TextStyle(
                                 color: Colors.white,
+                                fontFamily: 'Baloo',
                               )),
                         ),
                       ),
@@ -747,6 +830,7 @@ class _AddStory extends State<AddStory> {
                           readOnly: true,
                           style: const TextStyle(
                             color: Colors.white,
+                            fontFamily: 'Baloo',
                           ),
                           controller: locationController,
                           decoration: const InputDecoration(
@@ -765,9 +849,10 @@ class _AddStory extends State<AddStory> {
                               disabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                               ),
-                              labelText: 'موقع الحدث',
+                              labelText: 'موقع',
                               labelStyle: TextStyle(
                                 color: Colors.white,
+                                fontFamily: 'Baloo',
                               )),
                         ),
                       ),
@@ -781,6 +866,7 @@ class _AddStory extends State<AddStory> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             Container(
+                              width: 100,
                               decoration: const BoxDecoration(
                                   border: Border(
                                     top: BorderSide(
@@ -801,17 +887,19 @@ class _AddStory extends State<AddStory> {
                                       MainAxisAlignment.spaceAround,
                                   children: <Widget>[
                                     InkWell(
-                                      child: Text(_selectedDate,
+                                      child: Text(_selectedYear,
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
-                                              fontSize: 24,
-                                              color: Colors.white)),
+                                            fontSize: 24,
+                                            color: Colors.white,
+                                            fontFamily: 'Baloo',
+                                          )),
                                       onTap: () {
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
-                                              title: Text("أدخل التاريخ"),
+                                              title: Text("أدخل السنة"),
                                               content: Container(
                                                 // Need to use container to add size constraint.
                                                 width: 300,
@@ -831,6 +919,10 @@ class _AddStory extends State<AddStory> {
                                                   onChanged:
                                                       (DateTime dateTime) {
                                                     setState(() {
+                                                      _selectedYear =
+                                                          convertToArabicNumber(
+                                                              dateTime.year
+                                                                  .toString());
                                                       _selectedDate =
                                                           convertToArabicNumber(
                                                               dateTime.year
@@ -849,6 +941,131 @@ class _AddStory extends State<AddStory> {
                                       },
                                     ),
                                   ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 100,
+                              decoration: const BoxDecoration(
+                                  border: Border(
+                                    top: BorderSide(
+                                        width: 1.0, color: Colors.white),
+                                    left: BorderSide(
+                                        width: 1.0, color: Colors.white),
+                                    right: BorderSide(
+                                        width: 1.0, color: Colors.white),
+                                    bottom: BorderSide(
+                                        width: 1.0, color: Colors.white),
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: DropdownButton<String>(
+                                  underline: Container(),
+                                  isExpanded: true,
+                                  value: dropDownVal1,
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      dropDownVal1 = newValue!;
+                                      if (newValue == 'كانون الثاني') {
+                                        _selectedMonth = '01';
+                                      } else if (newValue == 'شباط') {
+                                        _selectedMonth = '02';
+                                      } else if (newValue == 'آذار') {
+                                        _selectedMonth = '03';
+                                      } else if (newValue == 'نيسان') {
+                                        _selectedMonth = '04';
+                                      } else if (newValue == 'أيار') {
+                                        _selectedMonth = '05';
+                                      } else if (newValue == 'حزيران') {
+                                        _selectedMonth = '06';
+                                      } else if (newValue == 'تموز') {
+                                        _selectedMonth = '07';
+                                      } else if (newValue == 'آب') {
+                                        _selectedMonth = '08';
+                                      } else if (newValue == 'أيلول') {
+                                        _selectedMonth = '09';
+                                      } else if (newValue == 'تشرين الأول') {
+                                        _selectedMonth = '10';
+                                      } else if (newValue == 'تشرين الثاني') {
+                                        _selectedMonth = '11';
+                                      } else if (newValue == 'كانون الأول') {
+                                        _selectedMonth = '12';
+                                      }
+                                    });
+                                  },
+                                  style: const TextStyle(color: Colors.black),
+                                  selectedItemBuilder: (BuildContext context) {
+                                    return options1.map((String value) {
+                                      return Center(
+                                          child: Text(
+                                        dropDownVal1,
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontFamily: 'Baloo'),
+                                      ));
+                                    }).toList();
+                                  },
+                                  items: options1.map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 100,
+                              decoration: const BoxDecoration(
+                                  border: Border(
+                                    top: BorderSide(
+                                        width: 1.0, color: Colors.white),
+                                    left: BorderSide(
+                                        width: 1.0, color: Colors.white),
+                                    right: BorderSide(
+                                        width: 1.0, color: Colors.white),
+                                    bottom: BorderSide(
+                                        width: 1.0, color: Colors.white),
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: DropdownButton<String>(
+                                  isExpanded: true,
+                                  underline: Container(),
+                                  value: dropDownVal2,
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      dropDownVal2 = newValue!;
+                                      _selectedDay =
+                                          replaceArabicNumber(newValue);
+                                    });
+                                  },
+                                  style: const TextStyle(color: Colors.black),
+                                  selectedItemBuilder: (BuildContext context) {
+                                    return options2.map((String value) {
+                                      return Center(
+                                          child: Text(
+                                        dropDownVal2,
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontFamily: 'Baloo'),
+                                      ));
+                                    }).toList();
+                                  },
+                                  items: options2.map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
                                 ),
                               ),
                             ),
@@ -875,11 +1092,7 @@ class _AddStory extends State<AddStory> {
                                     ? "Uploaded"
                                     : 'Failed';
                                 featured_image_id = content['id'];
-                                print(content);
-                                var list = [
-                                  content['guid']['rendered'],
-                                  'image'
-                                ];
+                                var list = [content['source_url'], 'image'];
 
                                 photoLinks.add(list);
                               });
@@ -930,8 +1143,9 @@ class _AddStory extends State<AddStory> {
                                     "description": "test",
                                   };
                                   links.add(media);
+                                  // print(source)
                                   var list = [
-                                    content['guid']['rendered'],
+                                    content['source_url'],
                                     mimeType.split('/')[0]
                                   ];
                                   photoLinks.add(list);
@@ -956,7 +1170,10 @@ class _AddStory extends State<AddStory> {
                                 children: [
                                   Text(
                                     'تم التحميل',
-                                    style: TextStyle(color: Colors.green),
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontFamily: 'Baloo',
+                                    ),
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -969,7 +1186,7 @@ class _AddStory extends State<AddStory> {
                                       onPressed: () {
                                         _showImages();
                                       },
-                                      color: Color(0xFFFFDE73),
+                                      color: Color(0xFF2F69BC),
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(40)),
@@ -977,7 +1194,9 @@ class _AddStory extends State<AddStory> {
                                         "عرض الصور",
                                         style: TextStyle(
                                           fontWeight: FontWeight.w600,
+                                          color: Colors.white,
                                           fontSize: 16,
+                                          fontFamily: 'Baloo',
                                         ),
                                       ),
                                     ),
@@ -987,7 +1206,10 @@ class _AddStory extends State<AddStory> {
                             if (status == 'Failed')
                               Text(
                                 'فشل التحميل',
-                                style: TextStyle(color: Colors.red),
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontFamily: 'Baloo',
+                                ),
                               ),
                             if (status == '') CircularProgressIndicator(),
                             if (status == 'none') Container(),
@@ -1016,12 +1238,14 @@ class _AddStory extends State<AddStory> {
                                       anonymous = [];
                                     }
 
-                                    print(anonymous);
                                     if (status != '') {
-                                      if (_selectedDate != 'أدخل التاريخ') {
+                                      if (_selectedYear != 'السنة' &&
+                                          _selectedMonth != 'الشهر' &&
+                                          _selectedDay != 'اليوم') {
                                         if (_formKey.currentState!.validate()) {
                                           var date =
-                                              _selectedDateEnglish.toString() +
+                                              replaceArabicNumber(_selectedYear)
+                                                      .toString() +
                                                   "-" +
                                                   '01' +
                                                   "-" +
@@ -1062,12 +1286,17 @@ class _AddStory extends State<AddStory> {
                                   },
                                   color: Color(0xFFFFDE73),
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(40)),
-                                  child: const Text(
-                                    "إرسال",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Container(
+                                    padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                    child: const Text(
+                                      "إرسال",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                        color: Colors.black,
+                                        fontFamily: 'Baloo',
+                                      ),
                                     ),
                                   ),
                                 ),

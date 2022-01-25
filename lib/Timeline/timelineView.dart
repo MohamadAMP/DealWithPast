@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:interactive_map/My%20Stories/Stories.dart';
 import 'package:interactive_map/galleryView.dart';
 import 'package:interactive_map/Timeline/viewStoriesTimeline.dart';
+import 'dart:math' as math;
 
 class TimelineView extends StatefulWidget {
   List<dynamic> stories;
@@ -37,48 +38,138 @@ class _TimelineViewState extends State<TimelineView> {
             return Stack(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(left: 50.0),
-                  child: Card(
-                    margin: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.only(left: 0.0),
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(0, 20, 0, 30),
                     child: Container(
-                      width: 320,
-                      height: 200.0,
-                      color: Color(0xFF31302D),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            widget.stories[index][0].featured_image,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      // color: Color(0xFF31302D),
+                      width: 336,
+                      height: 250.0,
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(20, 20, 30, 20),
-                        child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Text(
-                                          convertToArabicNumber(widget
-                                                  .stories[index][0].event_date
-                                                  .toString()
-                                                  .split("/")[2]
-                                                  .toString()
-                                                  .substring(0, 3) +
-                                              "0"),
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 25),
-                                        ),
-                                        IconButton(
-                                            onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        TimelineStoriesView(
-                                                            widget
-                                                                .stories[index],
-                                                            convertToArabicNumber(widget
+                        // padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                        child: Container(
+                            child: Stack(children: [
+                          Positioned.fill(
+                            child: Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                  color: Color(0xFF31302C),
+                                  width: double.infinity,
+                                  child: Container(
+                                      padding: EdgeInsets.fromLTRB(0, 0, 35, 0),
+                                      child: Row(
+                                        // mainAxisAlignment:
+                                        //     MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(
+                                            convertToArabicNumber(widget
+                                                    .stories[index][0]
+                                                    .event_date
+                                                    .toString()
+                                                    .split("/")[2]
+                                                    .toString()
+                                                    .substring(0, 3) +
+                                                "0"),
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 25),
+                                          ),
+                                          IconButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          TimelineStoriesView(
+                                                              widget.stories[
+                                                                  index],
+                                                              convertToArabicNumber(widget
+                                                                      .stories[
+                                                                          index]
+                                                                          [0]
+                                                                      .event_date
+                                                                      .toString()
+                                                                      .split("/")[
+                                                                          2]
+                                                                      .toString()
+                                                                      .substring(
+                                                                          0,
+                                                                          3) +
+                                                                  "0"),
+                                                              widget.token)),
+                                                );
+                                              },
+                                              icon: Icon(
+                                                Icons.arrow_forward,
+                                                color: Color(0xFFFFDE73),
+                                              )),
+                                        ],
+                                      )),
+                                )),
+                          ),
+                          Positioned.fill(
+                            child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  // margin: EdgeInsetsGeometry.lerp(a, b, t),
+                                  height: 55,
+                                  color: Colors.black.withOpacity(0.5),
+                                  padding: EdgeInsets.fromLTRB(0, 0, 25, 0),
+                                  alignment: Alignment.bottomRight,
+
+                                  child: Container(
+                                      child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Column(
+                                        children: [
+                                          Row(children: [
+                                            Transform(
+                                              alignment: Alignment.center,
+                                              transform:
+                                                  Matrix4.rotationY(math.pi),
+                                              child: Icon(
+                                                Icons.play_arrow,
+                                                color: Color(0xFFE0C165),
+                                              ),
+                                            ),
+                                            Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: Text(
+                                                widget.stories[index][0].title,
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.white,
+                                                    fontFamily: 'Baloo',
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          ]),
+                                          Container(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  0, 0, 25, 0),
+                                              child: Row(children: [
+                                                Directionality(
+                                                  textDirection:
+                                                      TextDirection.rtl,
+                                                  child: Text(
+                                                    widget.stories[index][0]
+                                                                .event_date ==
+                                                            ''
+                                                        ? ""
+                                                        : convertToArabicNumber(
+                                                                widget
                                                                     .stories[
                                                                         index]
                                                                         [0]
@@ -86,75 +177,28 @@ class _TimelineViewState extends State<TimelineView> {
                                                                     .toString()
                                                                     .split(
                                                                         "/")[2]
-                                                                    .toString()
-                                                                    .substring(
-                                                                        0, 3) +
-                                                                "0"),
-                                                            widget.token)),
-                                              );
-                                            },
-                                            icon: Icon(
-                                              Icons.arrow_forward,
-                                              color: Color(0xFFFFDE73),
-                                            )),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Container(
-                                        child: Row(
-                                      // mainAxisAlignment:
-                                      // MainAxisAlignment.,
-                                      children: [
-                                        Container(
-                                          height: 100,
-                                          width: 100,
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: NetworkImage(
-                                                    widget.stories[index][0]
-                                                        .featured_image,
+                                                                    .toString()) +
+                                                            ' - ' +
+                                                            widget
+                                                                .stories[index]
+                                                                    [0]
+                                                                .locationName,
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.white,
+                                                        fontFamily: 'Baloo',
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
-                                                  fit: BoxFit.cover),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10.0))),
-                                        ),
-                                        SizedBox(
-                                          width: 30,
-                                        ),
-                                        Container(
-                                          child: Column(
-                                            children: [
-                                              SizedBox(
-                                                width: 90,
-                                                child: Text(
-                                                  widget
-                                                      .stories[index][0].title,
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      fontSize: 16),
                                                 ),
-                                              ),
-                                              Text(
-                                                  convertToArabicNumber(widget
-                                                      .stories[index][0]
-                                                      .event_date
-                                                      .toString()
-                                                      .split("/")[2]
-                                                      .toString()),
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16)),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ))
-                                  ]),
-                            ]),
+                                              ])),
+                                        ],
+                                      ),
+                                    ],
+                                  )),
+                                )),
+                          ),
+                        ])),
                       ),
                     ),
                   ),

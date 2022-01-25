@@ -39,8 +39,17 @@ class _ProfileState extends State<Profile> {
         body: SingleChildScrollView(
       child: Column(children: <Widget>[
         Container(
-          color: Color(0xFF31302D),
+          // color: Color(0xFF31302D),
           height: MediaQuery.of(context).size.height * 0.23,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.yellow.shade200,
+              Colors.blue.shade300,
+            ],
+          )),
           child: Padding(
             padding: EdgeInsets.only(left: 30.0, top: 30.0),
             child: Column(
@@ -87,10 +96,10 @@ class _ProfileState extends State<Profile> {
                       child: Text(
                     "معلومات",
                     style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18,
-                    ),
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        fontFamily: 'Baloo'),
                   ))),
               SizedBox(
                 height: 25,
@@ -104,12 +113,12 @@ class _ProfileState extends State<Profile> {
                       child: Text(
                         'الإسم :',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                            color: Colors.grey,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Baloo'),
                       )),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
                   Padding(
                       padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
                       child: SizedBox(
@@ -122,21 +131,21 @@ class _ProfileState extends State<Profile> {
                                 //you might have to add another text widget depending on how you retrieve it
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Baloo'),
                               )))),
-                  SizedBox(height: 20),
+                  SizedBox(height: 50),
                   Padding(
                       padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
                       child: Text(
                         'البريد الإلكتروني :',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                            color: Colors.grey,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Baloo'),
                       )),
                   SizedBox(height: 20),
                   SizedBox(
@@ -151,20 +160,22 @@ class _ProfileState extends State<Profile> {
                               //you might have to add another text widget depending on how you retrieve it
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Baloo'),
                             ),
                           ))),
                   SizedBox(
-                    height: 100,
+                    height: 30,
                   ),
-                  Center(
+                  Container(
+                      width: 220,
+                      padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
                       child: ElevatedButton(
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  Color(0xFFFFDE73))),
+                                  Color(0xFF2F69BC))),
                           onPressed: () async {
                             await signOut();
                             Navigator.pushReplacement(
@@ -173,10 +184,15 @@ class _ProfileState extends State<Profile> {
                                   builder: (context) => WelcomePageGuest()),
                             );
                           },
-                          child: Text(
-                            "خروج",
-                            style: TextStyle(color: Colors.black, fontSize: 25),
-                          ))),
+                          child: Container(
+                              padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                              child: Text(
+                                "خروج",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                    fontFamily: 'Baloo'),
+                              )))),
                 ],
               ),
             ],

@@ -121,7 +121,8 @@ class _MapPage extends State<MapPage> {
     TextPainter textPainter = TextPainter(textDirection: TextDirection.ltr);
     textPainter.text = TextSpan(
       text: convertToArabicNumber(length.toString()),
-      style: TextStyle(fontSize: 60.0, color: Colors.white),
+      style:
+          TextStyle(fontSize: 60.0, color: Colors.white, fontFamily: 'Baloo'),
     );
 
     textPainter.layout();
@@ -332,10 +333,6 @@ class _MapPage extends State<MapPage> {
                   storyElem.length)),
               position: LatLng(storyElem[0].lat, storyElem[0].lng),
               onTap: () {
-                print("HEIGHT: " +
-                    (150 / MediaQuery.of(context).size.height).toString());
-                print(MediaQuery.of(context).size.width.toString());
-                print('test');
                 setState(() {
                   showPageGrouped = false;
                   showPage = false;
@@ -391,42 +388,12 @@ class _MapPage extends State<MapPage> {
                     height: 300,
                     child: Scaffold(
                         appBar: AppBar(
-                          actions: [
-                            TextButton(
-                                onPressed: () async {
-                                  setState(() {
-                                    showPage = false;
-                                  });
-                                  if (mainStory.gallery == false) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ViewStoryStart(
-                                              mainStory.author,
-                                              false,
-                                              mainStory,
-                                              mainStory.locationName,
-                                              false)),
-                                    );
-                                  } else {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ViewStoryStart(
-                                              mainStory.author,
-                                              true,
-                                              mainStory,
-                                              mainStory.locationName,
-                                              false)),
-                                    );
-                                  }
-                                },
-                                child: const Text(
-                                  "اقرأ المزيد",
-                                  style: TextStyle(color: Color(0xFFFFDE73)),
-                                ))
-                          ],
-                          title: Text(mainStory.title),
+                          backgroundColor: Color(0xFFFFDE73),
+                          title: Text(
+                            mainStory.title,
+                            style: TextStyle(
+                                fontFamily: 'Baloo', color: Colors.black),
+                          ),
                           leading: IconButton(
                               onPressed: () {
                                 setState(() {
@@ -434,7 +401,10 @@ class _MapPage extends State<MapPage> {
                                   showPage = false;
                                 });
                               },
-                              icon: Icon(Icons.arrow_back)),
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: Colors.black,
+                              )),
                           centerTitle: true,
                         ),
                         body: Container(
@@ -447,8 +417,8 @@ class _MapPage extends State<MapPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      height: 110,
-                                      width: 110,
+                                      height: 130,
+                                      width: 130,
                                       child: CircleAvatar(
                                         backgroundImage: NetworkImage(
                                           mainStory.featured_image,
@@ -476,13 +446,14 @@ class _MapPage extends State<MapPage> {
                                                 mainStory.locationName,
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontSize: 20),
+                                                    fontSize: 20,
+                                                    fontFamily: 'Baloo'),
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                             )
                                           ]),
                                           SizedBox(
-                                            height: 50,
+                                            height: 20,
                                           ),
                                           Row(children: [
                                             Icon(Icons.calendar_today_rounded,
@@ -501,11 +472,64 @@ class _MapPage extends State<MapPage> {
                                                             .toString()),
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontSize: 20),
+                                                    fontSize: 20,
+                                                    fontFamily: 'Baloo'),
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                             )
                                           ]),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                              width: 120,
+                                              child: ElevatedButton(
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStateProperty
+                                                              .all<Color>(Color(
+                                                                  0xFF2F69BC))),
+                                                  onPressed: () async {
+                                                    setState(() {
+                                                      showPage = false;
+                                                    });
+                                                    if (mainStory.gallery ==
+                                                        false) {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                ViewStoryStart(
+                                                                    mainStory
+                                                                        .author,
+                                                                    false,
+                                                                    mainStory,
+                                                                    mainStory
+                                                                        .locationName,
+                                                                    false)),
+                                                      );
+                                                    } else {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                ViewStoryStart(
+                                                                    mainStory
+                                                                        .author,
+                                                                    true,
+                                                                    mainStory,
+                                                                    mainStory
+                                                                        .locationName,
+                                                                    false)),
+                                                      );
+                                                    }
+                                                  },
+                                                  child: const Text(
+                                                    "اقرأ المزيد",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontFamily: 'Baloo'),
+                                                  )))
                                         ])
                                   ]),
                             ]))))
@@ -543,15 +567,23 @@ class _MapPage extends State<MapPage> {
                     height: 300,
                     child: Scaffold(
                         appBar: AppBar(
-                          title: Text('روايات في: ' +
-                              groupedMain[0].locationName.toString()),
+                          backgroundColor: Color(0xFFFFDE73),
+                          title: Text(
+                              'روايات في: ' +
+                                  groupedMain[0].locationName.toString(),
+                              style: TextStyle(
+                                  fontFamily: 'Baloo', color: Colors.black)),
                           leading: IconButton(
                               onPressed: () {
                                 setState(() {
+                                  // print(showPage);
                                   showPageGrouped = false;
                                 });
                               },
-                              icon: Icon(Icons.arrow_back)),
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: Colors.black,
+                              )),
                           centerTitle: true,
                         ),
                         body: Container(

@@ -121,9 +121,13 @@ flutter:
   #         weight: 700
   #
   fonts:
-    - family: Baloo
+    - family: BalooEng
       fonts:
         - asset: assets/Fonts/Baloo2-Regular.ttf
+          weight: 500
+    - family: Baloo
+      fonts:
+        - asset: assets/Fonts/BalooBhaijaan2-Regular.ttf
           weight: 500
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

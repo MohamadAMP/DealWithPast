@@ -99,15 +99,91 @@ class _Body extends State<Body> {
           changePage(index);
         },
         type: BottomNavigationBarType.fixed,
-        items: const [
+        items: [
           // ignore: prefer_const_constructors
           BottomNavigationBarItem(
-              label: "", icon: Icon(Icons.photo_album_outlined)),
-
-          BottomNavigationBarItem(label: "", icon: Icon(Icons.timeline)),
+            label: "",
+            icon: Row(
+              children: [
+                Container(
+                  width: 1,
+                  height: 30,
+                ),
+                Container(
+                    padding: EdgeInsets.fromLTRB(30, 0, 40, 0),
+                    child: Icon(Icons.photo_album_outlined)),
+              ],
+            ),
+          ),
           BottomNavigationBarItem(
-              label: "", icon: Icon(Icons.photo_library_outlined)),
-          BottomNavigationBarItem(label: "", icon: Icon(Icons.map_outlined)),
+            label: "",
+            icon: Row(
+              children: [
+                Container(
+                  width: 1,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: const [
+                      Colors.grey,
+                      Colors.black,
+                    ],
+                  )),
+                ),
+                Container(
+                    padding: EdgeInsets.fromLTRB(30, 0, 40, 0),
+                    child: Icon(Icons.timeline)),
+              ],
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: "",
+            icon: Row(
+              children: [
+                Container(
+                  width: 1,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: const [
+                      Colors.grey,
+                      Colors.black,
+                    ],
+                  )),
+                ),
+                Container(
+                    padding: EdgeInsets.fromLTRB(30, 0, 40, 0),
+                    child: Icon(Icons.photo_library_outlined)),
+              ],
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: "",
+            icon: Row(
+              children: [
+                Container(
+                  width: 1,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: const [
+                      Colors.grey,
+                      Colors.black,
+                    ],
+                  )),
+                ),
+                Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 30, 0),
+                    child: Icon(Icons.map_outlined)),
+              ],
+            ),
+          ),
         ],
       ),
     );

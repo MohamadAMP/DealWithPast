@@ -155,37 +155,37 @@ class _StoryWidgetTemplateState extends State<StoryWidgetTemplate> {
                       const SizedBox(
                         width: 30,
                       ),
-                      Column(
-                        children: [
-                          Container(
-                            width: 60,
-                            height: 12,
-                            decoration: const BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(40.0),
-                                  bottomRight: Radius.circular(40.0),
-                                  topLeft: Radius.circular(40.0),
-                                  bottomLeft: Radius.circular(40.0)),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            width: 85,
-                            height: 12,
-                            decoration: const BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(40.0),
-                                  bottomRight: Radius.circular(40.0),
-                                  topLeft: Radius.circular(40.0),
-                                  bottomLeft: Radius.circular(40.0)),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Column(
+                      //   children: [
+                      //     Container(
+                      //       width: 60,
+                      //       height: 12,
+                      //       decoration: const BoxDecoration(
+                      //         color: Colors.grey,
+                      //         borderRadius: BorderRadius.only(
+                      //             topRight: Radius.circular(40.0),
+                      //             bottomRight: Radius.circular(40.0),
+                      //             topLeft: Radius.circular(40.0),
+                      //             bottomLeft: Radius.circular(40.0)),
+                      //       ),
+                      //     ),
+                      //     const SizedBox(
+                      //       height: 5,
+                      //     ),
+                      //     Container(
+                      //       width: 85,
+                      //       height: 12,
+                      //       decoration: const BoxDecoration(
+                      //         color: Colors.grey,
+                      //         borderRadius: BorderRadius.only(
+                      //             topRight: Radius.circular(40.0),
+                      //             bottomRight: Radius.circular(40.0),
+                      //             topLeft: Radius.circular(40.0),
+                      //             bottomLeft: Radius.circular(40.0)),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),

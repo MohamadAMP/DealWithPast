@@ -88,7 +88,6 @@ class StoryRepo {
     request.body = jsonEncode(data);
     var res = await request.send();
     var content = await res.stream.bytesToString();
-    print(jsonDecode(content)['acf']);
     return content;
   }
 }
