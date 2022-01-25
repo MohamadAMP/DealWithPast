@@ -16,11 +16,9 @@ class GalleryView extends StatelessWidget {
         color: Color(0xFF252422),
         child: Column(children: [
           Expanded(
-              child: GridView.builder(
-                  padding: EdgeInsets.fromLTRB(10, 30, 10, 0),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
+              child: ListView.builder(
+                  // shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
                   itemCount: stories.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GalleryTile(stories[index], token);

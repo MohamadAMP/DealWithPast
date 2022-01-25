@@ -47,7 +47,9 @@ class _Body extends State<Body> {
           letterSpacing: 2,
           fontSize: 20,
           fontWeight: FontWeight.bold,
-          fontStyle: FontStyle.italic),
+          // fontStyle: FontStyle.italic,
+          fontFamily: 'Baloo',
+          color: Color(0xFFE0C165)),
     );
 
     appBarContent = appBarText;
@@ -101,6 +103,7 @@ class _Body extends State<Body> {
           // ignore: prefer_const_constructors
           BottomNavigationBarItem(
               label: "", icon: Icon(Icons.photo_album_outlined)),
+
           BottomNavigationBarItem(label: "", icon: Icon(Icons.timeline)),
           BottomNavigationBarItem(
               label: "", icon: Icon(Icons.photo_library_outlined)),

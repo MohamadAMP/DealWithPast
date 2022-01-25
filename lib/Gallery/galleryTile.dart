@@ -5,12 +5,14 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:interactive_map/View%20Stories/StoryWidgetAll.dart';
 import 'package:interactive_map/View%20Stories/LoadUser.dart';
+import 'dart:math' as math;
 
 import '../Repos/StoryClass.dart';
 import '../Repos/UserClass.dart';
 import '../Repos/UserInfo.dart';
 import '../Repos/UserRepo.dart';
 import '../View Stories/StoryWidgetImgOnly.dart';
+// import this
 
 // ignore: must_be_immutable
 class GalleryTile extends StatelessWidget {
@@ -47,84 +49,128 @@ class GalleryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    return Card(
-        color: Color(0xFF31302D),
-        elevation: 10.0,
-        // margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-        child: Center(
-          child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
-                  child: Container(
-                    width: double.infinity,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Image.network(
-                        story.featured_image,
+    return Container(
+        padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+        height: 250,
+        child: Stack(
+          children: [
+            Container(
+
+                // elevation: 10.0,
+                // margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          story.featured_image,
+                        ),
                         fit: BoxFit.cover,
                       ),
                     ),
-                  ),
-                ),
-              ),
-              Column(
-                children: [
-                  Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Text(
-                      story.title,
-                      style: const TextStyle(fontSize: 12, color: Colors.white),
+                    child: Container())),
+            Positioned.fill(
+              child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    // margin: EdgeInsetsGeometry.lerp(a, b, t),
+                    height: 65,
+                    color: Colors.black.withOpacity(0.5),
+                    padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                    alignment: Alignment.bottomRight,
+                    child: Column(
+                      // crossAxisAlignment: CrossAxisAlignment.end,
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Column(
+                          children: [
+                            Row(children: [
+                              Transform(
+                                alignment: Alignment.center,
+                                transform: Matrix4.rotationY(math.pi),
+                                child: Icon(
+                                  Icons.play_arrow,
+                                  color: Color(0xFFE0C165),
+                                ),
+                              ),
+                              Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: Text(
+                                  story.title,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                      fontFamily: 'Baloo',
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ]),
+                            Container(
+                                padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                                child: Row(children: [
+                                  Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: Text(
+                                      story.event_date == ''
+                                          ? ""
+                                          : convertToArabicNumber(story
+                                                  .event_date
+                                                  .toString()
+                                                  .split("/")[2]
+                                                  .toString()) +
+                                              ' - ' +
+                                              story.locationName,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white,
+                                          fontFamily: 'Baloo',
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ])),
+                          ],
+                        ),
+                        // Padding(
+                        //   padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        //   child: TextButton(
+                        //     onPressed: () async {
+                        //       if (story.gallery == false) {
+                        //         Navigator.push(
+                        //           context,
+                        //           MaterialPageRoute(
+                        //               builder: (context) => ViewStoryStart(
+                        //                   story.author,
+                        //                   false,
+                        //                   story,
+                        //                   story.locationName,
+                        //                   false)),
+                        //         );
+                        //       } else {
+                        //         Navigator.push(
+                        //           context,
+                        //           MaterialPageRoute(
+                        //               builder: (context) => ViewStoryStart(
+                        //                   story.author,
+                        //                   true,
+                        //                   story,
+                        //                   story.locationName,
+                        //                   false)),
+                        //         );
+                        //       }
+                        //     },
+                        //     child: Text(
+                        //       "اقرأ المزيد",
+                        //       style: TextStyle(color: Color(0xFFFFDE73)),
+                        //     ),
+                        //   ),
+                        // )
+                      ],
                     ),
-                  ),
-                  Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Text(
-                      story.event_date == ''
-                          ? ""
-                          : convertToArabicNumber(story.event_date
-                              .toString()
-                              .split("/")[2]
-                              .toString()),
-                      style: TextStyle(fontSize: 12, color: Colors.white),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: TextButton(
-                  onPressed: () async {
-                    if (story.gallery == false) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ViewStoryStart(story.author,
-                                false, story, story.locationName, false)),
-                      );
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ViewStoryStart(story.author,
-                                true, story, story.locationName, false)),
-                      );
-                    }
-                  },
-                  child: Text(
-                    "اقرأ المزيد",
-                    style: TextStyle(color: Color(0xFFFFDE73)),
-                  ),
-                ),
-              )
-            ],
-          ),
+                  )),
+            ),
+          ],
         ));
   }
 }
