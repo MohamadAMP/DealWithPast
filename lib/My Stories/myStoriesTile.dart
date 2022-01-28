@@ -82,7 +82,7 @@ class StoryTile extends StatelessWidget {
                           ? ""
                           : convertToArabicNumber(story.event_date
                               .toString()
-                              .split("/")[2]
+                              .split("/")[0]
                               .toString()),
                       style: TextStyle(
                           fontSize: 18,

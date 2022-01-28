@@ -114,7 +114,7 @@ class _AddStory extends State<AddStory> {
   var allUploaded = true;
   List<Map<String, dynamic>> links = [];
   var photoLinks = [];
-  dynamic featured_image_id = 1325;
+  dynamic featured_image_id = 2483;
   late String status = 'none';
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? d = await showDatePicker(
@@ -688,7 +688,16 @@ class _AddStory extends State<AddStory> {
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
             appBar: AppBar(
-              title: Text("زيادة رواية"),
+              title: Text(
+                "زيادة رواية",
+                style: TextStyle(
+                    letterSpacing: 2,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    // fontStyle: FontStyle.italic,
+                    fontFamily: 'Baloo',
+                    color: Color(0xFFE0C165)),
+              ),
               centerTitle: true,
               leading: IconButton(
                   onPressed: () {

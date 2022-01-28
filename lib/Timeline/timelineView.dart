@@ -38,7 +38,7 @@ class _TimelineViewState extends State<TimelineView> {
             return Stack(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(left: 0.0),
+                  padding: const EdgeInsets.only(left: 50.0),
                   child: Container(
                     margin: const EdgeInsets.fromLTRB(0, 20, 0, 30),
                     child: Container(
@@ -51,7 +51,7 @@ class _TimelineViewState extends State<TimelineView> {
                         ),
                       ),
                       // color: Color(0xFF31302D),
-                      width: 336,
+                      width: 285,
                       height: 250.0,
                       child: Container(
                         // padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
@@ -74,7 +74,7 @@ class _TimelineViewState extends State<TimelineView> {
                                                     .stories[index][0]
                                                     .event_date
                                                     .toString()
-                                                    .split("/")[2]
+                                                    .split("/")[0]
                                                     .toString()
                                                     .substring(0, 3) +
                                                 "0"),
@@ -98,7 +98,7 @@ class _TimelineViewState extends State<TimelineView> {
                                                                       .event_date
                                                                       .toString()
                                                                       .split("/")[
-                                                                          2]
+                                                                          0]
                                                                       .toString()
                                                                       .substring(
                                                                           0,
@@ -176,7 +176,7 @@ class _TimelineViewState extends State<TimelineView> {
                                                                     .event_date
                                                                     .toString()
                                                                     .split(
-                                                                        "/")[2]
+                                                                        "/")[0]
                                                                     .toString()) +
                                                             ' - ' +
                                                             widget

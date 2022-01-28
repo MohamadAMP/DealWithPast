@@ -148,7 +148,7 @@ class _StoryWidgetTemplateState extends State<StoryWidgetTemplate> {
                         width: 40,
                         child: CircleAvatar(
                           backgroundImage: NetworkImage(
-                            "https://secure.gravatar.com/avatar/f78d1ea57fd11ad745f028584fc71774?s=24&d=mm&r=g",
+                            "https://dwpbucket2.s3.eu-central-1.amazonaws.com/wp-content/uploads/2022/01/27170402/profile.png",
                           ),
                         ),
                       ),

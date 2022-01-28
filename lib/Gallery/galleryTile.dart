@@ -143,7 +143,7 @@ class GalleryTile extends StatelessWidget {
                                               : convertToArabicNumber(story
                                                       .event_date
                                                       .toString()
-                                                      .split("/")[2]
+                                                      .split("/")[0]
                                                       .toString()) +
                                                   ' - ' +
                                                   story.locationName,

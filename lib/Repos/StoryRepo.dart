@@ -64,6 +64,7 @@ class StoryRepo {
         var story = Story.fromJson(e);
         if (story.author == id) {
           stories.add(story);
+          print(story.event_date);
         }
       });
       return stories;

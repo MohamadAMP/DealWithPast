@@ -468,7 +468,7 @@ class _MapPage extends State<MapPage> {
                                                     : convertToArabicNumber(
                                                         mainStory.event_date
                                                             .toString()
-                                                            .split("/")[2]
+                                                            .split("/")[0]
                                                             .toString()),
                                                 style: TextStyle(
                                                     color: Colors.white,

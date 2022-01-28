@@ -104,13 +104,14 @@ class _Body extends State<Body> {
           BottomNavigationBarItem(
             label: "",
             icon: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
                   width: 1,
                   height: 30,
                 ),
                 Container(
-                    padding: EdgeInsets.fromLTRB(30, 0, 40, 0),
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: Icon(Icons.photo_album_outlined)),
               ],
             ),
@@ -118,6 +119,7 @@ class _Body extends State<Body> {
           BottomNavigationBarItem(
             label: "",
             icon: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
                   width: 1,
@@ -133,7 +135,7 @@ class _Body extends State<Body> {
                   )),
                 ),
                 Container(
-                    padding: EdgeInsets.fromLTRB(30, 0, 40, 0),
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: Icon(Icons.timeline)),
               ],
             ),
@@ -141,6 +143,7 @@ class _Body extends State<Body> {
           BottomNavigationBarItem(
             label: "",
             icon: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
                   width: 1,
@@ -156,7 +159,7 @@ class _Body extends State<Body> {
                   )),
                 ),
                 Container(
-                    padding: EdgeInsets.fromLTRB(30, 0, 40, 0),
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: Icon(Icons.photo_library_outlined)),
               ],
             ),
@@ -164,6 +167,7 @@ class _Body extends State<Body> {
           BottomNavigationBarItem(
             label: "",
             icon: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
                   width: 1,
@@ -179,7 +183,7 @@ class _Body extends State<Body> {
                   )),
                 ),
                 Container(
-                    padding: EdgeInsets.fromLTRB(20, 0, 30, 0),
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: Icon(Icons.map_outlined)),
               ],
             ),

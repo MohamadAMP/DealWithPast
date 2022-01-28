@@ -325,7 +325,7 @@ class _BodyState extends State<Body> {
                                               : convertToArabicNumber(widget
                                                       .story.event_date
                                                       .toString()
-                                                      .split("/")[2]
+                                                      .split("/")[0]
                                                       .toString()) +
                                                   ' - ' +
                                                   widget.story.locationName,
@@ -412,7 +412,7 @@ class _BodyState extends State<Body> {
                             ? ""
                             : convertToArabicNumber(widget.story.event_date
                                 .toString()
-                                .split("/")[2]
+                                .split("/")[0]
                                 .toString()),
                         style:
                             const TextStyle(fontSize: 20, color: Colors.white),
