@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:interactive_map/Gallery/Gallery.dart';
+import 'package:interactive_map/Homepages/startPage.dart';
 import 'package:interactive_map/My%20Stories/Stories.dart';
 import 'package:interactive_map/My%20Stories/addStoryGuest.dart';
 import 'package:interactive_map/profilePage.dart';
@@ -29,13 +30,14 @@ class Body extends StatefulWidget {
 }
 
 class _Body extends State<Body> {
-  int currentIndex = 3;
+  int currentIndex = 4;
   Map<int, Widget> pageMap = {};
   Map<int, String> titleMap = {
     0: "أضف رواية",
     1: "الجدول الزمني",
     2: "عرض الروايات",
-    3: "Memory Map",
+    3: "الخارطه",
+    4: 'خارطه و ذاكرة'
   };
   late Widget appBarContent, appBarText;
   late TextEditingController appBarController;
@@ -72,7 +74,8 @@ class _Body extends State<Body> {
       0: AddStoryGuest(),
       1: const Timeline(),
       2: const Gallery(),
-      3: const MapPage()
+      3: const MapPage(),
+      4: const StartPage(),
     };
     setAppBar();
   }
@@ -172,6 +175,30 @@ class _Body extends State<Body> {
                 Container(
                   width: 1,
                   height: 30,
+                  decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.grey,
+                      Colors.black,
+                    ],
+                  )),
+                ),
+                Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: Icon(Icons.map_outlined)),
+              ],
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: "",
+            icon: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  width: 1,
+                  height: 30,
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                     begin: Alignment.topCenter,
@@ -183,8 +210,8 @@ class _Body extends State<Body> {
                   )),
                 ),
                 Container(
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: Icon(Icons.map_outlined)),
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Icon(Icons.info_outline)),
               ],
             ),
           ),

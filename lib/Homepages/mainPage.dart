@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:interactive_map/Gallery/Gallery.dart';
+import 'package:interactive_map/Homepages/startPage.dart';
 import 'package:interactive_map/My%20Stories/Stories.dart';
 import 'package:interactive_map/profilePage.dart';
 import 'package:interactive_map/Timeline/timeline.dart';
@@ -28,14 +29,15 @@ class Body extends StatefulWidget {
 }
 
 class _Body extends State<Body> {
-  int currentIndex = 4;
+  int currentIndex = 5;
   Map<int, Widget> pageMap = {};
   Map<int, String> titleMap = {
     0: "الحساب الشخصي",
     1: "الجدول الزمني",
     2: "رواياتي",
     3: "عرض الروايات",
-    4: "Memory Map",
+    4: "الخارطه",
+    5: 'خارطه و ذاكرة'
   };
   late Widget appBarContent, appBarText;
   late TextEditingController appBarController;
@@ -74,6 +76,7 @@ class _Body extends State<Body> {
       2: Stories(),
       3: Gallery(),
       4: MapPage(),
+      5: StartPage(),
     };
     setAppBar();
   }
@@ -207,6 +210,30 @@ class _Body extends State<Body> {
                 Container(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Icon(Icons.map_outlined)),
+              ],
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: "",
+            icon: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  width: 1,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: const [
+                      Colors.grey,
+                      Colors.black,
+                    ],
+                  )),
+                ),
+                Container(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Icon(Icons.info_outline)),
               ],
             ),
           ),
