@@ -26,12 +26,19 @@ class StartPage extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
             child: Directionality(
               textDirection: TextDirection.rtl,
-              child: Text('''خارطة وذاكرة
+              child: Text(
+                '''خارطة وذاكرة
 
 تطبيق إلكتروني طورته الجامعة الأميركية في بيروت، دائرة التاريخ وعلم الآثار بالتعاون مع جمعية محاربون من أجل السلام ومركز أمم للتوثيق والأبحاث، يضم مجموعة من المقابلات والروايات والصور، مع عدد من الأشخاص الذين عاشوا الحرب الأهلية اللبنانية ١٩٧٥-١٩٩٠ من مختلف الاتجاهات السياسية والمناطقية والجندرية.
 
 يضم التطبيق نحو خمسين رواية جمعها وسجلها فريق العمل خلال أكثر من سنة، وتشكل الخميرة الأولية، ومثال من أجل الدفع بمستخدمي التطبيق لمشاركة روايتهم الخاصة من أجل نشر ثقافة الحوار وصناعة السلام.
-'''),
+
+هذا التطبيق متاح للناس لاستخدام وإضافة قصصهم المتعلقة بالحرب الأهلية. كل ما عليك فعله هو الذهاب إلى "أضف رواية" وملء النموذج. بمجرد الموافقة على القصة ، سيتم نشرها على موقع الويب وتطبيق الهاتف المحمول
+''',
+                style: TextStyle(
+                  fontFamily: 'Baloo',
+                ),
+              ),
             ),
           ),
           const Center(
@@ -41,12 +48,16 @@ class StartPage extends StatelessWidget {
             child: Text('00961-'),
           ),
           const Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+            padding: EdgeInsets.fromLTRB(7, 0, 7, 0),
             child: Directionality(
               textDirection: TextDirection.ltr,
               child: Text(
-                  ''' The stories and interviews and other information mentioned in this platform do not necessarily reflect the views of the UNDP and the donor. The content of the stories is the sole responsibility of the interviewees
-'''),
+                '''\nThis was developed with the support of UNDP and PBSO.
+ The stories and interviews and other information mentioned in this platform do not necessarily reflect the views of the UNDP and the donor. The content of the stories is the sole responsibility of the interviewees
+''',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontFamily: 'Baloo', fontSize: 16),
+              ),
             ),
           ),
           const Padding(
@@ -54,10 +65,17 @@ class StartPage extends StatelessWidget {
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: Text(
-                  '''القصص والمقابلات والمعلومات الأخرى المذكورة في هذه المنصة لا تعكس بالضرورة وجهات نظر برنامج الأمم المتحدة الإنمائي والجهة المانحة. محتوى القصص هي مسؤولية الأشخاص الذين تمت مقابلتهم.'''),
+                '''تم تطوير هذا بدعم من برنامج الأمم المتحدة الإنمائي ومكتب دعم بناء السلام.
+القصص والمقابلات والمعلومات الأخرى المذكورة في هذه المنصة لا تعكس بالضرورة وجهات نظر برنامج الأمم المتحدة الإنمائي والجهة المانحة. محتوى القصص هي مسؤولية الأشخاص الذين تمت مقابلتهم. ''',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'Baloo',
+                ),
+              ),
             ),
           ),
-          Row(
+          Container(
+              child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
@@ -89,7 +107,22 @@ class StartPage extends StatelessWidget {
                 child: Image.asset('assets/img1.png', fit: BoxFit.contain),
               ),
             ],
-          )
+          )),
+          SizedBox(
+            height: 10,
+          ),
+          Center(
+              child: Text(
+            'Copyright 2022, all rights reserved to the United Nations Development Program',
+            style: TextStyle(fontFamily: 'Baloo', fontSize: 11),
+          )),
+          Center(
+              child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: const Text(
+                    'حقوق الطبع والنشر ٢٠٢٢, جميع الحقوق محفوظة لبرنامج الأمم المتحدة الإنمائي',
+                    style: TextStyle(fontFamily: 'Baloo', fontSize: 11),
+                  )))
         ],
       ),
     );

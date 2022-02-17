@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:interactive_map/ContactUs.dart';
 import 'package:interactive_map/Gallery/Gallery.dart';
 import 'package:interactive_map/Homepages/startPage.dart';
 import 'package:interactive_map/My%20Stories/Stories.dart';
@@ -29,15 +30,16 @@ class Body extends StatefulWidget {
 }
 
 class _Body extends State<Body> {
-  int currentIndex = 5;
+  int currentIndex = 6;
   Map<int, Widget> pageMap = {};
   Map<int, String> titleMap = {
-    0: "الحساب الشخصي",
-    1: "الجدول الزمني",
-    2: "رواياتي",
-    3: "عرض الروايات",
-    4: "الخارطه",
-    5: 'خارطه و ذاكرة'
+    0: "تواصل معنا",
+    1: "الحساب الشخصي",
+    2: "الجدول الزمني",
+    3: "رواياتي",
+    4: "عرض الروايات",
+    5: "الخارطه",
+    6: 'خارطه و ذاكرة'
   };
   late Widget appBarContent, appBarText;
   late TextEditingController appBarController;
@@ -71,12 +73,13 @@ class _Body extends State<Body> {
     appBarController = TextEditingController();
     // ignore: prefer_const_constructors
     pageMap = {
-      0: ProfileStart(),
-      1: Timeline(),
-      2: Stories(),
-      3: Gallery(),
-      4: MapPage(),
-      5: StartPage(),
+      0: ContactUs(),
+      1: ProfileStart(),
+      2: Timeline(),
+      3: Stories(),
+      4: Gallery(),
+      5: MapPage(),
+      6: StartPage(),
     };
     setAppBar();
   }
@@ -112,7 +115,31 @@ class _Body extends State<Body> {
               children: [
                 Container(),
                 Container(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
+                    child: Icon(Icons.contact_support)),
+              ],
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: "",
+            icon: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  width: 1,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: const [
+                      Colors.grey,
+                      Colors.black,
+                    ],
+                  )),
+                ),
+                Container(
+                    padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
                     child: Icon(Icons.person)),
               ],
             ),
@@ -136,7 +163,7 @@ class _Body extends State<Body> {
                   )),
                 ),
                 Container(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
                     child: Icon(Icons.timeline)),
               ],
             ),
@@ -160,7 +187,7 @@ class _Body extends State<Body> {
                   )),
                 ),
                 Container(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
                     child: Icon(Icons.photo_album_outlined)),
               ],
             ),
@@ -184,7 +211,7 @@ class _Body extends State<Body> {
                   )),
                 ),
                 Container(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
                     child: Icon(Icons.photo_library_outlined)),
               ],
             ),
@@ -208,7 +235,7 @@ class _Body extends State<Body> {
                   )),
                 ),
                 Container(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
                     child: Icon(Icons.map_outlined)),
               ],
             ),
@@ -232,7 +259,7 @@ class _Body extends State<Body> {
                   )),
                 ),
                 Container(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
                     child: Icon(Icons.info_outline)),
               ],
             ),
