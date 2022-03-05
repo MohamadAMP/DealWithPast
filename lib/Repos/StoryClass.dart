@@ -62,7 +62,7 @@ class Story {
         status = json['status'],
         featured_image = json['better_featured_image']['source_url'],
         author = json['author'],
-        locationName = json['acf']['map_location']['city'],
+        locationName = json['acf']['map_location']['name'],
         lat = json['acf']['map_location']['lat'],
         lng = json['acf']['map_location']['lng'];
 

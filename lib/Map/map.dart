@@ -443,7 +443,8 @@ class _MapPage extends State<MapPage> {
                                             SizedBox(
                                               width: 130,
                                               child: Text(
-                                                mainStory.locationName,
+                                                mainStory.locationName
+                                                    .toString(),
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 20,

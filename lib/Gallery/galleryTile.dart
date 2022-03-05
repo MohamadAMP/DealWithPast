@@ -146,7 +146,7 @@ class GalleryTile extends StatelessWidget {
                                                       .split("/")[0]
                                                       .toString()) +
                                                   ' - ' +
-                                                  story.locationName,
+                                                  story.locationName.toString(),
                                           style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.white,
