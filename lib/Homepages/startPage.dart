@@ -16,7 +16,7 @@ class StartPage extends StatelessWidget {
                   height: 200,
                   width: double.infinity,
                   child: Padding(
-                    child: Image.asset('assets/img6.png'),
+                    child: Image.asset('assets/logo.png'),
                     padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
                   ))),
           const SizedBox(
