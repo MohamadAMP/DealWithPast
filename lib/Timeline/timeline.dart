@@ -58,7 +58,7 @@ class _Timeline extends State<Timeline> {
   retrieveStories() async {
     try {
       token = await userRepo.Authenticate("admin", "admin_1234");
-      stories = await storyrepo.getStoriesTimeline(token);
+      stories = await storyrepo.getStories(token);
       stories.forEach((element) {
         if (element.event_date != "") {
           String year = element.event_date.toString().split("/")[0].toString();

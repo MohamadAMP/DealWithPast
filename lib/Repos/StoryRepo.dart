@@ -41,48 +41,48 @@ class StoryRepo {
     return stories;
   }
 
-  getStoriesTimeline(token) async {
-    final response = await http.get(
-        Uri.parse('http://dwp.world/wp-json/wp/v2/stories/?per_page=100'),
-        headers: {
-          "connection": "keep-alive",
-          'Authorization': 'Bearer $token',
-        });
-    int x = int.parse(response.headers['x-wp-totalpages']!);
+  // getStoriesTimeline(token) async {
+  //   final response = await http.get(
+  //       Uri.parse('http://dwp.world/wp-json/wp/v2/stories/?per_page=100'),
+  //       headers: {
+  //         "connection": "keep-alive",
+  //         'Authorization': 'Bearer $token',
+  //       });
+  //   int x = int.parse(response.headers['x-wp-totalpages']!);
 
-    List<Story> stories = [];
-    for (int i = 0; i < x; i++) {
-      final response = await http.get(
-          Uri.parse(
-              'http://dwp.world/wp-json/wp/v2/stories/?per_page=100&page=' +
-                  (i + 1).toString()),
-          headers: {
-            "connection": "keep-alive",
-            'Authorization': 'Bearer $token',
-          });
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-        data.forEach((e) {
-          if (e['acf']['event_date'] != '' &&
-              e['acf']['map_location'] != false) {
-            if (e['better_featured_image']['description'] != '') {
-              stories.add(Story.fromJson(e));
-            } else if (e['acf']['gallery'] != false) {
-              var gallery = e['acf']['gallery'];
-              gallery.forEach((q) {
-                print(q['mime_type']);
-                if (q['type'] == 'video') {
-                  stories.add(Story.fromJson(e));
-                }
-              });
-            }
-          }
-        });
-      }
-    }
-    print(stories.length);
-    return stories;
-  }
+  //   List<Story> stories = [];
+  //   for (int i = 0; i < x; i++) {
+  //     final response = await http.get(
+  //         Uri.parse(
+  //             'http://dwp.world/wp-json/wp/v2/stories/?per_page=100&page=' +
+  //                 (i + 1).toString()),
+  //         headers: {
+  //           "connection": "keep-alive",
+  //           'Authorization': 'Bearer $token',
+  //         });
+  //     if (response.statusCode == 200) {
+  //       var data = jsonDecode(response.body);
+  //       data.forEach((e) {
+  //         if (e['acf']['event_date'] != '' &&
+  //             e['acf']['map_location'] != false) {
+  //           if (e['better_featured_image']['description'] != '') {
+  //             stories.add(Story.fromJson(e));
+  //           } else if (e['acf']['gallery'] != false) {
+  //             var gallery = e['acf']['gallery'];
+  //             gallery.forEach((q) {
+  //               print(q['mime_type']);
+  //               if (q['type'] == 'video') {
+  //                 stories.add(Story.fromJson(e));
+  //               }
+  //             });
+  //           }
+  //         }
+  //       });
+  //     }
+  //   }
+  //   print(stories.length);
+  //   return stories;
+  // }
 
   getStoriesByAuthor(id, token) async {
     final response = await http.get(
