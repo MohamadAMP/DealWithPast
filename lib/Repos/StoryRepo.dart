@@ -9,38 +9,98 @@ import 'StoryClass.dart';
 
 class StoryRepo {
   getStories(token) async {
-    final response = await http
-        .get(Uri.parse('http://dwp.world/wp-json/wp/v2/stories'), headers: {
-      "connection": "keep-alive",
-      'Authorization': 'Bearer $token',
-    });
+    final response = await http.get(
+        Uri.parse('http://dwp.world/wp-json/wp/v2/stories/?per_page=100'),
+        headers: {
+          "connection": "keep-alive",
+          'Authorization': 'Bearer $token',
+        });
+    int x = int.parse(response.headers['x-wp-totalpages']!);
 
     List<Story> stories = [];
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      data.forEach((e) {
-        stories.add(Story.fromJson(e));
-      });
-      return stories;
-    } else {
-      return [];
+    for (int i = 0; i < x; i++) {
+      final response = await http.get(
+          Uri.parse(
+              'http://dwp.world/wp-json/wp/v2/stories/?per_page=100&page=' +
+                  (i + 1).toString()),
+          headers: {
+            "connection": "keep-alive",
+            'Authorization': 'Bearer $token',
+          });
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        data.forEach((e) {
+          if (e['acf']['event_date'] != '' &&
+              e['acf']['map_location'] != false) {
+            stories.add(Story.fromJson(e));
+          }
+        });
+      }
     }
+    print(stories.length);
+    return stories;
   }
 
+  // getStoriesTimeline(token) async {
+  //   final response = await http.get(
+  //       Uri.parse('http://dwp.world/wp-json/wp/v2/stories/?per_page=100'),
+  //       headers: {
+  //         "connection": "keep-alive",
+  //         'Authorization': 'Bearer $token',
+  //       });
+  //   int x = int.parse(response.headers['x-wp-totalpages']!);
+
+  //   List<Story> stories = [];
+  //   for (int i = 0; i < x; i++) {
+  //     final response = await http.get(
+  //         Uri.parse(
+  //             'http://dwp.world/wp-json/wp/v2/stories/?per_page=100&page=' +
+  //                 (i + 1).toString()),
+  //         headers: {
+  //           "connection": "keep-alive",
+  //           'Authorization': 'Bearer $token',
+  //         });
+  //     if (response.statusCode == 200) {
+  //       var data = jsonDecode(response.body);
+  //       data.forEach((e) {
+  //         if (e['acf']['event_date'] != '' &&
+  //             e['acf']['map_location'] != false) {
+  //           if (e['better_featured_image']['description'] != '') {
+  //             stories.add(Story.fromJson(e));
+  //           } else if (e['acf']['gallery'] != false) {
+  //             var gallery = e['acf']['gallery'];
+  //             gallery.forEach((q) {
+  //               print(q['mime_type']);
+  //               if (q['type'] == 'video') {
+  //                 stories.add(Story.fromJson(e));
+  //               }
+  //             });
+  //           }
+  //         }
+  //       });
+  //     }
+  //   }
+  //   print(stories.length);
+  //   return stories;
+  // }
+
   getStoriesByAuthor(id, token) async {
-    final response = await http
-        .get(Uri.parse('http://dwp.world/wp-json/wp/v2/stories'), headers: {
-      "connection": "keep-alive",
-      'Authorization': 'Bearer $token',
-    });
+    final response = await http.get(
+        Uri.parse('http://dwp.world/wp-json/wp/v2/stories/?per_page=100'),
+        headers: {
+          "connection": "keep-alive",
+          'Authorization': 'Bearer $token',
+        });
 
     List<Story> stories = [];
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       data.forEach((e) {
-        var story = Story.fromJson(e);
-        if (story.author == id) {
-          stories.add(story);
+        if (e['acf']['event_date'] != '' && e['acf']['map_location'] != false) {
+          var story = Story.fromJson(e);
+          if (story.author == id) {
+            stories.add(story);
+          }
         }
       });
       return stories;
@@ -51,7 +111,8 @@ class StoryRepo {
 
   getStoriesPendingByAuthor(id, token) async {
     final response = await http.get(
-        Uri.parse('https://dwp.world/wp-json/wp/v2/stories/?status=pending'),
+        Uri.parse(
+            'https://dwp.world/wp-json/wp/v2/stories/?per_page=100&status=pending'),
         headers: {
           "connection": "keep-alive",
           'Authorization': 'Bearer $token',
@@ -61,10 +122,12 @@ class StoryRepo {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       data.forEach((e) {
-        var story = Story.fromJson(e);
-        if (story.author == id) {
-          stories.add(story);
-          print(story.event_date);
+        if (e['acf']['event_date'] != '' && e['acf']['map_location'] != false) {
+          var story = Story.fromJson(e);
+          if (story.author == id) {
+            stories.add(story);
+            print(story.event_date);
+          }
         }
       });
       return stories;
@@ -77,7 +140,7 @@ class StoryRepo {
     UserRepo userRepo = UserRepo();
     var token = await userRepo.AuthenticateOther(username, password);
 
-    String url = 'https://dwp.world/wp-json/wp/v2/stories';
+    String url = 'https://dwp.world/wp-json/wp/v2/stories/';
 
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
