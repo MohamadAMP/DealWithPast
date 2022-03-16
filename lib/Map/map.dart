@@ -40,7 +40,7 @@ class MapPage extends StatefulWidget {
 class _MapPage extends State<MapPage> {
   StoryRepo storyrepo = StoryRepo();
   static const _initialCameraPosition =
-      CameraPosition(target: LatLng(33.8547, 35.8623), zoom: 8.5, bearing: 10);
+      CameraPosition(target: LatLng(33.8547, 35.9623), zoom: 8.5, bearing: 10);
   late GoogleMapController _controller;
   List<Story> stories = [];
   List<UserData> userData = [];
@@ -365,10 +365,13 @@ class _MapPage extends State<MapPage> {
         body: Stack(
       children: [
         GoogleMap(
-          minMaxZoomPreference: MinMaxZoomPreference(8.5, 20),
+          minMaxZoomPreference: MinMaxZoomPreference(8.9, 20),
           cameraTargetBounds: CameraTargetBounds(LatLngBounds(
-              northeast: LatLng(34.6566324, 36.6896525),
-              southwest: LatLng(33.4569738, 35.4935346))),
+              northeast: LatLng(34.080595, 35.999283),
+              southwest: LatLng(34.005073, 35.815629))),
+          // cameraTargetBounds: CameraTargetBounds(LatLngBounds(
+          //     northeast: LatLng(34.0000001, 35.840000),
+          //     southwest: LatLng(34.0000000, 35.839999))),
           initialCameraPosition: _initialCameraPosition,
           myLocationButtonEnabled: false,
           zoomControlsEnabled: false,
