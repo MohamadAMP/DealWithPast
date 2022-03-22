@@ -30,7 +30,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
    <application
         android:usesCleartextTraffic="true"
-        android:label="خارطة وذاكرة"
+        android:label="Memory Map"
         android:icon="@mipmap/ic_launcher">
         
         <activity
