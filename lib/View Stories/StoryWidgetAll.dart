@@ -43,7 +43,7 @@ enum SocialMedia { facebook, twitter, whatsapp, instagram }
 
 class _StoryWidgetAllState extends State<StoryWidgetAll> {
   Future share(SocialMedia socialPlatform) async {
-    final text = widget.story.title;
+    final text = widget.story.title + ' ';
     final urlShare = Uri.encodeComponent(widget.story.link);
 
     final urls = {

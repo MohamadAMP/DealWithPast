@@ -539,30 +539,30 @@ class _MapPage extends State<MapPage> {
                             ]))))
               ]))
             : Container(),
-        nearMe
-            ? Container(
-                padding: EdgeInsets.all(10),
-                child: ElevatedButton(
-                    onPressed: () async {
-                      setState(() {
-                        _goToAll();
-                        nearMe = false;
-                      });
-                    },
-                    child: Text("كل الروايات")))
-            : Container(
-                padding: EdgeInsets.all(10),
-                child: ElevatedButton(
-                    onPressed: () async {
-                      if (currLat == 0) {
-                        await locationAccess();
-                      }
-                      setState(() {
-                        _goToLoc();
-                        nearMe = true;
-                      });
-                    },
-                    child: Text("روايات قريبة"))),
+        // nearMe
+        //     ? Container(
+        //         padding: EdgeInsets.all(10),
+        //         child: ElevatedButton(
+        //             onPressed: () async {
+        //               setState(() {
+        //                 _goToAll();
+        //                 nearMe = false;
+        //               });
+        //             },
+        //             child: Text("كل الروايات")))
+        //     : Container(
+        //         padding: EdgeInsets.all(10),
+        //         child: ElevatedButton(
+        //             onPressed: () async {
+        //               if (currLat == 0) {
+        //                 await locationAccess();
+        //               }
+        //               setState(() {
+        //                 _goToLoc();
+        //                 nearMe = true;
+        //               });
+        //             },
+        //             child: Text("روايات قريبة"))),
         showPageGrouped
             ? Container(
                 child:

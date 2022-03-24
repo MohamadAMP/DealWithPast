@@ -41,12 +41,12 @@ class StartPage extends StatelessWidget {
               ),
             ),
           ),
-          const Center(
-            child: Text('Info@Dwp.World'),
-          ),
-          const Center(
-            child: Text('00961-'),
-          ),
+          // const Center(
+          //   child: Text('Info@Dwp.World'),
+          // ),
+          // const Center(
+          //   child: Text('00961-'),
+          // ),
           const Padding(
             padding: EdgeInsets.fromLTRB(7, 0, 7, 0),
             child: Directionality(
