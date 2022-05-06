@@ -5,11 +5,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:interactive_map/Backend/auth.dart';
+import 'package:interactive_map/Homepages/mainPageAppleSignIn.dart';
 import 'package:interactive_map/Repos/UserRepo.dart';
 import 'package:interactive_map/Repos/media.dart';
 import 'package:interactive_map/Homepages/mainPage.dart';
 import 'package:interactive_map/Homepages/mainPageGuest.dart';
 import 'package:interactive_map/Map/map.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AddStoryGuest extends StatelessWidget {
@@ -266,6 +268,34 @@ class _BodyState extends State<Body> {
             ),
             SizedBox(height: 100),
             Container(child: loginButton()),
+            SizedBox(
+              height: 20,
+            ),
+            Platform.isIOS
+                ? Container(
+                    height: 60,
+                    width: 250,
+                    child: SignInWithAppleButton(
+                      text: 'سجل مع Apple',
+                      style: SignInWithAppleButtonStyle.black,
+                      borderRadius: BorderRadius.circular(15),
+                      onPressed: () async {
+                        final credential =
+                            await SignInWithApple.getAppleIDCredential(
+                          scopes: [
+                            AppleIDAuthorizationScopes.email,
+                            AppleIDAuthorizationScopes.fullName,
+                          ],
+                        );
+
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WelcomePageApple(),
+                            ));
+                      },
+                    ))
+                : Container()
           ],
         ))));
   }
