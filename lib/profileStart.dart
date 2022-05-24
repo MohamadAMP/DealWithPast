@@ -13,6 +13,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:image/image.dart' as IMG;
+import 'package:interactive_map/Backend/auth.dart';
 import 'package:interactive_map/Repos/UserInfo.dart';
 import 'package:interactive_map/Repos/UserRepo.dart';
 import 'package:interactive_map/profilePage.dart';
@@ -36,6 +37,8 @@ class _ProfileStart extends State<ProfileStart> {
   late var url;
 
   getImage() async {
+    var eml = FirebaseAuth.instance.currentUser!.email.toString();
+    var tst = eml.split("@")[0];
     var token = await userRepoTok.Authenticate("admin", "admin_1234");
     var userInfo = await userRepo.getUserInfoByEmail(
         FirebaseAuth.instance.currentUser!.email.toString(), token);
