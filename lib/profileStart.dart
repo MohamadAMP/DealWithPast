@@ -38,8 +38,7 @@ class _ProfileStart extends State<ProfileStart> {
   getImage() async {
     var token = await userRepoTok.Authenticate("admin", "admin_1234");
     var userInfo = await userRepo.getUserInfoByEmail(
-        FirebaseAuth.instance.currentUser!.email.toString().split("@")[0],
-        token);
+        FirebaseAuth.instance.currentUser!.email.toString(), token);
     return userInfo[0].image;
   }
 

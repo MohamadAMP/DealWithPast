@@ -1,8 +1,10 @@
 // ignore_for_file: file_names
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
+// import 'package:alt_http/alt_http.dart';
 import 'UserClass.dart';
 
 class UserInfoRepo {
@@ -30,37 +32,34 @@ class UserInfoRepo {
   }
 
   getUserInfoByEmail(email, token) async {
+//     var client = AltHttpClient();
+
+//     HttpClientRequest request = await client.postUrl(Uri.parse(
+//         "http://dwp.world/wp-json/wp/v2/users?search=ronisayegh@hotmail.com"));
+// request.abort();
+//     HttpClientResponse response = await request.close();
+//     final stringData = await response.transform(utf8.decoder).join();
+//     print(stringData);
+
     final response = await http.get(
-        Uri.parse('http://dwp.world/wp-json/wp/v2/users/?per_page=100'),
+        Uri.parse('http://dwp.world/wp-json/wp/v2/users?search=' + email),
         headers: {
           "connection": "keep-alive",
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
+          'content-type': 'application/json',
+          'accept': 'application/json',
+          'authorization': 'Bearer $token',
         });
-    int x = int.parse(response.headers['x-wp-totalpages']!);
 
     List<UserData> userInfo = [];
-    for (int i = 0; i < x; i++) {
-      final response = await http.get(
-          Uri.parse('http://dwp.world/wp-json/wp/v2/users/?per_page=100&page=' +
-              (i + 1).toString()),
-          headers: {
-            "connection": "keep-alive",
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer $token',
-          });
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-        data.forEach((e) {
-          var user = UserData.fromJson(e);
-          if (user.name == email) {
-            userInfo.add(user);
-          }
-        });
-      }
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      print(data);
+
+      var user = UserData.fromJson(data[0]);
+
+      userInfo.add(user);
+
+      return userInfo;
     }
-    return userInfo;
   }
 }
