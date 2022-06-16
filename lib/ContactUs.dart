@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:interactive_map/Homepages/mainPageGuest.dart';
 
 import 'Homepages/mainPage.dart';
 
@@ -191,8 +192,10 @@ class _ContactUsState extends State<ContactUs> {
                     isHTML: false,
                   );
                   await FlutterEmailSender.send(email);
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => WelcomePage()));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WelcomePageGuest()));
                 }
               },
               color: Color(0xFFFFDE73),

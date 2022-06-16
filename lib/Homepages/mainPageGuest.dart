@@ -31,15 +31,15 @@ class Body extends StatefulWidget {
 }
 
 class _Body extends State<Body> {
-  int currentIndex = 5;
+  int currentIndex = 4;
   Map<int, Widget> pageMap = {};
   Map<int, String> titleMap = {
     0: "تواصل معنا",
-    1: "أضف رواية",
-    2: "الجدول الزمني",
-    3: "عرض الروايات",
-    4: "الخارطه",
-    5: 'خارطه و ذاكرة'
+    // 1: "أضف رواية",
+    1: "الجدول الزمني",
+    2: "عرض الروايات",
+    3: "الخارطه",
+    4: 'خارطه و ذاكرة'
   };
   late Widget appBarContent, appBarText;
   late TextEditingController appBarController;
@@ -74,11 +74,11 @@ class _Body extends State<Body> {
     // ignore: prefer_const_constructors
     pageMap = {
       0: const ContactUs(),
-      1: AddStoryGuest(),
-      2: const Timeline(),
-      3: const Gallery(),
-      4: const MapPage(),
-      5: const StartPage(),
+      // 1: AddStoryGuest(),
+      1: const Timeline(),
+      2: const Gallery(),
+      3: const MapPage(),
+      4: const StartPage(),
     };
     setAppBar();
   }
@@ -119,30 +119,30 @@ class _Body extends State<Body> {
               ],
             ),
           ),
-          BottomNavigationBarItem(
-            label: "",
-            icon: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  width: 1,
-                  height: 30,
-                  decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.grey,
-                      Colors.black,
-                    ],
-                  )),
-                ),
-                Container(
-                    padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
-                    child: Icon(Icons.photo_album_outlined)),
-              ],
-            ),
-          ),
+          // BottomNavigationBarItem(
+          //   label: "",
+          //   icon: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //     children: [
+          //       Container(
+          //         width: 1,
+          //         height: 30,
+          //         decoration: const BoxDecoration(
+          //             gradient: LinearGradient(
+          //           begin: Alignment.topCenter,
+          //           end: Alignment.bottomCenter,
+          //           colors: [
+          //             Colors.grey,
+          //             Colors.black,
+          //           ],
+          //         )),
+          //       ),
+          //       Container(
+          //           padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+          //           child: Icon(Icons.photo_album_outlined)),
+          //     ],
+          //   ),
+          // ),
           BottomNavigationBarItem(
             label: "",
             icon: Row(
