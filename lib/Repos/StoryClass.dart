@@ -27,15 +27,11 @@ class Story {
 
   Story(
       this.title,
-      // this.mediaType,
-      // this.source_url,
       this.description,
       this.date_submitted,
       this.event_date,
       this.gallery,
       this.targeted_person,
-      // this.video,
-      // this.audio,
       this.status,
       this.featured_image,
       this.author,
@@ -47,17 +43,12 @@ class Story {
 
   Story.fromJson(Map<String, dynamic> json)
       : title = json['title']['rendered'],
-        // mediaType = json['acf']['audio']['type'],
-        // source_url = json['acf']['audio']['url'],
         description = json['content']['rendered'],
         date_submitted = json['date_gmt'],
-        // event_date = json['date'],
         event_date = json['acf']['event_date'],
         gallery = json['acf']['gallery'],
         anonymous = json['acf']['anonymous'],
         targeted_person = json['acf']['targeted_person'],
-        // video = json['acf']['video'],
-        // audio = json['acf']['audio'],
         link = json['link'],
         status = json['status'],
         featured_image = json['better_featured_image']['source_url'],
@@ -68,12 +59,17 @@ class Story {
 
   Map<String, dynamic> toJson() => {
         'title': title,
-        // 'mediaType': mediaType,
         'description': description,
-        'date': date_submitted,
+        'date_submitted': date_submitted,
         'event_date': event_date,
-        // 'source_url': source_url,
-        'status': status,
+        'gallery': gallery,
+        'anonymous': anonymous,
+        'targeted_person': targeted_person,
+        'link': link,
+        'featured_image': featured_image,
         'author': author,
+        'locationName': locationName,
+        'lat': lat,
+        'lng': lng,
       };
 }

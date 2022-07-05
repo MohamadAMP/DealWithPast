@@ -1,6 +1,8 @@
 // ignore_for_file: unused_import, library_prefixes, prefer_typing_uninitialized_variables, await_only_futures, unnecessary_this, avoid_print, duplicate_ignore, avoid_function_literals_in_foreach_calls, prefer_const_constructors, avoid_unnecessary_containers, sized_box_for_whitespace, empty_catches
 //
 // import 'dart:html';
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -29,6 +31,7 @@ import '../Repos/UserInfo.dart';
 import '../Repos/UserRepo.dart';
 import '../View Stories/StoryWidgetImgOnly.dart';
 import "package:collection/collection.dart";
+import 'package:path_provider/path_provider.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({Key? key}) : super(key: key);
@@ -66,10 +69,37 @@ class _MapPage extends State<MapPage> {
   List<dynamic> groupedStories = [];
   List<dynamic> groupedMain = [];
 
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+
+    return directory.path;
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    return File('$path/stories.json');
+  }
+
+  Future<dynamic> readCounter() async {
+    try {
+      var stor = [];
+      final file = await _localFile;
+      final contents = await file.readAsString();
+      var data = await json.decode(contents);
+      for (int i = 0; i < data.length; i++) {
+        stories.add(Story.fromJson(data[i]));
+      }
+      print(stor);
+      return stor;
+    } catch (e) {
+      return 0;
+    }
+  }
+
   retrieveStories() async {
     try {
-      token = await userRepo.Authenticate("admin", "admin_1234");
-      stories = await storyrepo.getStories(token);
+      await readCounter();
+      print(stories);
       var newMap = groupBy(stories, (Story s) => s.locationName);
       for (var i = 0; i < newMap.length; i++) {
         groupedStories.add(newMap.values.elementAt(i));
