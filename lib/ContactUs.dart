@@ -1,10 +1,11 @@
 // ignore_for_file: file_names, unnecessary_const
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:interactive_map/Homepages/mainPageGuest.dart';
 
 import 'Homepages/mainPage.dart';
+import 'Homepages/mainPageGuest.dart';
 
 class ContactUs extends StatefulWidget {
   const ContactUs({Key? key}) : super(key: key);
@@ -113,7 +114,6 @@ class _ContactUsState extends State<ContactUs> {
                           caseSensitive: false,
                           multiLine: false,
                         );
-                        print(regExp.hasMatch(value!));
                         if (value == null ||
                             value.isEmpty ||
                             !regExp.hasMatch(value)) {
@@ -186,16 +186,21 @@ class _ContactUsState extends State<ContactUs> {
                   final Email email = Email(
                     body: questionController.text,
                     subject: 'Deal With Past Support',
-                    recipients: ['rf09@aub.edu.lb'],
+                    recipients: ['mrs23@mail.aub.edu'],
                     cc: [''],
                     bcc: [''],
                     isHTML: false,
                   );
                   await FlutterEmailSender.send(email);
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => WelcomePageGuest()));
+                  if (FirebaseAuth.instance.currentUser != null) {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => WelcomePage()));
+                  } else {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => WelcomePageGuest()));
+                  }
                 }
               },
               color: Color(0xFFFFDE73),

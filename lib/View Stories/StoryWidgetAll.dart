@@ -466,12 +466,10 @@ class _BodyState extends State<Body> {
                       'Image') {
                     setState(() {
                       show = false;
-                      print(show);
                     });
                   } else {
                     setState(() {
                       show = true;
-                      print(show);
                     });
                   }
                 },

@@ -236,12 +236,10 @@ class _BodyState extends State<Body> {
                       'Image') {
                     setState(() {
                       show = false;
-                      print(carousel);
                     });
                   } else {
                     setState(() {
                       show = true;
-                      print(carousel);
                     });
                   }
                 },
