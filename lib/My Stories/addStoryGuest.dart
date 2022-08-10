@@ -223,11 +223,14 @@ class _BodyState extends State<Body> {
 
   Widget loginButton() {
     // ignore: deprecated_member_use
-    return OutlineButton(
+    return OutlinedButton(
         onPressed: this.click,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        splashColor: Colors.grey[600],
-        borderSide: BorderSide(color: Colors.grey),
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  side: BorderSide(color: Colors.grey))),
+        ),
         child: Container(
           child: Padding(
             padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
