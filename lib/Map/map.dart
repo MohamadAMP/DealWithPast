@@ -89,7 +89,6 @@ class _MapPage extends State<MapPage> {
       for (int i = 0; i < data.length; i++) {
         stories.add(Story.fromJson(data[i]));
       }
-      print(stor);
       return stor;
     } catch (e) {
       return 0;
@@ -99,7 +98,6 @@ class _MapPage extends State<MapPage> {
   retrieveStories() async {
     try {
       await readCounter();
-      print(stories);
       var newMap = groupBy(stories, (Story s) => s.locationName);
       for (var i = 0; i < newMap.length; i++) {
         groupedStories.add(newMap.values.elementAt(i));

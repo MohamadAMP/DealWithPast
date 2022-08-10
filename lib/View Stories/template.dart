@@ -42,11 +42,16 @@ class _StoryWidgetTemplateState extends State<StoryWidgetTemplate> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // ignore: deprecated_member_use
-                        OutlineButton(
-                            color: Colors.transparent,
-                            borderSide: BorderSide(color: Colors.transparent),
+                        OutlinedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      side: BorderSide(color: Colors.grey))),
+                            ),
                             onPressed: () {},
-                            splashColor: Colors.grey[600],
+
                             // borderSide: BorderSide(color: Colors.grey),
                             child: Container(
                               child: Image(
@@ -56,11 +61,15 @@ class _StoryWidgetTemplateState extends State<StoryWidgetTemplate> {
                                 width: 45,
                               ),
                             )),
-                        OutlineButton(
-                            color: Colors.transparent,
-                            borderSide: BorderSide(color: Colors.transparent),
+                        OutlinedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      side: BorderSide(color: Colors.grey))),
+                            ),
                             onPressed: () {},
-                            splashColor: Colors.grey[600],
                             child: Container(
                               child: Image(
                                   fit: BoxFit.fitWidth,
@@ -78,11 +87,15 @@ class _StoryWidgetTemplateState extends State<StoryWidgetTemplate> {
                       children: [
                         // ignore: deprecated_member_use
 
-                        OutlineButton(
-                            color: Colors.transparent,
-                            borderSide: BorderSide(color: Colors.transparent),
+                        OutlinedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      side: BorderSide(color: Colors.grey))),
+                            ),
                             onPressed: () {},
-                            splashColor: Colors.grey[600],
                             child: Container(
                               child: Image(
                                   fit: BoxFit.fitWidth,
@@ -90,11 +103,15 @@ class _StoryWidgetTemplateState extends State<StoryWidgetTemplate> {
                                   height: 45,
                                   width: 45),
                             )),
-                        OutlineButton(
-                            color: Colors.transparent,
-                            borderSide: BorderSide(color: Colors.transparent),
+                        OutlinedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      side: BorderSide(color: Colors.grey))),
+                            ),
                             onPressed: () {},
-                            splashColor: Colors.grey[600],
                             child: Container(
                               child: Image(
                                   fit: BoxFit.fitWidth,
