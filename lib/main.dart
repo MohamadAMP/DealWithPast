@@ -7,9 +7,12 @@ import 'package:interactive_map/Homepages/mainPage.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:interactive_map/Homepages/mainPageGuest.dart';
 
+import 'Backend/auth.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await signOut();
   runApp(MyApp());
 }
 
