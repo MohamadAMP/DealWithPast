@@ -40,7 +40,6 @@ class UserInfoRepo {
 //     HttpClientResponse response = await request.close();
 //     final stringData = await response.transform(utf8.decoder).join();
 //     print(stringData);
-
     final response = await http.get(
         Uri.parse('http://dwp.world/wp-json/wp/v2/users?search=' + email),
         headers: {
@@ -53,7 +52,6 @@ class UserInfoRepo {
     List<UserData> userInfo = [];
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-
       var user = UserData.fromJson(data[0]);
 
       userInfo.add(user);

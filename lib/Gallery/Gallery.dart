@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, unused_import, library_prefixes, prefer_typing_uninitialized_variables, avoid_print, empty_catches
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -14,6 +15,8 @@ import 'package:http/http.dart' as http;
 import 'package:image/image.dart' as IMG;
 import 'package:interactive_map/Repos/UserRepo.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import "package:collection/collection.dart";
+import 'package:path_provider/path_provider.dart';
 
 import '../Repos/StoryClass.dart';
 import '../Repos/StoryRepo.dart';
@@ -43,11 +46,37 @@ class _Gallery extends State<Gallery> {
   UserRepo userRepo = UserRepo();
   var token;
   // late Coordinates coordinates;
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+
+    return directory.path;
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    return File('$path/stories.json');
+  }
+
+  Future<dynamic> readCounter() async {
+    try {
+      var stor = [];
+      final file = await _localFile;
+      final contents = await file.readAsString();
+      var data = await json.decode(contents);
+      for (int i = 0; i < data.length; i++) {
+        stories.add(Story.fromJson(data[i]));
+      }
+      return stor;
+    } catch (e) {
+      return 0;
+    }
+  }
 
   retrieveStories() async {
     try {
-      token = await userRepo.Authenticate("admin", "admin_1234");
-      stories = await storyrepo.getStories(token);
+      await readCounter();
+      // token = await userRepo.Authenticate("admin", "admin_1234");
+      // stories = await storyrepo.getStories(token);
       return stories;
     } catch (e) {}
   }
