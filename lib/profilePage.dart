@@ -67,7 +67,8 @@ class _ProfileState extends State<Profile> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                             fit: BoxFit.fill,
-                            image: NetworkImage(widget.url),
+                            image: NetworkImage(
+                                'https://dwpbucket2.s3.eu-central-1.amazonaws.com/wp-content/uploads/2022/01/27170402/profile.png'),
                           ),
                         ),
                       ),
