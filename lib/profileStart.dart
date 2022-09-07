@@ -43,7 +43,7 @@ class _ProfileStart extends State<ProfileStart> {
     var userInfo = await userRepo.getUserInfoByEmail(
         FirebaseAuth.instance.currentUser!.email.toString().split("@")[0],
         token);
-    return userInfo[0].image;
+    return null;
   }
 
   @override
