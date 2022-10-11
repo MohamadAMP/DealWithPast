@@ -87,37 +87,10 @@ class _BodyState extends State<Body> {
                                   child: Directionality(
                                 textDirection: TextDirection.ltr,
                                 child: Text(
-                                  'The stories and interviews and other information mentioned in this platform do not necessarily reflect the views of the UNDP and the donor. The content of the stories is the sole responsibility of the interviewees.',
+                                  'ليس لديك حساب على منصتنا',
                                   style: TextStyle(fontSize: 15),
                                 ),
                               )),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                  child: Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: Text(
-                                    'القصص والمقابلات والمعلومات الأخرى المذكورة في هذه المنصة لا تعكس بالضرورة وجهات نظر برنامج الأمم المتحدة الإنمائي والجهة المانحة. محتوى القصص هي مسؤولية الأشخاص الذين تمت مقابلتهم.',
-                                    style: TextStyle(fontSize: 15)),
-                              )),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Divider(
-                                color: Colors.black,
-                                thickness: 2,
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                child: Center(
-                                    child: Text(
-                                  "عليك الموافقة على الشروط قبل الدخول إلى حسابك",
-                                  style: TextStyle(fontSize: 15),
-                                )),
-                              ),
                               SizedBox(
                                 height: 10,
                               ),
@@ -126,84 +99,29 @@ class _BodyState extends State<Body> {
                                   text: TextSpan(
                                     children: [
                                       TextSpan(
-                                        text: 'لقراءة الشروط',
+                                        text:
+                                            ':لإنشاء حساب اضغط على الرابط التالي',
                                         style: TextStyle(
                                             color: Colors.black, fontSize: 15),
                                       ),
                                       TextSpan(
-                                        text: ' اضغط هنا',
+                                        text: 'https://dwp.world/',
                                         style: TextStyle(
                                             color: Colors.blue,
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold),
                                         recognizer: TapGestureRecognizer()
-                                          ..onTap = () {
-                                            launch(
-                                                'https://dwp.world/terms-and-conditions/');
+                                          ..onTap = () async {
+                                            await signOut();
+                                            launchUrl(
+                                              Uri.parse('https://dwp.world/'),
+                                            );
                                           },
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  TextButton(
-                                    onPressed: () async => {
-                                      token = await userRepo.Authenticate(
-                                          "admin", "admin_1234"),
-                                      await userRepo.Login(
-                                          FirebaseAuth
-                                              .instance.currentUser!.uid,
-                                          FirebaseAuth
-                                              .instance.currentUser!.email
-                                              .toString(),
-                                          FirebaseAuth
-                                              .instance.currentUser!.email
-                                              .toString()
-                                              .split('@')[0],
-                                          token),
-                                      Navigator.pop(context),
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => WelcomePage(),
-                                          ))
-                                    },
-                                    child: Text(
-                                      "قبول الشروط",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    style: TextButton.styleFrom(
-                                      primary: Colors.black,
-                                      backgroundColor: Color(0xFFCCAF41),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () async => {
-                                      await signOut(),
-                                      Navigator.pop(context)
-                                    },
-                                    child: Text(
-                                      "عدم قبول الشروط",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    style: TextButton.styleFrom(
-                                      primary: Colors.black,
-                                      backgroundColor: Color(0xFFCCAF41),
-                                    ),
-                                  ),
-                                ],
-                              )
                             ])));
                       }
                     }
