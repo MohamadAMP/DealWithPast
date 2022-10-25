@@ -62,6 +62,11 @@ Future<void> writeCounter(dynamic stories) async {
 }
 
 retrieveUser() async {
+  // UserRepo userRepo = UserRepo();
+  // final UserInfoRepo _userRepo = UserInfoRepo();
+  // var token = await userRepo.Authenticate("admin", "admin_1234");
+  // var temp = await _userRepo.getUserInfoByEmail("msabra1731", token);
+  // print(temp.runtimeType);
   try {
     UserRepo userRepo = UserRepo();
     StoryRepo storyrepo = StoryRepo();
