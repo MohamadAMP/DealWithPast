@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:interactive_map/Backend/auth.dart';
 import 'package:interactive_map/Homepages/mainPageAppleSignIn.dart';
+import 'package:interactive_map/Repos/UserInfo.dart';
 import 'package:interactive_map/Repos/UserRepo.dart';
 import 'package:interactive_map/Repos/media.dart';
 import 'package:interactive_map/Homepages/mainPage.dart';
@@ -30,6 +31,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   UserRepo userRepo = UserRepo();
+  final UserInfoRepo _userRepo = UserInfoRepo();
   Media media = Media();
   var agreed = false;
 
@@ -41,9 +43,11 @@ class _BodyState extends State<Body> {
   }
 
   posting(dynamic user) async {
-    if (await userRepo.AuthenticateOther(
-            user!.email.toString().split('@')[0], user.uid) ==
-        false) {
+    token = await userRepo.Authenticate("admin", "admin_1234");
+    if ((await _userRepo.getUserInfoByEmail(
+                user!.email.toString().split('@')[0], token))
+            .toString() ==
+        "[]") {
       return false;
     } else {
       Navigator.pop(context);

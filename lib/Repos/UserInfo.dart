@@ -52,11 +52,16 @@ class UserInfoRepo {
     List<UserData> userInfo = [];
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      var user = UserData.fromJson(data[0]);
+      print(data.toString());
+      if (data.toString() == "[]") {
+        return;
+      } else {
+        var user = UserData.fromJson(data[0]);
 
-      userInfo.add(user);
+        userInfo.add(user);
 
-      return userInfo;
+        return userInfo;
+      }
     }
   }
 }

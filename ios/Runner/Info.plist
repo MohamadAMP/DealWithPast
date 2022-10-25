@@ -35,8 +35,9 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>sms</string>
+		<string>tel</string>
 		<string>https</string>
-		<string>http</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
