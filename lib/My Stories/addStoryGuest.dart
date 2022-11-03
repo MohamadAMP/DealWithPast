@@ -44,17 +44,33 @@ class _BodyState extends State<Body> {
 
   posting(dynamic user) async {
     token = await userRepo.Authenticate("admin", "admin_1234");
-    if ((await _userRepo.getUserInfoByEmail(user!.email.toString(), token)) ==
+    print(
+      user!.providerData[0].displayName
+          .toString()
+          .replaceAll(RegExp('\\s+'), "")
+          .toLowerCase(),
+    );
+    if ((await _userRepo.getUserInfoByEmail(
+            user!.providerData[0].email, token)) ==
         0) {
       return false;
     } else {
       Navigator.pop(context);
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => WelcomePage(),
-          ));
-      return true;
+      if (Platform.isIOS) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => WelcomePageApple(),
+            ));
+        return true;
+      } else {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => WelcomePage(),
+            ));
+        return true;
+      }
     }
   }
 
@@ -211,14 +227,32 @@ class _BodyState extends State<Body> {
                           ],
                         );
 
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => WelcomePageApple(),
-                            ));
+                        final oauthCredential = OAuthProvider("apple.com")
+                            .credential(idToken: credential.identityToken
+                                // idToken: credential.
+                                // rawNonce: rawNonce,
+                                );
+
+                        final userCredential = await FirebaseAuth.instance
+                            .signInWithCredential(oauthCredential);
+                        print(userCredential.user?.providerData[0].displayName);
+                        // User user = ;
+                        // print(credential.givenName);
+                        // user.displayName
+                        // print(credential.familyName);
+                        _sending(userCredential.user);
                       },
-                    ))
-                : Container()
+                    ),
+                  )
+// credential.email
+                //     Navigator.pushReplacement(
+                //         context,
+                //         MaterialPageRoute(
+                //           builder: (context) => WelcomePageApple(),
+                //         ));
+                //   },
+                // ))
+                : Container(),
           ],
         ))));
   }
