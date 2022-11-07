@@ -31,7 +31,9 @@ class _ProfileAppleState extends State<ProfileApple> {
 
   @override
   Widget build(BuildContext context) {
-    var name = user!.displayName;
+    var name = user!.providerData[0].displayName;
+    print(user!);
+
     var email = user!.email;
     return Scaffold(
         body: SingleChildScrollView(
@@ -66,7 +68,7 @@ class _ProfileAppleState extends State<ProfileApple> {
                           image: DecorationImage(
                             fit: BoxFit.fill,
                             image: NetworkImage(
-                                'https://dwpbucket2.s3.eu-central-1.amazonaws.com/wp-content/uploads/2022/01/27170402/profileApple.png'),
+                                'https://dwpbucket2.s3.eu-central-1.amazonaws.com/wp-content/uploads/2022/01/27170402/profile.png'),
                           ),
                         ),
                       ),
