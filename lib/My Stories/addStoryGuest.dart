@@ -44,14 +44,9 @@ class _BodyState extends State<Body> {
 
   posting(dynamic user) async {
     token = await userRepo.Authenticate("admin", "admin_1234");
-    print(
-      user!.providerData[0].displayName
-          .toString()
-          .replaceAll(RegExp('\\s+'), "")
-          .toLowerCase(),
-    );
     if ((await _userRepo.getUserInfoByEmail(
-            user!.providerData[0].email, token)) ==
+            user!.providerData[0].email.toString().split('@')[0].toString(),
+            token)) ==
         0) {
       return false;
     } else {

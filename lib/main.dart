@@ -41,8 +41,8 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('en', ''), // English, no country code
-        Locale('ar', 'MA'), // Spanish, no country code
+        Locale('en', ''),
+        Locale('ar', 'MA'),
       ],
       debugShowCheckedModeBanner: false,
       title: 'Interactive Map',
