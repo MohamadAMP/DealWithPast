@@ -32,7 +32,6 @@ class _ProfileAppleState extends State<ProfileApple> {
   @override
   Widget build(BuildContext context) {
     var name = user!.providerData[0].displayName;
-    print(user!);
 
     var email = user!.email;
     return Scaffold(

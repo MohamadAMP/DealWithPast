@@ -52,6 +52,7 @@ class UserInfoRepo {
     List<UserData> userInfo = [];
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
+      print(data);
       var temp = data.isEmpty;
       print(temp);
       if (temp) {
