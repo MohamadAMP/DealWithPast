@@ -64,7 +64,7 @@ dependencies:
   url_launcher: ^6.0.17
   fluster: ^1.2.0
   google_maps_cluster_manager: ^3.0.0
-  open_file: ^3.2.1
+  open_file_safe: ^3.2.3
   flutter_launcher_icons: ^0.10.0
   flutter_email_sender: ^5.1.0
   sign_in_with_apple: ^4.1.0
