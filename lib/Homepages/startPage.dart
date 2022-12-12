@@ -52,7 +52,7 @@ class StartPage extends StatelessWidget {
             child: Directionality(
               textDirection: TextDirection.ltr,
               child: Text(
-                '''\nThis was developed with the support of UNDP and PBSO.
+                '''\nThis was developed with the support of the United Nations Development Programme (UNDP) and the Peacebuilding Fund.
  The stories and interviews and other information mentioned in this platform do not necessarily reflect the views of the UNDP and the donor. The content of the stories is the sole responsibility of the interviewees
 ''',
                 textAlign: TextAlign.center,
@@ -81,30 +81,30 @@ class StartPage extends StatelessWidget {
               Container(
                 height: 80,
                 width: 60,
-                child: Image.asset('assets/img5.jpg', fit: BoxFit.contain),
+                child: Image.asset('assets/img1.png', fit: BoxFit.contain),
               ),
               Container(
                 height: 80,
                 width: 60,
-                child: Image.asset('assets/img4.png', fit: BoxFit.contain),
+                child: Image.asset('assets/img3.png', fit: BoxFit.contain),
               ),
               Container(
                 height: 80,
                 width: 60,
                 child: Image.asset(
-                  'assets/img3.png',
+                  'assets/img2.png',
                   fit: BoxFit.contain,
                 ),
               ),
               Container(
                 height: 80,
                 width: 60,
-                child: Image.asset('assets/img2.png', fit: BoxFit.contain),
+                child: Image.asset('assets/img5.jpg', fit: BoxFit.contain),
               ),
               Container(
                 height: 80,
                 width: 60,
-                child: Image.asset('assets/img1.png', fit: BoxFit.contain),
+                child: Image.asset('assets/img4.png', fit: BoxFit.contain),
               ),
             ],
           )),
