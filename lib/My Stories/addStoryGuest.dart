@@ -157,10 +157,11 @@ class _BodyState extends State<Body> {
     return OutlinedButton(
         onPressed: this.click,
         style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
-                  side: BorderSide(color: Colors.grey))),
+                  side: BorderSide(color: Colors.black))),
         ),
         child: Container(
           child: Padding(
@@ -172,8 +173,8 @@ class _BodyState extends State<Body> {
                 Padding(
                   padding: EdgeInsets.only(left: 10),
                   child: Text(
-                    'سجل مع Google',
-                    style: TextStyle(color: Colors.grey, fontSize: 25),
+                    'تسجيل الدخول مع Google',
+                    style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
                 Image(image: AssetImage('assets/google_logo.png'), height: 35),
@@ -193,11 +194,16 @@ class _BodyState extends State<Body> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: 40),
-            Center(
-              child: Text(
-                "لإضافة رواية عليك الدخول إلى حسابك الشخصي",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white, fontSize: 40),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Center(
+                child: Text(
+                  "لإضافة رواية عليك الدخول إلى حسابك الشخصي" +
+                      "\n\n" +
+                      "يجب أن يكون لديك حساب على منصتنا",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white, fontSize: 40),
+                ),
               ),
             ),
             SizedBox(height: 100),
@@ -207,36 +213,40 @@ class _BodyState extends State<Body> {
             ),
             Platform.isIOS
                 ? Container(
-                    height: 60,
-                    width: 250,
-                    child: SignInWithAppleButton(
-                      text: 'سجل مع Apple',
-                      style: SignInWithAppleButtonStyle.black,
-                      borderRadius: BorderRadius.circular(15),
-                      onPressed: () async {
-                        final credential =
-                            await SignInWithApple.getAppleIDCredential(
-                          scopes: [
-                            AppleIDAuthorizationScopes.email,
-                            AppleIDAuthorizationScopes.fullName,
-                          ],
-                        );
+                    height: 55,
+                    width: 260,
+                    child: Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: SignInWithAppleButton(
+                        text: 'Apple تسجيل الدخول مع ',
+                        style: SignInWithAppleButtonStyle.black,
+                        borderRadius: BorderRadius.circular(15),
+                        onPressed: () async {
+                          final credential =
+                              await SignInWithApple.getAppleIDCredential(
+                            scopes: [
+                              AppleIDAuthorizationScopes.email,
+                              AppleIDAuthorizationScopes.fullName,
+                            ],
+                          );
 
-                        final oauthCredential = OAuthProvider("apple.com")
-                            .credential(idToken: credential.identityToken
-                                // idToken: credential.
-                                // rawNonce: rawNonce,
-                                );
+                          final oauthCredential = OAuthProvider("apple.com")
+                              .credential(idToken: credential.identityToken
+                                  // idToken: credential.
+                                  // rawNonce: rawNonce,
+                                  );
 
-                        final userCredential = await FirebaseAuth.instance
-                            .signInWithCredential(oauthCredential);
-                        print(userCredential.user?.providerData[0].displayName);
-                        // User user = ;
-                        // print(credential.givenName);
-                        // user.displayName
-                        // print(credential.familyName);
-                        _sending(userCredential.user);
-                      },
+                          final userCredential = await FirebaseAuth.instance
+                              .signInWithCredential(oauthCredential);
+                          print(
+                              userCredential.user?.providerData[0].displayName);
+                          // User user = ;
+                          // print(credential.givenName);
+                          // user.displayName
+                          // print(credential.familyName);
+                          _sending(userCredential.user);
+                        },
+                      ),
                     ),
                   )
 // credential.email
