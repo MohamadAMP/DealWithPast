@@ -88,7 +88,7 @@ class _Gallery extends State<Gallery> {
     super.initState();
     retrieveStories();
 
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
 
   @override
