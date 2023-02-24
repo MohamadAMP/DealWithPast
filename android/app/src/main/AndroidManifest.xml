@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="lb.com.aub.dwp">
+
+    package="lb.com.aub.dwp"
+    xmlns:tools="http://schemas.android.com/tools">
     <queries>
   <!-- If your app opens https URLs -->
   <intent>
@@ -29,10 +30,10 @@
 </queries>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission
-        android:name="android.permission.REQUEST_INSTALL_PACKAGES"
-        tools:node="remove" />
-        
+
+
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove"/>
+
    <application
         android:usesCleartextTraffic="true"
         android:label="Memory Map"
