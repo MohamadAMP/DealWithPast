@@ -10,7 +10,7 @@ import 'UserClass.dart';
 class UserInfoRepo {
   getUserInfo(id, token) async {
     // UserRepo userRepo = UserRepo();
-    // var tok = await userRepo.Authenticate("admin", "admin_1234");
+    // var tok = await userRepo.Authenticate("admin", "Admin_12345");
     String url = 'http://dwp.world/wp-json/wp/v2/users/' +
         id.toString() +
         "/?per_page=100";

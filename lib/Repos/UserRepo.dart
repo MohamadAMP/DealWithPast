@@ -40,7 +40,7 @@ class UserRepo {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(
-          <String, String>{'username': "admin", 'password': "admin_1234"}),
+          <String, String>{'username': "admin", 'password': "Admin_12345"}),
     );
 
     if (response.statusCode == 200) {

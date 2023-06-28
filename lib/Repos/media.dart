@@ -12,7 +12,7 @@ import 'package:interactive_map/Repos/UserRepo.dart';
 class Media {
   Future<dynamic> uploadImage(filePath) async {
     UserRepo userRepo = UserRepo();
-    var token = await userRepo.Authenticate('admin', 'admin_1234');
+    var token = await userRepo.Authenticate('admin', 'Admin_12345');
     String url = 'https://dwp.world/wp-json/wp/v2/media';
 
     String fileName = filePath.path.split('/').last;
@@ -33,7 +33,7 @@ class Media {
 
   Future<dynamic> uploadAll(filePath) async {
     UserRepo userRepo = UserRepo();
-    var token = await userRepo.Authenticate('admin', 'admin_1234');
+    var token = await userRepo.Authenticate('admin', 'Admin_12345');
     String url = 'https://dwp.world/wp-json/wp/v2/media';
 
     String fileName = filePath.split('/').last;
