@@ -1,7 +1,8 @@
 // ignore_for_file: file_names, unused_import, use_key_in_widget_constructors, prefer_const_constructors, duplicate_ignore
 
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:flutter/services.dart';
+// import 'package:hexcolor/hexcolor.dart';
 import 'package:interactive_map/ContactUs.dart';
 import 'package:interactive_map/Gallery/Gallery.dart';
 import 'package:interactive_map/Homepages/startPage.dart';
@@ -91,10 +92,8 @@ class _Body extends State<Body> {
         centerTitle: true,
         title: appBarContent,
         backgroundColor: Colors.black.withOpacity(0.8),
-        // elevation: 0,
-        // ignore: deprecated_member_use
-        brightness: Brightness.light,
         automaticallyImplyLeading: false,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: pageMap[currentIndex],
       bottomNavigationBar: BottomNavigationBar(

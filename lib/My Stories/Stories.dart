@@ -44,10 +44,9 @@ class _Stories extends State<Stories> {
   retrieveStories() async {
     try {
       dynamic email = user!.email;
-      token = await userRepoTok.Authenticate("admin", "admin_1234");
+      token = await userRepoTok.Authenticate("admin", "Admin_12345");
       var userInfo = await userRepo.getUserInfoByEmail(
-          FirebaseAuth.instance.currentUser!.email.toString(),
-          token);
+          FirebaseAuth.instance.currentUser!.email.toString(), token);
       var id = userInfo[0].id;
       var stories_published = await storyrepo.getStoriesByAuthor(id, token);
       var stories_submitted =
