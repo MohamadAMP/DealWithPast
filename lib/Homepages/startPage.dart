@@ -80,30 +80,30 @@ class StartPage extends StatelessWidget {
               Container(
                 height: 80,
                 width: 60,
-                child: Image.asset('assets/img5.jpg', fit: BoxFit.contain),
+                child: Image.asset('assets/img1.png', fit: BoxFit.contain),
               ),
               Container(
                 height: 80,
                 width: 60,
-                child: Image.asset('assets/img4.png', fit: BoxFit.contain),
+                child: Image.asset('assets/img3.png', fit: BoxFit.contain),
               ),
               Container(
                 height: 80,
                 width: 60,
                 child: Image.asset(
-                  'assets/img3.png',
+                  'assets/img2.png',
                   fit: BoxFit.contain,
                 ),
               ),
               Container(
                 height: 80,
                 width: 60,
-                child: Image.asset('assets/img2.png', fit: BoxFit.contain),
+                child: Image.asset('assets/img5.jpg', fit: BoxFit.contain),
               ),
               Container(
                 height: 80,
                 width: 60,
-                child: Image.asset('assets/img1.png', fit: BoxFit.contain),
+                child: Image.asset('assets/img4.png', fit: BoxFit.contain),
               ),
             ],
           )),

@@ -450,10 +450,10 @@ class _AddStory extends State<AddStory> {
             ),
           );
         } else if (type == 'video' || type == 'audio') {
-          carousel.add(WebView(
-            initialUrl: element[0],
-            javascriptMode: JavascriptMode.unrestricted,
-          ));
+          carousel.add(WebViewWidget(
+              controller: WebViewController()
+                ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                ..loadRequest(Uri.parse(element[0]))));
         } else {
           documents.add(element[0]);
         }
@@ -549,8 +549,8 @@ class _AddStory extends State<AddStory> {
     super.initState();
 
     locationAccess();
-    if (Platform.isAndroid) WebView.platform = AndroidWebView();
-    if (Platform.isIOS) WebView.platform = CupertinoWebView();
+    // if (Platform.isAndroid) WebView.platform = AndroidWebView();
+    // if (Platform.isIOS) WebView.platform = CupertinoWebView();
   }
 
   bool value = false;
