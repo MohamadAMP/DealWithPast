@@ -52,7 +52,8 @@ class StartPage extends StatelessWidget {
             child: Directionality(
               textDirection: TextDirection.ltr,
               child: Text(
-                '''\nThis application was developed by the United Nations Development Programme (UNDP) and the American University of Beirut (AUB) in collaboration with Fighters for Peace (FFP) and UMAM documentation and research with funds from the United Nations' Peacebuilding support office.
+                '''\nThis was developed with the support of UNDP and PBSO.
+ The stories and interviews and other information mentioned in this platform do not necessarily reflect the views of the UNDP and the donor. The content of the stories is the sole responsibility of the interviewees
 ''',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontFamily: 'Baloo', fontSize: 16),
@@ -64,8 +65,8 @@ class StartPage extends StatelessWidget {
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: Text(
-                '''تم تطوير هذا التطبيق من قبل برنامج الأمم المتحدة الإنمائي والجامعة الأمريكية في بيروت بالتعاون مع محاربون من أجل السلام ة أمم للتوثيق و الأبحاث
-الإنمائي وبتمويل من مكتب دعم بناء السلام''',
+                '''تم تطوير هذا بدعم من برنامج الأمم المتحدة الإنمائي ومكتب دعم بناء السلام.
+القصص والمقابلات والمعلومات الأخرى المذكورة في هذه المنصة لا تعكس بالضرورة وجهات نظر برنامج الأمم المتحدة الإنمائي والجهة المانحة. محتوى القصص هي مسؤولية الأشخاص الذين تمت مقابلتهم. ''',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Baloo',

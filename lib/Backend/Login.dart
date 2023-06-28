@@ -42,7 +42,7 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> click() async {
-    token = await userRepo.Authenticate("admin", "Admin_12345");
+    token = await userRepo.Authenticate("admin", "admin_1234");
     signInWithGoogle().then((user) async => {});
   }
 

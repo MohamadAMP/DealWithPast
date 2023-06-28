@@ -27,7 +27,7 @@ class GalleryTile extends StatelessWidget {
   retrieveUserInfo(
       UserInfoRepo userInfoRepo, UserRepo userRepo, dynamic id) async {
     try {
-      var tok = await userRepo.Authenticate("admin", "Admin_12345");
+      var tok = await userRepo.Authenticate("admin", "admin_1234");
 
       userData = await userInfoRepo.getUserInfo(id, tok);
       // EasyLoading.showSuccess("Stories Loaded");

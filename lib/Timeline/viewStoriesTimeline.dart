@@ -1,7 +1,6 @@
 // ignore_for_file: file_names, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../Gallery/galleryTile.dart';
 
@@ -26,8 +25,10 @@ class TimelineStoriesView extends StatelessWidget {
           centerTitle: true,
           title: Text("روايات من  " + year),
           backgroundColor: Colors.black.withOpacity(0.8),
+          // elevation: 0,
+          // ignore: deprecated_member_use
+          brightness: Brightness.light,
           automaticallyImplyLeading: false,
-          systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
         body: Container(
             color: Color(0xFF252422),

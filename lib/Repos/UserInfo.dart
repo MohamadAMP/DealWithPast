@@ -10,7 +10,7 @@ import 'UserClass.dart';
 class UserInfoRepo {
   getUserInfo(id, token) async {
     // UserRepo userRepo = UserRepo();
-    // var tok = await userRepo.Authenticate("admin", "Admin_12345");
+    // var tok = await userRepo.Authenticate("admin", "admin_1234");
     String url = 'http://dwp.world/wp-json/wp/v2/users/' +
         id.toString() +
         "/?per_page=100";
@@ -52,7 +52,9 @@ class UserInfoRepo {
     List<UserData> userInfo = [];
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
+      print(data);
       var temp = data.isEmpty;
+      print(temp);
       if (temp) {
         return 0;
       } else {

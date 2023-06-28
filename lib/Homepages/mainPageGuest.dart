@@ -1,9 +1,8 @@
 // ignore_for_file: file_names, unused_import, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-// import 'package:hexcolor/hexcolor.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:interactive_map/Gallery/Gallery.dart';
 import 'package:interactive_map/Homepages/startPage.dart';
 import 'package:interactive_map/My%20Stories/Stories.dart';
@@ -93,8 +92,7 @@ class _Body extends State<Body> {
         backgroundColor: Colors.black.withOpacity(0.8),
         // elevation: 0,
         // ignore: deprecated_member_use
-        systemOverlayStyle: SystemUiOverlayStyle.light,
-
+        brightness: Brightness.light,
         automaticallyImplyLeading: false,
       ),
       body: pageMap[currentIndex],

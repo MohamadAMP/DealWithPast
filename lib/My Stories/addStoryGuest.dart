@@ -43,7 +43,7 @@ class _BodyState extends State<Body> {
   }
 
   posting(dynamic user) async {
-    token = await userRepo.Authenticate("admin", "Admin_12345");
+    token = await userRepo.Authenticate("admin", "admin_1234");
     if ((await _userRepo.getUserInfoByEmail(
             user!.providerData[0].email.toString().split('@')[0].toString(),
             token)) ==
@@ -230,6 +230,7 @@ class _BodyState extends State<Body> {
 
                         final userCredential = await FirebaseAuth.instance
                             .signInWithCredential(oauthCredential);
+                        print(userCredential.user?.providerData[0].displayName);
                         // User user = ;
                         // print(credential.givenName);
                         // user.displayName
