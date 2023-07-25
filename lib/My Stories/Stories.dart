@@ -44,7 +44,7 @@ class _Stories extends State<Stories> {
   retrieveStories() async {
     try {
       dynamic email = user!.email;
-      token = await userRepoTok.Authenticate("admin", "admin_1234");
+      token = await userRepoTok.Authenticate("admin", "Admin_12345");
       var userInfo = await userRepo.getUserInfoByEmail(
           FirebaseAuth.instance.currentUser!.email.toString(), token);
       var id = userInfo[0].id;
@@ -72,7 +72,7 @@ class _Stories extends State<Stories> {
   @override
   void initState() {
     super.initState();
-    // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
 
   @override

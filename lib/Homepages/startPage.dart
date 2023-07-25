@@ -52,9 +52,7 @@ class StartPage extends StatelessWidget {
             child: Directionality(
               textDirection: TextDirection.ltr,
               child: Text(
-                '''\nThis application was developed by the American University of Beirut (AUB) in collaboration with Fighters for Peace (FFP) and UMAM documentation and research with the support of the United Nations Development Programme (UNDP)and funds from the United Nations' Peacebuilding support office.
- The stories and interviews and other information mentioned in this platform do not necessarily reflect the views of the UNDP and the donor. The content of the stories is the sole responsibility of the interviewees
-''',
+                '''\nThis application was developed by the United Nations Development Programme (UNDP) and the American University of Beirut (AUB) in collaboration with Fighters for Peace (FFP) and UMAM documentation and research with funds from the United Nations' Peacebuilding support office''',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontFamily: 'Baloo', fontSize: 16),
               ),
@@ -65,9 +63,8 @@ class StartPage extends StatelessWidget {
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: Text(
-                '''  تم تطوير هذا التطبيق من قبل الجامعة الأمريكية في بيروت بالتعاون مع محاربون من أجل السلام و أمم للتوثيق و الأبحاث بدعم من برنامج الأمم المتحدة الإنمائي وبتمويل من مكتب دعم بناء السلام .
-
-القصص والمقابلات والمعلومات الأخرى المذكورة في هذه المنصة لا تعكس بالضرورة وجهات نظر برنامج الأمم المتحدة الإنمائي والجهة المانحة. محتوى القصص هي مسؤولية الأشخاص الذين تمت مقابلتهم. ''',
+                '''تم تطوير هذا التطبيق من قبل برنامج الأمم المتحدة الإنمائي والجامعة الأمريكية في بيروت بالتعاون مع محاربون من أجل السلام ة أمم للتوثيق و الأبحاث
+الإنمائي وبتمويل من مكتب دعم بناء السلام''',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Baloo',
@@ -82,30 +79,30 @@ class StartPage extends StatelessWidget {
               Container(
                 height: 80,
                 width: 60,
-                child: Image.asset('assets/img1.png', fit: BoxFit.contain),
-              ),
-              Container(
-                height: 80,
-                width: 60,
-                child: Image.asset('assets/img3.png', fit: BoxFit.contain),
-              ),
-              Container(
-                height: 80,
-                width: 60,
-                child: Image.asset(
-                  'assets/img2.png',
-                  fit: BoxFit.contain,
-                ),
-              ),
-              Container(
-                height: 80,
-                width: 60,
                 child: Image.asset('assets/img5.jpg', fit: BoxFit.contain),
               ),
               Container(
                 height: 80,
                 width: 60,
                 child: Image.asset('assets/img4.png', fit: BoxFit.contain),
+              ),
+              Container(
+                height: 80,
+                width: 60,
+                child: Image.asset(
+                  'assets/img3.png',
+                  fit: BoxFit.contain,
+                ),
+              ),
+              Container(
+                height: 80,
+                width: 60,
+                child: Image.asset('assets/img2.png', fit: BoxFit.contain),
+              ),
+              Container(
+                height: 80,
+                width: 60,
+                child: Image.asset('assets/img1.png', fit: BoxFit.contain),
               ),
             ],
           )),

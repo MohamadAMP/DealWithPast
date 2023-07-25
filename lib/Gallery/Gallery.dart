@@ -75,7 +75,7 @@ class _Gallery extends State<Gallery> {
   retrieveStories() async {
     try {
       await readCounter();
-      // token = await userRepo.Authenticate("admin", "admin_1234");
+      // token = await userRepo.Authenticate("admin", "Admin_12345");
       // stories = await storyrepo.getStories(token);
       return stories;
     } catch (e) {}
@@ -88,7 +88,7 @@ class _Gallery extends State<Gallery> {
     super.initState();
     retrieveStories();
 
-    // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
 
   @override

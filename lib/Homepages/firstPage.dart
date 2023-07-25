@@ -64,14 +64,14 @@ Future<void> writeCounter(dynamic stories) async {
 retrieveUser() async {
   // UserRepo userRepo = UserRepo();
   // final UserInfoRepo _userRepo = UserInfoRepo();
-  // var token = await userRepo.Authenticate("admin", "admin_1234");
+  // var token = await userRepo.Authenticate("admin", "Admin_12345");
   // var temp = await _userRepo.getUserInfoByEmail("msabra1731", token);
   // print(temp.runtimeType);
   try {
     UserRepo userRepo = UserRepo();
     StoryRepo storyrepo = StoryRepo();
 
-    var token = await userRepo.Authenticate("admin", "admin_1234");
+    var token = await userRepo.Authenticate("admin", "Admin_12345");
     final response = await http.get(
         Uri.parse('http://dwp.world/wp-json/wp/v2/stories/?per_page=100'),
         headers: {
@@ -84,7 +84,8 @@ retrieveUser() async {
     for (int i = 0; i < x; i++) {
       final response = await http.get(
           Uri.parse(
-              'http://dwp.world/wp-json/wp/v2/stories/?per_page=100&page=${i + 1}'),
+              'http://dwp.world/wp-json/wp/v2/stories/?per_page=100&page=' +
+                  (i + 1).toString()),
           headers: {
             "connection": "keep-alive",
             'Authorization': 'Bearer $token',

@@ -27,7 +27,7 @@ class TimelineStoriesView extends StatelessWidget {
           backgroundColor: Colors.black.withOpacity(0.8),
           // elevation: 0,
           // ignore: deprecated_member_use
-          brightness: Brightness.light,
+          // brightness: Brightness.light,
           automaticallyImplyLeading: false,
         ),
         body: Container(

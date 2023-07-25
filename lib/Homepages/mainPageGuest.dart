@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:interactive_map/Gallery/Gallery.dart';
 import 'package:interactive_map/Homepages/startPage.dart';
 import 'package:interactive_map/My%20Stories/Stories.dart';
@@ -92,7 +91,7 @@ class _Body extends State<Body> {
         backgroundColor: Colors.black.withOpacity(0.8),
         // elevation: 0,
         // ignore: deprecated_member_use
-        brightness: Brightness.light,
+        // brightness: Brightness.light,
         automaticallyImplyLeading: false,
       ),
       body: pageMap[currentIndex],

@@ -48,7 +48,7 @@ class _ViewStoryStart extends State<ViewStoryStart> {
   retrieveUserInfo(
       UserInfoRepo userInfoRepo, UserRepo userRepo, dynamic id) async {
     try {
-      var tok = await userRepo.Authenticate("admin", "admin_1234");
+      var tok = await userRepo.Authenticate("admin", "Admin_12345");
 
       userData = await userInfoRepo.getUserInfo(id, tok);
       return userData;

@@ -388,8 +388,8 @@ class _BodyState extends State<Body> {
     // ignore: todo
     // TODO: implement initState
     super.initState();
-    // if (Platform.isAndroid) WebView.platform = AndroidWebView();
-    // if (Platform.isIOS) WebView.platform = CupertinoWebView();
+    if (Platform.isAndroid) WebView.platform = AndroidWebView();
+    if (Platform.isIOS) WebView.platform = CupertinoWebView();
   }
 
   @override
@@ -445,10 +445,10 @@ class _BodyState extends State<Body> {
           ),
         );
       } else if (type == 'video' || type == 'audio') {
-        carousel.add(WebViewWidget(
-            controller: WebViewController()
-              ..setJavaScriptMode(JavaScriptMode.unrestricted)
-              ..loadRequest(Uri.parse(element['url']))));
+        carousel.add(WebView(
+          initialUrl: element['url'],
+          javascriptMode: JavascriptMode.unrestricted,
+        ));
       } else {
         documents.add(element['url']);
       }

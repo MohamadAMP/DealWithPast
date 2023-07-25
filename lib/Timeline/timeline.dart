@@ -86,7 +86,7 @@ class _Timeline extends State<Timeline> {
   retrieveStories() async {
     try {
       await readCounter();
-      // token = await userRepo.Authenticate("admin", "admin_1234");
+      // token = await userRepo.Authenticate("admin", "Admin_12345");
       // stories = await storyrepo.getStories(token);
       stories.forEach((element) {
         if (element.event_date != "") {
@@ -128,7 +128,7 @@ class _Timeline extends State<Timeline> {
   void initState() {
     super.initState();
 
-    // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
 
   @override
