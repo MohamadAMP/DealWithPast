@@ -13,11 +13,14 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
 
+import '../Repos/UserInfo.dart';
+import '../Repos/UserRepo.dart';
+
 class StoryWidgetImgOnly extends StatefulWidget {
   Story story;
   dynamic location;
-  UserData userData;
-  StoryWidgetImgOnly(this.story, this.location, this.userData, {Key? key})
+  dynamic id;
+  StoryWidgetImgOnly(this.story, this.location, this.id, {Key? key})
       : super(key: key);
 
   @override
@@ -197,6 +200,19 @@ class _StoryWidgetImgOnlyState extends State<StoryWidgetImgOnly> {
         builder: (context) => _aboutdialog);
   }
 
+  List<UserData> userData = [];
+  UserInfoRepo userInfoRepo = UserInfoRepo();
+  UserRepo userRepo = UserRepo();
+  retrieveUserInfo(
+      UserInfoRepo userInfoRepo, UserRepo userRepo, dynamic id) async {
+    try {
+      var tok = await userRepo.Authenticate("admin", "Admin_12345");
+
+      userData = await userInfoRepo.getUserInfo(id, tok);
+      return userData;
+    } catch (e) {}
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.story.anonymous.length == 0) {
@@ -212,15 +228,24 @@ class _StoryWidgetImgOnlyState extends State<StoryWidgetImgOnly> {
                   child: Container(
                     child: Row(
                       children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          child: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              widget.userData.image,
-                            ),
-                          ),
-                        ),
+                        FutureBuilder(
+                            future: retrieveUserInfo(
+                                userInfoRepo, userRepo, widget.id),
+                            builder: (context, AsyncSnapshot snapshot) {
+                              if (!snapshot.hasData) {
+                                return Container();
+                              } else {
+                                return Container(
+                                  height: 40,
+                                  width: 40,
+                                  child: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                      snapshot.data[0].image,
+                                    ),
+                                  ),
+                                );
+                              }
+                            }),
                         const SizedBox(
                           width: 30,
                         ),
@@ -275,7 +300,7 @@ class _StoryWidgetImgOnlyState extends State<StoryWidgetImgOnly> {
             ),
           ),
         ),
-        body: Body(widget.story, widget.location, widget.userData),
+        body: Body(widget.story, widget.location),
       );
     } else {
       return Scaffold(
@@ -353,7 +378,7 @@ class _StoryWidgetImgOnlyState extends State<StoryWidgetImgOnly> {
             ),
           ),
         ),
-        body: Body(widget.story, widget.location, widget.userData),
+        body: Body(widget.story, widget.location),
       );
     }
   }
@@ -362,8 +387,8 @@ class _StoryWidgetImgOnlyState extends State<StoryWidgetImgOnly> {
 class Body extends StatefulWidget {
   Story story;
   dynamic location;
-  UserData userData;
-  Body(this.story, this.location, this.userData, {Key? key}) : super(key: key);
+
+  Body(this.story, this.location, {Key? key}) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
