@@ -42,19 +42,6 @@ class ViewStoryStart extends StatefulWidget {
 }
 
 class _ViewStoryStart extends State<ViewStoryStart> {
-  List<UserData> userData = [];
-  UserInfoRepo userInfoRepo = UserInfoRepo();
-  UserRepo userRepo = UserRepo();
-  retrieveUserInfo(
-      UserInfoRepo userInfoRepo, UserRepo userRepo, dynamic id) async {
-    try {
-      var tok = await userRepo.Authenticate("admin", "Admin_12345");
-
-      userData = await userInfoRepo.getUserInfo(id, tok);
-      return userData;
-    } catch (e) {}
-  }
-
   @override
   void initState() {
     super.initState();
@@ -62,25 +49,14 @@ class _ViewStoryStart extends State<ViewStoryStart> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: retrieveUserInfo(userInfoRepo, userRepo, widget.id),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return StoryWidgetTemplate();
-          } else {
-            if (widget.pending) {
-              return StoryWidgetPending(
-                  widget.story, widget.location, userData[0]);
-            } else {
-              if (widget.gallery) {
-                return StoryWidgetAll(
-                    widget.story, widget.location, userData[0]);
-              } else {
-                return StoryWidgetImgOnly(
-                    widget.story, widget.location, userData[0]);
-              }
-            }
-          }
-        });
+    if (widget.pending) {
+      return StoryWidgetPending(widget.story, widget.location, widget.id);
+    } else {
+      if (widget.gallery) {
+        return StoryWidgetAll(widget.story, widget.location, widget.id);
+      } else {
+        return StoryWidgetImgOnly(widget.story, widget.location, widget.id);
+      }
+    }
   }
 }

@@ -10,17 +10,20 @@ import '../Repos/UserClass.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:open_file_safe/open_file_safe.dart';
+// import 'package:open_file_safe/open_file_safe.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:math' as math;
 
+import '../Repos/UserInfo.dart';
+import '../Repos/UserRepo.dart';
+
 class StoryWidgetAll extends StatefulWidget {
   Story story;
   dynamic location;
-  UserData userData;
-  StoryWidgetAll(this.story, this.location, this.userData, {Key? key})
+  dynamic id;
+  StoryWidgetAll(this.story, this.location, this.id, {Key? key})
       : super(key: key);
 
   @override
@@ -202,6 +205,19 @@ class _StoryWidgetAllState extends State<StoryWidgetAll> {
         builder: (context) => _aboutdialog);
   }
 
+  List<UserData> userData = [];
+  UserInfoRepo userInfoRepo = UserInfoRepo();
+  UserRepo userRepo = UserRepo();
+  retrieveUserInfo(
+      UserInfoRepo userInfoRepo, UserRepo userRepo, dynamic id) async {
+    try {
+      var tok = await userRepo.Authenticate("admin", "Admin_12345");
+
+      userData = await userInfoRepo.getUserInfo(id, tok);
+      return userData;
+    } catch (e) {}
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.story.anonymous.length == 0) {
@@ -217,15 +233,24 @@ class _StoryWidgetAllState extends State<StoryWidgetAll> {
                   child: Container(
                     child: Row(
                       children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          child: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              widget.userData.image,
-                            ),
-                          ),
-                        ),
+                        FutureBuilder(
+                            future: retrieveUserInfo(
+                                userInfoRepo, userRepo, widget.id),
+                            builder: (context, AsyncSnapshot snapshot) {
+                              if (!snapshot.hasData) {
+                                return Container();
+                              } else {
+                                return Container(
+                                  height: 40,
+                                  width: 40,
+                                  child: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                      snapshot.data[0].image,
+                                    ),
+                                  ),
+                                );
+                              }
+                            }),
                         const SizedBox(
                           width: 30,
                         ),
@@ -280,7 +305,10 @@ class _StoryWidgetAllState extends State<StoryWidgetAll> {
             ),
           ),
         ),
-        body: Body(widget.story, widget.location, widget.userData),
+        body: Body(
+          widget.story,
+          widget.location,
+        ),
       );
     } else {
       return Scaffold(
@@ -358,7 +386,7 @@ class _StoryWidgetAllState extends State<StoryWidgetAll> {
             ),
           ),
         ),
-        body: Body(widget.story, widget.location, widget.userData),
+        body: Body(widget.story, widget.location),
       );
     }
   }
@@ -367,8 +395,8 @@ class _StoryWidgetAllState extends State<StoryWidgetAll> {
 class Body extends StatefulWidget {
   Story story;
   dynamic location;
-  UserData userData;
-  Body(this.story, this.location, this.userData, {Key? key}) : super(key: key);
+
+  Body(this.story, this.location, {Key? key}) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
