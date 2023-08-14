@@ -246,7 +246,7 @@ class _BodyState extends State<Body> {
               child: Container(
                 height: 250,
                 child: Image.asset(
-                  'assets/default-image.png',
+                  'assets/icon.png',
                   fit: BoxFit.fill,
                 ),
               )),
