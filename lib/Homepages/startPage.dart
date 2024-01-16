@@ -60,20 +60,12 @@ class StartPage extends StatelessWidget {
               Container(
                 height: 80,
                 width: 60,
-                child: Image.asset('assets/img5.jpg', fit: BoxFit.contain),
+                child: Image.asset('assets/img1.png', fit: BoxFit.contain),
               ),
               Container(
                 height: 80,
                 width: 60,
-                child: Image.asset('assets/img4.png', fit: BoxFit.contain),
-              ),
-              Container(
-                height: 80,
-                width: 60,
-                child: Image.asset(
-                  'assets/img3.png',
-                  fit: BoxFit.contain,
-                ),
+                child: Image.asset('assets/img3.png', fit: BoxFit.contain),
               ),
               Container(
                 height: 80,
@@ -83,7 +75,12 @@ class StartPage extends StatelessWidget {
               Container(
                 height: 80,
                 width: 60,
-                child: Image.asset('assets/img1.png', fit: BoxFit.contain),
+                child: Image.asset('assets/img5.jpg', fit: BoxFit.contain),
+              ),
+              Container(
+                height: 80,
+                width: 60,
+                child: Image.asset('assets/img4.png', fit: BoxFit.contain),
               ),
             ],
           )),
@@ -92,14 +89,14 @@ class StartPage extends StatelessWidget {
           ),
           Center(
               child: Text(
-            'Copyright 2022, all rights reserved to the United Nations Development Program',
+            'Copyright 2023, all rights reserved to the United Nations Development Program',
             style: TextStyle(fontFamily: 'Baloo', fontSize: 11),
           )),
           Center(
               child: Directionality(
                   textDirection: TextDirection.rtl,
                   child: const Text(
-                    'حقوق الطبع والنشر ٢٠٢٢, جميع الحقوق محفوظة لبرنامج الأمم المتحدة الإنمائي',
+                    'حقوق الطبع والنشر ٢٠٢٣, جميع الحقوق محفوظة لبرنامج الأمم المتحدة الإنمائي',
                     style: TextStyle(fontFamily: 'Baloo', fontSize: 11),
                   )))
         ],
